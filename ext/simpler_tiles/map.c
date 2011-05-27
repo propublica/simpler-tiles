@@ -17,7 +17,7 @@ set_srs(VALUE self, VALUE srs){
   simplet_map_t *map = get_map(self);
   if(!Check_Type(VALUE srs, T_STRING))
     return Qnil;
-  simplet_map_set_srs(map, RSTRING(srs)->ptr);
+  simplet_map_set_srs(map, RSTRING_PTR(srs));
   return Qnil;
 }
 
@@ -47,7 +47,7 @@ add_layer(VALUE self, VALUE source){
   simplet_map_t *map = get_map(self);
   if(!Check_Type(VALUE srs, T_STRING))
     return Qnil;
-  simplet_map_add_layer(map, RSTRING(srs)->ptr);
+  simplet_map_add_layer(map, RSTRING_PTR(srs));
   return Qnil;
 }
 
@@ -56,7 +56,7 @@ add_rule(VALUE self, VALUE sql){
   simplet_map_t *map = get_map(self);
   if(!Check_Type(VALUE srs, T_STRING))
     return Qnil;
-  simplet_map_add_rule(map, RSTRING(srs)->ptr);
+  simplet_map_add_rule(map, RSTRING_PTR(srs));
   return Qnil;
 }
 
@@ -67,7 +67,7 @@ save(VALUE self, VALUE path){
     return Qfalse;
   if(!Check_Type(VALUE srs, T_STRING))
     return Qfalse;
-  simplet_map_add_rule(map, RSTRING(srs)->ptr);
+  simplet_map_add_rule(map, RSTRING_PTR(srs));
   return Qtrue;
 }
 
