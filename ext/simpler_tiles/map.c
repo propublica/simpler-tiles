@@ -62,10 +62,10 @@ add_rule(VALUE self, VALUE sql){
 
 static VALUE 
 save(VALUE self, VALUE path){
+  Check_Type(VALUE srs, T_STRING);
+  
   simplet_map_t *map = get_map(self);
   if(is_valid(self) == Qfalse)
-    return Qfalse;
-  if(!Check_Type(VALUE srs, T_STRING))
     return Qfalse;
   simplet_map_add_rule(map, RSTRING_PTR(srs));
   return Qtrue;
