@@ -42,12 +42,7 @@ end
 
 task :default => :test
 
-require 'rake/rdoctask'
-Rake::RDocTask.new do |rdoc|
-  version = File.exist?('VERSION') ? File.read('VERSION') : ""
-
-  rdoc.rdoc_dir = 'rdoc'
-  rdoc.title = "simpler-tiles #{version}"
-  rdoc.rdoc_files.include('README*')
-  rdoc.rdoc_files.include('lib/**/*.rb')
+require 'rake/extensiontask'
+Rake::ExtensionTask.new('simpler_tiles', Rake.application.jeweler.gemspec) do |ext|
+  ext.lib_dir = File.join('lib', 'simpler_tiles')
 end
