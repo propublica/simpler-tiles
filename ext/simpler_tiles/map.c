@@ -14,9 +14,8 @@ mark_map(simplet_map_t *map){}
 
 static VALUE 
 set_srs(VALUE self, VALUE srs){
+  Check_Type(srs, T_STRING);
   simplet_map_t *map = get_map(self);
-  if(!Check_Type(VALUE srs, T_STRING))
-    return Qnil;
   simplet_map_set_srs(map, RSTRING_PTR(srs));
   return Qnil;
 }
@@ -37,6 +36,9 @@ set_size(VALUE self, VALUE size){
 
 static VALUE 
 add_style(VALUE self, VALUE key, VALUE arg){
+  Check_Type(key, T_STRING);
+  Check_Type(arg, T_STRING);
+
   simplet_map_t *map = get_map(self);
   //simplet_map_add_layer(map, RSTRING(key)->ptr, RSTRING(arg)->);
   return Qnil;
@@ -44,37 +46,17 @@ add_style(VALUE self, VALUE key, VALUE arg){
 
 static VALUE 
 add_layer(VALUE self, VALUE source){
+  Check_Type(source, T_STRING);
   simplet_map_t *map = get_map(self);
-  if(!Check_Type(VALUE srs, T_STRING))
-    return Qnil;
-  simplet_map_add_layer(map, RSTRING_PTR(srs));
+  simplet_map_add_layer(map, RSTRING_PTR(source));
   return Qnil;
 }
 
 static VALUE 
-add_rule(VALUE self, VALUE sql){
+add_filter(VALUE self, VALUE sql){
+  Check_Type(VALUE sql, T_STRING);
   simplet_map_t *map = get_map(self);
-  if(!Check_Type(VALUE srs, T_STRING))
-    return Qnil;
-  simplet_map_add_rule(map, RSTRING_PTR(srs));
-  return Qnil;
-}
-
-static VALUE 
-save(VALUE self, VALUE path){
-  Check_Type(VALUE srs, T_STRING);
-  
-  simplet_map_t *map = get_map(self);
-  if(is_valid(self) == Qfalse)
-    return Qfalse;
-  simplet_map_add_rule(map, RSTRING_PTR(srs));
-  return Qtrue;
-}
-
-static VALUE 
-to_png(VALUE self){
-  simplet_map_t *map = get_map(self);
-  
+  simplet_map_add_filter(map, RSTRING_PTR(sql));
   return Qnil;
 }
 
@@ -87,15 +69,31 @@ is_valid(VALUE self){
 }
 
 static VALUE 
+save(VALUE self, VALUE path){
+  Check_Type(VALUE srs, T_STRING);
+  simplet_map_t *map = get_map(self);
+  if(is_valid(self) == Qfalse)
+    return Qfalse;
+  simplet_map_add_filter(map, RSTRING_PTR(srs));
+  return Qtrue;
+}
+
+static VALUE 
+to_png(VALUE self){
+  simplet_map_t *map = get_map(self);
+  
+  return Qnil;
+}
+
+static VALUE 
 new(VALUE klass){
-  VALUE map_wrap;
   simplet_map_t *map;
-  map = simplet_map_new();
+  if((map = simplet_map_new()) == NULL)
+    rb_raise(rb_eRuntimeError, "Could not allocate space for a new map in memory");
   VALUE rmap = Data_Wrap_Struct(klass, mark_map, simplet_map_free, map);
   rb_obj_call_init(rmap, 0, 0);
-  if(rb_block_given()){
+  if(rb_block_given())
     rb_yield(rmap);
-  }
   return rmap;
 }
 
@@ -108,7 +106,7 @@ init_map(){
   rb_define_method(rmap, "size=", set_size, 1);
   rb_define_method(rmap, "bounds=", set_bounds, 1);
   rb_define_method(rmap, "add_layer", add_layer, 1);
-  rb_define_method(rmap, "add_rule", add_rule, 1);
+  rb_define_method(rmap, "add_filter", add_filter, 1);
   rb_define_method(rmap, "add_style", add_style, 2);
   rb_define_method(rmap, "save", save, 1);
   rb_define_method(rmap, "to_png", to_png, 0);

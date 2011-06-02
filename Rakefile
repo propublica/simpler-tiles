@@ -46,3 +46,10 @@ require 'rake/extensiontask'
 Rake::ExtensionTask.new('simpler_tiles', Rake.application.jeweler.gemspec) do |ext|
   ext.lib_dir = File.join('lib', 'simpler_tiles')
 end
+
+DEPEND = "ext/simpler_tiles/depend"
+file DEPEND => Dir["ext/simpler_tiles/*.c"] do |t|
+  `cd ext/simpler_tiles/; gcc -MM *.c > depend`
+end
+Rake::Task[:compile].prerequisites.unshift DEPEND
+
