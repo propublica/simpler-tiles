@@ -1,0 +1,2 @@
+map.o: map.c map.h simpler_tiles.h
+simpler_tiles.o: simpler_tiles.c simpler_tiles.h map.h
