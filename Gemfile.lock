@@ -10,7 +10,9 @@ GEM
     rake-compiler (0.7.8)
       rake
     rcov (0.9.9)
+    redgreen (1.2.2)
     shoulda (2.11.3)
+    shoulda-context (1.0.0.beta1)
 
 PLATFORMS
   ruby
@@ -20,4 +22,6 @@ DEPENDENCIES
   jeweler (~> 1.6.0)
   rake-compiler
   rcov
+  redgreen
   shoulda
+  shoulda-context

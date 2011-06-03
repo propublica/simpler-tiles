@@ -106,12 +106,15 @@ is_valid(VALUE self){
 static VALUE 
 save(VALUE self, VALUE path){
   Check_Type(path, T_STRING);
+  if(!is_valid(self)) return Qfalse;
   simplet_map_t *map = get_map(self);
-  if(is_valid(self) == Qfalse)
+  if(simplet_map_render_to_png(map, RSTRING_PTR(path));
+    return Qtrue;
+  else
     return Qfalse;
-  simplet_map_add_filter(map, RSTRING_PTR(path));
-  return Qtrue;
 }
+
+
 
 static VALUE 
 to_png(VALUE self){
@@ -149,6 +152,7 @@ init_map(){
   rb_define_method(rmap, "add_style", add_style, 2);
   rb_define_method(rmap, "save", save, 1);
   rb_define_method(rmap, "to_png", to_png, 0);
+  rb_define_method(rmap, "data", data, 0);
   rb_define_method(rmap, "valid?", is_valid, 0);
 }
 

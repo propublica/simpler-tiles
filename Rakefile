@@ -48,8 +48,22 @@ Rake::ExtensionTask.new('simpler_tiles', Rake.application.jeweler.gemspec) do |e
 end
 
 DEPEND = "ext/simpler_tiles/depend"
-file DEPEND => Dir["ext/simpler_tiles/*.c"] do |t|
+file DEPEND => FileList["ext/simpler_tiles/*.c"] do |t|
   `cd ext/simpler_tiles/; gcc -MM *.c > depend`
 end
-Rake::Task[:compile].prerequisites.unshift DEPEND
 
+DATA = "data/tl_2010_us_state10.shp"
+file DATA do |t|
+  if !File.exists? t.name
+    require 'fileutils'
+    FileUtils.mkdir_p "data"
+    tasks = []
+    tasks << 'cd data'
+    tasks << 'curl -O ftp://ftp2.census.gov/geo/tiger/TIGER2010/STATE/2010/tl_2010_us_state10.zip'
+    tasks << 'unzip tl_2010_us_state10.zip'  
+    `#{tasks.join ';'}`
+  end
+end
+
+Rake::Task[:compile].prerequisites.unshift DEPEND
+Rake::Task[:test].prerequisites.unshift DATA
