@@ -39,4 +39,4 @@ missing "gdal"         unless find_header "gdal/ogr_srs_api.h"
 missing "cairo"        unless find_header "cairo/cairo.h"
 missing "simple-tiles" unless find_header "simple-tiles/simple_tiles.h"
 
-create_makefile('simpler-tiles/simpler_tiles')
+create_makefile('simpler_tiles/simpler_tiles')
