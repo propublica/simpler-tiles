@@ -1,5 +1,5 @@
 module SimplerTiles
-  VERSION = '1.0.0'
+  VERSION = '0.0.1'
   ROOT = File.expand_path File.dirname(__FILE__)
 end
 
