@@ -108,18 +108,28 @@ save(VALUE self, VALUE path){
   Check_Type(path, T_STRING);
   if(!is_valid(self)) return Qfalse;
   simplet_map_t *map = get_map(self);
-  if(simplet_map_render_to_png(map, RSTRING_PTR(path));
+  if(simplet_map_render_to_png(map, RSTRING_PTR(path)))
     return Qtrue;
   else
     return Qfalse;
 }
 
+static cairo_status_t
+stream(void* stream, const unsigned char *data, unsigned int length){
+  Check_Type((VALUE)stream, T_STRING);
+  rb_str_cat((VALUE)stream, data, (long)length);
+  return CAIRO_STATUS_SUCCESS;
+}
 
 
 static VALUE 
 to_png(VALUE self){
   simplet_map_t *map = get_map(self);
-  
+  VALUE data;
+  char *cdata = "";
+  data = rb_str_new2(cdata);
+  simplet_map_render_to_stream(map, (void *)data, stream);  
+  rb_yield(data);
   return Qnil;
 }
 
@@ -127,7 +137,7 @@ static VALUE
 new(VALUE klass){
   simplet_map_t *map;
   if((map = simplet_map_new()) == NULL)
-    rb_raise(rb_eRuntimeError, "Could not allocate space for a new map in memory");
+    rb_raise(rb_eRuntimeError, "Could not allocate space for a new SimplerTiles::Map in memory.");
   VALUE rmap = Data_Wrap_Struct(klass, mark_map, simplet_map_free, map);
   rb_obj_call_init(rmap, 0, 0);
   if(rb_block_given_p()) rb_yield(rmap);
@@ -152,7 +162,6 @@ init_map(){
   rb_define_method(rmap, "add_style", add_style, 2);
   rb_define_method(rmap, "save", save, 1);
   rb_define_method(rmap, "to_png", to_png, 0);
-  rb_define_method(rmap, "data", data, 0);
   rb_define_method(rmap, "valid?", is_valid, 0);
 }
 
