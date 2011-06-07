@@ -8,7 +8,7 @@ class TestSimplerTiles < Test::Unit::TestCase
       m.set_size 256, 256
       m.add_layer "#{File.dirname(__FILE__)}/../data/tl_2010_us_state10.shp"
       m.add_filter "SELECT * from tl_2010_us_state10"
-      m.styles 'fill' => "#061F37ff",
+      m.styles 'fill' => "#061F3799",
           'line-join' => "round",
            'line-cap' => "square",
            'seamless' => "true"
