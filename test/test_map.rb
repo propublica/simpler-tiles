@@ -25,5 +25,9 @@ class TestMap < Test::Unit::TestCase
     should "test validity" do
       assert_equal @map.valid?, false
     end
+    
+    should "set slippy" do
+      assert @map.slippy 0, 0, 1
+    end
   end
 end

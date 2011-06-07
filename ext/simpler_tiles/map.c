@@ -133,6 +133,14 @@ to_png(VALUE self){
   return Qnil;
 }
 
+static VALUE
+slippy(VALUE self, VALUE x, VALUE y, VALUE z){
+  simplet_map_t *map = get_map(self);
+  if(simplet_map_set_slippy(map, NUM2INT(x), NUM2INT(y), NUM2INT(z)))
+    return Qtrue;
+  return Qfalse;
+}
+
 static VALUE 
 new(VALUE klass){
   simplet_map_t *map;
@@ -143,6 +151,8 @@ new(VALUE klass){
   if(rb_block_given_p()) rb_yield(rmap);
   return rmap;
 }
+
+
 
 void
 init_map(){
@@ -161,6 +171,7 @@ init_map(){
   rb_define_method(rmap, "add_filter", add_filter, 1);
   rb_define_method(rmap, "add_style", add_style, 2);
   rb_define_method(rmap, "save", save, 1);
+  rb_define_method(rmap, "slippy", slippy, 3);
   rb_define_method(rmap, "to_png", to_png, 0);
   rb_define_method(rmap, "valid?", is_valid, 0);
 }

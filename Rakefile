@@ -69,3 +69,5 @@ end
 
 Rake::Task[:compile].prerequisites.unshift DEPEND
 Rake::Task[:test].prerequisites.unshift DATA
+Rake::Task[:test].prerequisites.unshift :compile
+
