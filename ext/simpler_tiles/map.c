@@ -152,8 +152,6 @@ new(VALUE klass){
   return rmap;
 }
 
-
-
 void
 init_map(){
   VALUE simplet = rb_define_module("SimplerTiles");
