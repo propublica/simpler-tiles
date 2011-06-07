@@ -9,7 +9,7 @@ module SimplerTiles
     end
     
     def ar_layer
-      if !defined(ActiveRecord)
+      if !defined?(ActiveRecord)
         raise "ActiveRecord not available"
       end
       
