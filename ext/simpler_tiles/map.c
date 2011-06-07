@@ -9,10 +9,10 @@ get_map(VALUE self){
   return map;
 }
 
-static void 
+static void
 mark_map(simplet_map_t *map){}
 
-static VALUE 
+static VALUE
 set_srs(VALUE self, VALUE srs){
   Check_Type(srs, T_STRING);
   simplet_map_t *map = get_map(self);
@@ -20,7 +20,7 @@ set_srs(VALUE self, VALUE srs){
   return Qnil;
 }
 
-static VALUE 
+static VALUE
 get_srs(VALUE self){
   simplet_map_t *map = get_map(self);
   if(!map->proj) return Qnil;
@@ -29,14 +29,14 @@ get_srs(VALUE self){
   return rb_str_new2(srs);
 }
 
-static VALUE 
+static VALUE
 set_bounds(VALUE self, VALUE maxx, VALUE maxy, VALUE minx, VALUE miny){
   simplet_map_t *map = get_map(self);
   simplet_map_set_bounds(map, NUM2DBL(maxx), NUM2DBL(maxy), NUM2DBL(minx), NUM2DBL(miny));
   return Qnil;
 }
 
-static VALUE 
+static VALUE
 set_size(VALUE self, VALUE width, VALUE height){
   simplet_map_t *map = get_map(self);
   simplet_map_set_size(map, NUM2INT(width), NUM2INT(height));
@@ -69,7 +69,7 @@ get_height(VALUE self){
   return INT2NUM(map->height);
 }
 
-static VALUE 
+static VALUE
 add_style(VALUE self, VALUE key, VALUE arg){
   Check_Type(key, T_STRING);
   Check_Type(arg, T_STRING);
@@ -79,7 +79,7 @@ add_style(VALUE self, VALUE key, VALUE arg){
   return Qnil;
 }
 
-static VALUE 
+static VALUE
 add_layer(VALUE self, VALUE source){
   Check_Type(source, T_STRING);
   simplet_map_t *map = get_map(self);
@@ -87,7 +87,7 @@ add_layer(VALUE self, VALUE source){
   return Qnil;
 }
 
-static VALUE 
+static VALUE
 add_filter(VALUE self, VALUE sql){
   Check_Type(sql, T_STRING);
   simplet_map_t *map = get_map(self);
@@ -95,7 +95,7 @@ add_filter(VALUE self, VALUE sql){
   return Qnil;
 }
 
-static VALUE 
+static VALUE
 is_valid(VALUE self){
   simplet_map_t *map = get_map(self);
   if(!simplet_map_is_valid(map))
@@ -103,7 +103,7 @@ is_valid(VALUE self){
   return Qtrue;
 }
 
-static VALUE 
+static VALUE
 save(VALUE self, VALUE path){
   Check_Type(path, T_STRING);
   if(!is_valid(self)) return Qfalse;
@@ -122,13 +122,13 @@ stream(void* stream, const unsigned char *data, unsigned int length){
 }
 
 
-static VALUE 
+static VALUE
 to_png(VALUE self){
   simplet_map_t *map = get_map(self);
   VALUE data;
   char *cdata = "";
   data = rb_str_new2(cdata);
-  simplet_map_render_to_stream(map, (void *)data, stream);  
+  simplet_map_render_to_stream(map, (void *)data, stream);
   rb_yield(data);
   return Qnil;
 }
@@ -141,7 +141,7 @@ slippy(VALUE self, VALUE x, VALUE y, VALUE z){
   return Qfalse;
 }
 
-static VALUE 
+static VALUE
 new(VALUE klass){
   simplet_map_t *map;
   if((map = simplet_map_new()) == NULL)
@@ -173,4 +173,3 @@ init_map(){
   rb_define_method(rmap, "to_png", to_png, 0);
   rb_define_method(rmap, "valid?", is_valid, 0);
 }
-

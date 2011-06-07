@@ -62,7 +62,7 @@ file DATA do |t|
     tasks = []
     tasks << 'cd data'
     tasks << 'curl -O ftp://ftp2.census.gov/geo/tiger/TIGER2010/STATE/2010/tl_2010_us_state10.zip'
-    tasks << 'unzip tl_2010_us_state10.zip'  
+    tasks << 'unzip tl_2010_us_state10.zip'
     `#{tasks.join ';'}`
   end
 end
@@ -70,4 +70,3 @@ end
 Rake::Task[:compile].prerequisites.unshift DEPEND
 Rake::Task[:test].prerequisites.unshift DATA
 Rake::Task[:test].prerequisites.unshift :compile
-
