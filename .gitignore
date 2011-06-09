@@ -10,3 +10,5 @@ data
 *.shp
 .DS_Store
 Gemfile
+.document
+Gemfile.lock

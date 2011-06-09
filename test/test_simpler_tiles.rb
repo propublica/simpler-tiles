@@ -15,13 +15,12 @@ class TestSimplerTiles < Test::Unit::TestCase
     end
 
     assert map.valid?
-
     map.to_png do |data|
       assert data
       File.open "#{File.dirname(__FILE__)}/out.png", "wb" do |f|
         f.write data
       end
       assert data.length
-    end
+    end    
   end
 end

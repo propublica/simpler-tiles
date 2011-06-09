@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Jeff Larson"]
-  s.date = %q{2011-06-06}
+  s.date = %q{2011-06-09}
   s.description = %q{mappy maps!}
   s.email = %q{thejefflarson@gmail.com}
   s.extensions = ["ext/simpler_tiles/extconf.rb"]
@@ -20,7 +20,6 @@ Gem::Specification.new do |s|
   s.files = [
     ".document",
     "Gemfile",
-    "Gemfile.lock",
     "LICENSE.txt",
     "README.rdoc",
     "Rakefile",
@@ -34,6 +33,7 @@ Gem::Specification.new do |s|
     "lib/simpler_tiles.rb",
     "lib/simpler_tiles/map.rb",
     "lib/simpler_tiles/mixins/pp.rb",
+    "simpler-tiles.gemspec",
     "test/helper.rb",
     "test/test_map.rb",
     "test/test_simpler_tiles.rb"
