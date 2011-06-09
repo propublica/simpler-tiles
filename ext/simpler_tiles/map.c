@@ -129,8 +129,8 @@ to_png(VALUE self){
   char *cdata = "";
   data = rb_str_new2(cdata);
   simplet_map_render_to_stream(map, (void *)data, stream);
-  rb_yield(data);
-  return Qnil;
+  if(rb_block_given_p()) rb_yield(data);
+  return data;
 }
 
 static VALUE
