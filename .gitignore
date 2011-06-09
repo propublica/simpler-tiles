@@ -9,3 +9,4 @@ tmp
 data
 *.shp
 .DS_Store
+Gemfile
