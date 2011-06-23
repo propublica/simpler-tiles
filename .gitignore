@@ -12,3 +12,5 @@ data
 Gemfile
 .document
 Gemfile.lock
+*.orig
+*.png
