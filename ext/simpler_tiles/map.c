@@ -117,7 +117,7 @@ save(VALUE self, VALUE path){
 static cairo_status_t
 stream(void* stream, const unsigned char *data, unsigned int length){
   Check_Type((VALUE)stream, T_STRING);
-  rb_str_cat((VALUE)stream, data, (long)length);
+  rb_str_cat((VALUE)stream, (const char *)data, (long)length);
   return CAIRO_STATUS_SUCCESS;
 }
 
