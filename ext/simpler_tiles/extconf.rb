@@ -31,8 +31,8 @@ def missing(lib)
   abort "Could not find #{lib}, you may have to change your load path."
 end
 
-missing "gdal"         unless find_library "gdal",         "OGROpen"
-missing "cairo"        unless find_library "cairo",        "cairo_surface_write_to_png_stream"
+missing "gdal"         unless find_library "gdal", "OGROpen" or find_library "gdal1.6.0", "OGROpen"
+missing "cairo"        unless find_library "cairo", "cairo_surface_write_to_png_stream"
 missing "simple-tiles" unless find_library "simple-tiles", "simplet_map_render_to_stream"
 missing "gdal"         unless find_header "gdal/ogr_api.h"
 missing "gdal"         unless find_header "gdal/ogr_srs_api.h"
