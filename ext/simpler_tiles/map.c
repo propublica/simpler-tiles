@@ -108,7 +108,8 @@ save(VALUE self, VALUE path){
   Check_Type(path, T_STRING);
   if(!is_valid(self)) return Qfalse;
   simplet_map_t *map = get_map(self);
-  if(simplet_map_render_to_png(map, RSTRING_PTR(path)))
+  simplet_map_render_to_png(map, RSTRING_PTR(path));
+  if(simplet_map_get_status(map) == SIMPLET_OK)
     return Qtrue;
   else
     return Qfalse;
