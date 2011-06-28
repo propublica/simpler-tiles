@@ -21,6 +21,6 @@ class TestSimplerTiles < Test::Unit::TestCase
         f.write data
       end
       assert data.length
-    end    
+    end
   end
 end

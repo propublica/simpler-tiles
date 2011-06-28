@@ -112,6 +112,7 @@ save(VALUE self, VALUE path){
   if(simplet_map_get_status(map) == SIMPLET_OK)
     return Qtrue;
   else
+    rb_raise(rb_eRuntimeError, simplet_map_status_to_string(map));
     return Qfalse;
 }
 
@@ -130,6 +131,9 @@ to_png(VALUE self){
   char *cdata = "";
   data = rb_str_new2(cdata);
   simplet_map_render_to_stream(map, (void *)data, stream);
+  if(simplet_map_get_status(map) != SIMPLET_OK)
+    rb_raise(rb_eRuntimeError, simplet_map_status_to_string(map));
+
   if(rb_block_given_p()) rb_yield(data);
   return data;
 }

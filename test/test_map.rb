@@ -29,5 +29,22 @@ class TestMap < Test::Unit::TestCase
     should "set slippy" do
       assert @map.slippy 0, 0, 1
     end
+
+    should "raise error when invalid" do
+      map = SimplerTiles::Map.new do |m|
+        m.srs = "+proj=longlat +ellps=GRS80 +datum=NAD83 +no_defs"
+        m.set_bounds -179.231086, 17.831509, -100.859681, 71.441059
+        m.set_size 256, 256
+        m.add_layer "#{File.dirname(__FILE__)}/../data/tl_2010_us_state10.shp"
+        m.add_filter "SELECT * from tl_2010_us_state10_error_error"
+        m.styles 'fill' => "#061F3799",
+            'line-join' => "round",
+             'line-cap' => "square",
+           'seamless' => "true"
+      end
+      assert_raises RuntimeError do
+        map.to_png
+      end
+    end
   end
 end
