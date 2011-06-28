@@ -6,8 +6,8 @@ ROOT = File.expand_path(File.join(File.dirname(__FILE__), '..', '..'))
 LIBDIR = Config::CONFIG['libdir']
 INCLUDEDIR = Config::CONFIG['includedir']
 
-$CFLAGS << " #{ENV["CFLAGS"]}"
-$LIBS << " #{ENV["LIBS"]}"
+$CFLAGS << " #{ENV["CFLAGS"]}" << `gdal-config --cflags`.chomp
+$LIBS << " #{ENV["LIBS"]}" << `gdal-config --libs`
 
 HEADER_DIRS = [
  '/usr/local/include',
@@ -23,7 +23,6 @@ LIB_DIRS = [
  '/usr/lib',
 ]
 
-dir_config('gdal', HEADER_DIRS, LIB_DIRS)
 dir_config('cairo', HEADER_DIRS, LIB_DIRS)
 dir_config('simple-tiles', HEADER_DIRS, LIB_DIRS)
 
@@ -31,11 +30,6 @@ def missing(lib)
   abort "Could not find #{lib}, you may have to change your load path."
 end
 
-`gdal-config --libs` =~ /-l(gdal*)/
-gdal_library = $1
-
-
-missing "gdal"         unless find_library $1,             "OGROpen"
 missing "cairo"        unless find_library "cairo",        "cairo_surface_write_to_png_stream"
 missing "simple-tiles" unless find_library "simple-tiles", "simplet_map_render_to_stream"
 missing "gdal"         unless find_header "ogr_api.h"
