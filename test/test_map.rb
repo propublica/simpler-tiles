@@ -46,5 +46,13 @@ class TestMap < Test::Unit::TestCase
         map.to_png
       end
     end
+
+    should "return bounds" do
+      map = SimplerTiles::Map.new do |m|
+        m.slippy 0, 0, 1
+      end
+
+      p map.bounds.to_wkt
+    end
   end
 end

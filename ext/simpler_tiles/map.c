@@ -1,6 +1,7 @@
 #include "map.h"
 #include <simple-tiles/map.h>
 
+VALUE cSimplerTilesMap;
 
 static simplet_map_t *
 get_map(VALUE self){
@@ -10,7 +11,7 @@ get_map(VALUE self){
 }
 
 static void
-mark_map(simplet_map_t *map){}
+mark_map(simplet_map_t *map){ (void) map; }
 
 static VALUE
 set_srs(VALUE self, VALUE srs){
@@ -34,6 +35,17 @@ set_bounds(VALUE self, VALUE maxx, VALUE maxy, VALUE minx, VALUE miny){
   simplet_map_t *map = get_map(self);
   simplet_map_set_bounds(map, NUM2DBL(maxx), NUM2DBL(maxy), NUM2DBL(minx), NUM2DBL(miny));
   return Qnil;
+}
+
+static VALUE
+bounds(VALUE self){
+  simplet_map_t *map = get_map(self);
+  VALUE args[4];
+  args[0] = rb_float_new(map->bounds->nw.x);
+  args[1] = rb_float_new(map->bounds->nw.y);
+  args[2] = rb_float_new(map->bounds->se.x);
+  args[3] = rb_float_new(map->bounds->se.y);
+  return rb_funcall2(cSimplerTilesBounds, rb_intern("new"), 4, args);
 }
 
 static VALUE
@@ -149,7 +161,7 @@ slippy(VALUE self, VALUE x, VALUE y, VALUE z){
 static VALUE
 new(VALUE klass){
   simplet_map_t *map;
-  if((map = simplet_map_new()) == NULL)
+  if(!(map = simplet_map_new()))
     rb_raise(rb_eRuntimeError, "Could not allocate space for a new SimplerTiles::Map in memory.");
   VALUE rmap = Data_Wrap_Struct(klass, mark_map, simplet_map_free, map);
   rb_obj_call_init(rmap, 0, 0);
@@ -159,8 +171,7 @@ new(VALUE klass){
 
 void
 init_map(){
-  VALUE simplet = rb_define_module("SimplerTiles");
-  VALUE rmap = rb_define_class_under(simplet, "Map", rb_cObject);
+  VALUE rmap = rb_define_class_under(mSimplerTiles, "Map", rb_cObject);
   rb_define_singleton_method(rmap, "new", new, 0);
   rb_define_method(rmap, "srs=", set_srs, 1);
   rb_define_method(rmap, "srs", get_srs, 0);
@@ -170,6 +181,7 @@ init_map(){
   rb_define_method(rmap, "width=", set_width, 1);
   rb_define_method(rmap, "height=", set_height, 1);
   rb_define_method(rmap, "set_bounds", set_bounds, 4);
+  rb_define_method(rmap, "bounds", bounds, 0);
   rb_define_method(rmap, "add_layer", add_layer, 1);
   rb_define_method(rmap, "add_filter", add_filter, 1);
   rb_define_method(rmap, "add_style", add_style, 2);
@@ -177,4 +189,5 @@ init_map(){
   rb_define_method(rmap, "slippy", slippy, 3);
   rb_define_method(rmap, "to_png", to_png, 0);
   rb_define_method(rmap, "valid?", is_valid, 0);
+  cSimplerTilesMap = rmap;
 }

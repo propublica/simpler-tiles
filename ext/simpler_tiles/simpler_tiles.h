@@ -5,6 +5,7 @@
 #include <ruby.h>
 
 #include "map.h"
+#include "bounds.h"
 
 #ifdef __cplusplus
 extern "C" {

@@ -1,2 +1,3 @@
-map.o: map.c map.h simpler_tiles.h
-simpler_tiles.o: simpler_tiles.c simpler_tiles.h map.h
+bounds.o: bounds.c bounds.h simpler_tiles.h map.h
+map.o: map.c map.h simpler_tiles.h bounds.h
+simpler_tiles.o: simpler_tiles.c simpler_tiles.h map.h bounds.h

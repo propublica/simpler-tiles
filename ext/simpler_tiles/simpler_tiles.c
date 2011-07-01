@@ -9,4 +9,5 @@ Init_simpler_tiles(){
               rb_intern("SIMPLE_TILES_VERSION"),
               rb_str_new2(SIMPLE_TILES_VERSION));
   init_map();
+  init_bounds();
 }
