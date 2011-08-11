@@ -54,5 +54,11 @@ class TestMap < Test::Unit::TestCase
 
       p map.bounds.to_wkt
     end
+
+    should "set and get bgcolor" do
+      color = "#cc0000"
+      @map.bgcolor = color
+      assert_equal @map.bgcolor, color
+    end
   end
 end

@@ -14,6 +14,22 @@ static void
 mark_map(simplet_map_t *map){ (void) map; }
 
 static VALUE
+set_bgcolor(VALUE self, VALUE bgcolor){
+  Check_Type(bgcolor, T_STRING);
+  simplet_map_t *map = get_map(self);
+  simplet_map_set_bgcolor(map, RSTRING_PTR(bgcolor));
+  return Qnil;
+}
+
+static VALUE
+get_bgcolor(VALUE self){
+  simplet_map_t *map = get_map(self);
+  char *color;
+  simplet_map_get_bgcolor(map, &color);
+  return rb_str_new2(color);
+}
+
+static VALUE
 set_srs(VALUE self, VALUE srs){
   Check_Type(srs, T_STRING);
   simplet_map_t *map = get_map(self);
@@ -24,7 +40,6 @@ set_srs(VALUE self, VALUE srs){
 static VALUE
 get_srs(VALUE self){
   simplet_map_t *map = get_map(self);
-  if(!map->proj) return Qnil;
   char *srs;
   simplet_map_get_srs(map, &srs);
   return rb_str_new2(srs);
@@ -173,6 +188,8 @@ void
 init_map(){
   VALUE rmap = rb_define_class_under(mSimplerTiles, "Map", rb_cObject);
   rb_define_singleton_method(rmap, "new", new, 0);
+  rb_define_method(rmap, "bgcolor=", set_bgcolor, 1);
+  rb_define_method(rmap, "bgcolor", get_bgcolor, 0);
   rb_define_method(rmap, "srs=", set_srs, 1);
   rb_define_method(rmap, "srs", get_srs, 0);
   rb_define_method(rmap, "set_size", set_size, 2);
