@@ -10,4 +10,7 @@ Init_simpler_tiles(){
               rb_str_new2(SIMPLE_TILES_VERSION));
   init_map();
   init_bounds();
+  init_layer();
+  init_filter();
+  init_style();
 }

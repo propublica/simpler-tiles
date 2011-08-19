@@ -177,8 +177,8 @@ static VALUE
 new(VALUE klass){
   simplet_map_t *map;
   if(!(map = simplet_map_new()))
-    rb_raise(rb_eRuntimeError, "Could not allocate space for a new SimplerTiles::Map in memory.");
-  VALUE rmap = Data_Wrap_Struct(klass, mark_map, simplet_map_free, map);
+    rb_fatal(rb_eRuntimeError, "Could not allocate space for a new SimplerTiles::Map in memory.");
+  VALUE rmap = Data_Wrap_Struct(klass, mark_map, simplet_map_vfree, map);
   rb_obj_call_init(rmap, 0, 0);
   if(rb_block_given_p()) rb_yield(rmap);
   return rmap;
