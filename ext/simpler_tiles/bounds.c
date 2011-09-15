@@ -48,8 +48,6 @@ static VALUE
 reproject(VALUE self, VALUE from, VALUE to) {
   Check_Type(from, T_STRING);
   Check_Type(to, T_STRING);
-  printf("%s\n", RSTRING_PTR(from));
-  printf("%s\n", RSTRING_PTR(to));
   simplet_bounds_t *bounds;
   if(!(bounds = simplet_bounds_reproject(get_bounds(self), RSTRING_PTR(from), RSTRING_PTR(to))))
     rb_raise(rb_eRuntimeError, "Error in creating bounds.");
