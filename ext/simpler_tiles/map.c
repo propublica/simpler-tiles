@@ -136,11 +136,12 @@ save(VALUE self, VALUE path){
   if(!is_valid(self)) return Qfalse;
   simplet_map_t *map = get_map(self);
   simplet_map_render_to_png(map, RSTRING_PTR(path));
-  if(simplet_map_get_status(map) == SIMPLET_OK)
+  if(simplet_map_get_status(map) == SIMPLET_OK) {
     return Qtrue;
-  else
+  } else {
     rb_raise(rb_eRuntimeError, simplet_map_status_to_string(map));
     return Qfalse;
+  }
 }
 
 static cairo_status_t
