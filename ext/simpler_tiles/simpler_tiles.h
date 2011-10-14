@@ -6,6 +6,11 @@
 
 #include "map.h"
 #include "bounds.h"
+#include "layer.h"
+#include "filter.h"
+#include "style.h"
+
+
 
 #ifdef __cplusplus
 extern "C" {

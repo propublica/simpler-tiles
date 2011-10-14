@@ -1,6 +1,7 @@
 #include "map.h"
 #include <simple-tiles/map.h>
 
+
 VALUE cSimplerTilesMap;
 
 static simplet_map_t *
@@ -96,29 +97,12 @@ get_height(VALUE self){
   return INT2NUM(map->height);
 }
 
-static VALUE
-add_style(VALUE self, VALUE key, VALUE arg){
-  Check_Type(key, T_STRING);
-  Check_Type(arg, T_STRING);
-
-  simplet_map_t *map = get_map(self);
-  simplet_map_add_style(map, RSTRING_PTR(key), RSTRING_PTR(arg));
-  return Qnil;
-}
-
+// TODO: return newly created layer
 static VALUE
 add_layer(VALUE self, VALUE source){
   Check_Type(source, T_STRING);
   simplet_map_t *map = get_map(self);
   simplet_map_add_layer(map, RSTRING_PTR(source));
-  return Qnil;
-}
-
-static VALUE
-add_filter(VALUE self, VALUE sql){
-  Check_Type(sql, T_STRING);
-  simplet_map_t *map = get_map(self);
-  simplet_map_add_filter(map, RSTRING_PTR(sql));
   return Qnil;
 }
 
@@ -177,8 +161,8 @@ static VALUE
 new(VALUE klass){
   simplet_map_t *map;
   if(!(map = simplet_map_new()))
-    rb_fatal(rb_eRuntimeError, "Could not allocate space for a new SimplerTiles::Map in memory.");
-  VALUE rmap = Data_Wrap_Struct(klass, mark_map, simplet_map_vfree, map);
+    rb_fatal("Could not allocate space for a new SimplerTiles::Map in memory.");
+  VALUE rmap = Data_Wrap_Struct(klass, mark_map, simplet_map_free, map);
   rb_obj_call_init(rmap, 0, 0);
   if(rb_block_given_p()) rb_yield(rmap);
   return rmap;
@@ -199,9 +183,7 @@ init_map(){
   rb_define_method(rmap, "height=", set_height, 1);
   rb_define_method(rmap, "set_bounds", set_bounds, 4);
   rb_define_method(rmap, "bounds", bounds, 0);
-  rb_define_method(rmap, "add_layer", add_layer, 1);
-  rb_define_method(rmap, "add_filter", add_filter, 1);
-  rb_define_method(rmap, "add_style", add_style, 2);
+  rb_define_method(rmap, "add_layer", add_layer, 2);
   rb_define_method(rmap, "save", save, 1);
   rb_define_method(rmap, "slippy", slippy, 3);
   rb_define_method(rmap, "to_png", to_png, 0);
