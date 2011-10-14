@@ -21,11 +21,19 @@ set_query(VALUE self, VALUE query){
   return Qnil;
 }
 
+static VALUE
+get_query(VALUE self){
+  simplet_filter_t *filter = get_filter(self);
+  char *str;
+  simplet_filter_get_query(filter, &str);
+  return rb_str_new2(str);
+}
+
 // TODO: return newly created style
 static VALUE
 add_style(VALUE self, VALUE key, VALUE arg){
-  Check_Type(query, T_STRING);
-  Check_Type(query, T_STRING);
+  Check_Type(key, T_STRING);
+  Check_Type(arg, T_STRING);
   simplet_filter_t *filter = get_filter(self);
   simplet_filter_add_style(filter, RSTRING_PTR(key), RSTRING_PTR(arg));
   return Qnil;
