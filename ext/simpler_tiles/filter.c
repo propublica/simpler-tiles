@@ -18,7 +18,7 @@ set_query(VALUE self, VALUE query){
   Check_Type(query, T_STRING);
   simplet_filter_t *filter = get_filter(self);
   simplet_filter_set_query(filter, RSTRING_PTR(query));
-  return Qnil;
+  return query;
 }
 
 static VALUE

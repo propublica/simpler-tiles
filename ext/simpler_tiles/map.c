@@ -140,7 +140,7 @@ static VALUE
 to_png(VALUE self){
   simplet_map_t *map = get_map(self);
   VALUE data;
-  char *cdata = "";
+  char *cdata;
   data = rb_str_new2(cdata);
   simplet_map_render_to_stream(map, (void *)data, stream);
   if(simplet_map_get_status(map) != SIMPLET_OK)
