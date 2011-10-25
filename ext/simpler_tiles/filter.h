@@ -10,7 +10,6 @@ extern "C" {
 void init_filter();
 extern VALUE cSimplerTilesFilter;
 
-
 #ifdef __cplusplus
 }
 #endif

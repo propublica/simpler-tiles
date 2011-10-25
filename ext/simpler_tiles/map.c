@@ -11,9 +11,6 @@ get_map(VALUE self){
   return map;
 }
 
-static void
-mark_map(simplet_map_t *map){ (void) map; }
-
 static VALUE
 set_bgcolor(VALUE self, VALUE bgcolor){
   Check_Type(bgcolor, T_STRING);
@@ -159,20 +156,19 @@ slippy(VALUE self, VALUE x, VALUE y, VALUE z){
 }
 
 static VALUE
-new(VALUE klass){
+map_alloc(VALUE klass){
   simplet_map_t *map;
+
   if(!(map = simplet_map_new()))
     rb_fatal("Could not allocate space for a new SimplerTiles::Map in memory.");
-  VALUE rmap = Data_Wrap_Struct(klass, mark_map, simplet_map_free, map);
-  rb_obj_call_init(rmap, 0, 0);
-  if(rb_block_given_p()) rb_yield(rmap);
-  return rmap;
+
+  return Data_Wrap_Struct(klass, NULL, simplet_map_free, map);
 }
 
 void
 init_map(){
   VALUE rmap = rb_define_class_under(mSimplerTiles, "Map", rb_cObject);
-  rb_define_singleton_method(rmap, "new", new, 0);
+  rb_define_alloc_func(rmap, map_alloc);
   rb_define_method(rmap, "bgcolor=", set_bgcolor, 1);
   rb_define_method(rmap, "bgcolor", get_bgcolor, 0);
   rb_define_method(rmap, "srs=", set_srs, 1);

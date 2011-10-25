@@ -9,7 +9,6 @@ extern "C" {
 
 void init_layer();
 extern VALUE cSimplerTilesLayer;
-
 #ifdef __cplusplus
 }
 #endif

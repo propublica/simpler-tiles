@@ -9,18 +9,12 @@ get_style(VALUE self){
   return style;
 }
 
-static void
-mark_style(simplet_style_t *style){ (void) style; }
-
-
 static VALUE
-new(VALUE klass, VALUE key, VALUE arg){
+alloc_style(VALUE klass){
   simplet_style_t *style;
-  if(!(style = simplet_style_new(RSTRING_PTR(key), RSTRING_PTR(arg))))
+  if(!(style = simplet_style_new(NULL, NULL)))
     rb_fatal("Could not allocate space for a new SimplerTiles::Style in memory.");
-  VALUE rstyle = Data_Wrap_Struct(klass, mark_style, simplet_style_vfree, style);
-  rb_obj_call_init(rstyle, 0, 0);
-  return rstyle;
+  return Data_Wrap_Struct(klass, NULL, simplet_style_free, style);
 }
 
 static VALUE
@@ -58,9 +52,11 @@ get_key(VALUE self){
 void
 init_style(){
   VALUE rstyle = rb_define_class_under(mSimplerTiles, "Style", rb_cObject);
-  rb_define_singleton_method(rstyle, "new", new, 2);
+  rb_define_alloc_func(rstyle, alloc_style);
   rb_define_method(rstyle, "arg=", set_arg, 1);
   rb_define_method(rstyle, "arg", get_arg, 0);
   rb_define_method(rstyle, "key=", set_key, 1);
   rb_define_method(rstyle, "key", get_key, 0);
+
+  cSimplerTilesFilter = rstyle;
 }

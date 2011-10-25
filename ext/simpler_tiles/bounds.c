@@ -10,9 +10,6 @@ get_bounds(VALUE self){
   return bounds;
 }
 
-static void
-mark_bounds(simplet_bounds_t *bounds){ (void) bounds; }
-
 static VALUE
 to_wkt(VALUE self){
   simplet_bounds_t *bounds = get_bounds(self);
@@ -25,23 +22,14 @@ to_wkt(VALUE self){
 }
 
 static VALUE
-new(VALUE self, VALUE maxx, VALUE maxy, VALUE minx, VALUE miny){
+extend(VALUE self, VALUE x, VALUE y){
   simplet_bounds_t *bounds;
-  VALUE args[4];
-  if(!(bounds = simplet_bounds_new()))
-    rb_raise(rb_eRuntimeError, "Error in creating bounds.");
+  VALUE args[2];
 
-  args[0] = maxx;
-  args[1] = maxy;
-  args[2] = minx;
-  args[3] = miny;
+  args[0] = x;
+  args[1] = y;
 
-  simplet_bounds_extend(bounds, NUM2DBL(maxx), NUM2DBL(maxy));
-  simplet_bounds_extend(bounds, NUM2DBL(minx), NUM2DBL(miny));
-
-  VALUE rbounds = Data_Wrap_Struct(self, mark_bounds, simplet_bounds_free, bounds);
-  rb_obj_call_init(rbounds, 4, args);
-  return rbounds;
+  simplet_bounds_extend(bounds, NUM2DBL(x), NUM2DBL(y));
 }
 
 static VALUE
@@ -51,21 +39,36 @@ reproject(VALUE self, VALUE from, VALUE to) {
   simplet_bounds_t *bounds;
   if(!(bounds = simplet_bounds_reproject(get_bounds(self), RSTRING_PTR(from), RSTRING_PTR(to))))
     rb_raise(rb_eRuntimeError, "Error in creating bounds.");
-  return new(cSimplerTilesBounds, rb_float_new(bounds->nw.x), rb_float_new(bounds->nw.y),
-                                  rb_float_new(bounds->se.x), rb_float_new(bounds->se.y));
+
+  VALUE id = rb_intern("new");
+
+  VALUE rbounds = rb_funcall(cSimplerTilesBounds, id, 4,
+                              rb_float_new(bounds->nw.x),
+                              rb_float_new(bounds->nw.y),
+                              rb_float_new(bounds->se.x),
+                              rb_float_new(bounds->se.y));
+
+  simplet_bounds_free(bounds);
+  return rbounds;
 }
 
 static VALUE
-init(VALUE self, VALUE maxx, VALUE maxy, VALUE minx, VALUE miny){
-  return self;
+alloc_bounds(VALUE self){
+  simplet_bounds_t *bounds;
+  VALUE args[4];
+  if(!(bounds = simplet_bounds_new()))
+    rb_raise(rb_eRuntimeError, "Error in creating bounds.");
+
+  VALUE rbounds = Data_Wrap_Struct(self, NULL, simplet_bounds_free, bounds);
+  return rbounds;
 }
 
 void
 init_bounds(){
   VALUE rbounds = rb_define_class_under(mSimplerTiles, "Bounds", rb_cObject);
-  rb_define_singleton_method(rbounds, "new", new, 4);
-  rb_define_method(rbounds, "initialize", init, 4);
+  rb_define_alloc_func(rbounds, alloc_bounds);
   rb_define_method(rbounds, "to_wkt", to_wkt, 0);
+  rb_define_method(rbounds, "extend", extend, 0);
   rb_define_method(rbounds, "reproject", reproject, 2);
   cSimplerTilesBounds = rbounds;
 }
