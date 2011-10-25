@@ -7,7 +7,8 @@ module SimplerTiles
     end
 
     def layer(source, &blk)
-      layer = SimplerTiles::Layer.new source, &blk
+      layer = SimplerTiles::Layer.new(source, &blk)
+      add_layer layer
     end
 
 

@@ -35,12 +35,14 @@ class TestMap < Test::Unit::TestCase
         m.srs = "+proj=longlat +ellps=GRS80 +datum=NAD83 +no_defs"
         m.set_bounds -179.231086, 17.831509, -100.859681, 71.441059
         m.set_size 256, 256
-        m.add_layer "#{File.dirname(__FILE__)}/../data/tl_2010_us_state10.shp"
-        m.add_filter "SELECT * from tl_2010_us_state10_error_error"
-        m.styles 'fill' => "#061F3799",
-            'line-join' => "round",
-             'line-cap' => "square",
-           'seamless' => "true"
+        m.layer "#{File.dirname(__FILE__)}/../data/tl_2010_us_state10.shp" do |l|
+          l.filter "SELECT * from tl_2010_us_state10_error_error" do |f|
+            f.styles 'fill' => "#061F3799",
+                'line-join' => "round",
+                 'line-cap' => "square",
+                 'seamless' => "true"
+          end
+        end
       end
       assert_raises RuntimeError do
         map.to_png
@@ -51,9 +53,9 @@ class TestMap < Test::Unit::TestCase
       map = SimplerTiles::Map.new do |m|
         m.slippy 0, 0, 1
       end
-      p map.srs
-      p map.bounds.to_wkt
-      p map.bounds.reproject(map.srs, "epsg:4269").to_wkt
+      # p map.srs
+      # p map.bounds.to_wkt
+      # p map.bounds.reproject(map.srs, "epsg:4269").to_wkt
     end
 
     should "set and get bgcolor" do
