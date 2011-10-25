@@ -50,7 +50,7 @@ void init_layer(){
   rb_define_alloc_func(rlayer, layer_alloc);
   rb_define_method(rlayer, "source=", set_source, 1);
   rb_define_method(rlayer, "source", get_source, 0);
-  rb_define_method(rlayer, "add_filter", add_filter, 1);
+  rb_define_private_method(rlayer, "add_filter", add_filter, 1);
 
   cSimplerTilesLayer = rlayer;
 }

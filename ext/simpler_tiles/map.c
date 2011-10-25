@@ -150,9 +150,9 @@ to_png(VALUE self){
 static VALUE
 slippy(VALUE self, VALUE x, VALUE y, VALUE z){
   simplet_map_t *map = get_map(self);
-  if(simplet_map_set_slippy(map, NUM2INT(x), NUM2INT(y), NUM2INT(z)))
-    return Qtrue;
-  return Qfalse;
+  if(simplet_map_set_slippy(map, NUM2INT(x), NUM2INT(y), NUM2INT(z)) != SIMPLET_OK)
+    rb_raise(rb_eRuntimeError, simplet_map_status_to_string(map));
+  return Qtrue;
 }
 
 static VALUE
@@ -180,10 +180,11 @@ init_map(){
   rb_define_method(rmap, "height=", set_height, 1);
   rb_define_method(rmap, "set_bounds", set_bounds, 4);
   rb_define_method(rmap, "bounds", bounds, 0);
-  rb_define_method(rmap, "add_layer", add_layer, 2);
   rb_define_method(rmap, "save", save, 1);
   rb_define_method(rmap, "slippy", slippy, 3);
   rb_define_method(rmap, "to_png", to_png, 0);
   rb_define_method(rmap, "valid?", is_valid, 0);
+  rb_define_private_method(rmap, "add_layer", add_layer, 2);
+
   cSimplerTilesMap = rmap;
 }

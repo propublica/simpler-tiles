@@ -52,7 +52,7 @@ void init_filter(){
   rb_define_alloc_func(rfilter, filter_alloc);
   rb_define_method(rfilter, "query=", set_query, 1);
   rb_define_method(rfilter, "query", get_query, 0);
-  rb_define_method(rfilter, "add_style", add_style, 2);
+  rb_define_private_method(rfilter, "add_style", add_style, 2);
 
   cSimplerTilesFilter = rfilter;
 }

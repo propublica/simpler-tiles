@@ -2,11 +2,14 @@ module SimplerTiles
   class Map
     include SimplerTiles::PP
 
-    def styles(styles)
-      styles.each do |k,v|
-        add_style k, v
-      end
+    def initialize
+      yield self if block_given?
     end
+
+    def layer(source, &blk)
+      layer = SimplerTiles::Layer.new source, &blk
+    end
+
 
     def ar_layer
       if !defined?(ActiveRecord)
@@ -21,10 +24,11 @@ module SimplerTiles
         :port     => config[:port],
         :password => config[:password]
       }
-      add_layer "PG:#{params.map {|k,v| "#{k}='#{v}' "}}"
+      layer "PG:#{params.map {|k,v| "#{k}='#{v}' "}}"
     end
 
     private
+
     def inspect_attributes
       [:srs, :width, :height]
     end
