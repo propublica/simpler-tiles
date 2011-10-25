@@ -22,7 +22,7 @@ to_wkt(VALUE self){
 }
 
 static VALUE
-extend(VALUE self, VALUE x, VALUE y){
+grow(VALUE self, VALUE x, VALUE y){
   simplet_bounds_t *bounds = get_bounds(self);
   simplet_bounds_extend(bounds, NUM2DBL(x), NUM2DBL(y));
   return self;
@@ -64,7 +64,7 @@ init_bounds(){
   VALUE rbounds = rb_define_class_under(mSimplerTiles, "Bounds", rb_cObject);
   rb_define_alloc_func(rbounds, alloc_bounds);
   rb_define_method(rbounds, "to_wkt", to_wkt, 0);
-  rb_define_method(rbounds, "extend", extend, 0);
+  rb_define_method(rbounds, "grow", grow, 0);
   rb_define_method(rbounds, "reproject", reproject, 2);
   cSimplerTilesBounds = rbounds;
 }
