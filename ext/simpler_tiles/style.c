@@ -1,6 +1,7 @@
 #include "style.h"
 #include <simple-tiles/style.h>
 
+VALUE cSimplerTilesStyle;
 
 static simplet_style_t *
 get_style(VALUE self){

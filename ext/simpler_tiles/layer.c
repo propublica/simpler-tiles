@@ -1,6 +1,8 @@
 #include "layer.h"
 #include <simple-tiles/layer.h>
 
+VALUE cSimplerTilesLayer;
+
 static simplet_layer_t *
 get_layer(VALUE self){
   simplet_layer_t *layer;
@@ -8,12 +10,11 @@ get_layer(VALUE self){
   return layer;
 }
 
-
 static VALUE
 set_source(VALUE self, VALUE source){
   Check_Type(source, T_STRING);
   simplet_layer_t *layer = get_layer(self);
-  simplet_layer_set_source(layer, RESTRING_PTR(source));
+  simplet_layer_set_source(layer, RSTRING_PTR(source));
   return source;
 }
 
@@ -22,7 +23,7 @@ get_source(VALUE self) {
   simplet_layer_t *layer = get_layer(self);
   char *source;
   simplet_layer_get_source(layer, &source);
-  return rb_string_new2(source);
+  return rb_str_new2(source);
 }
 
 static VALUE
@@ -40,7 +41,7 @@ layer_alloc(VALUE klass){
   if(!(layer = simplet_layer_new("")))
     rb_fatal("Could not allocate space for a new SimplerTiles::Layer in memory.");
 
-  return Data_Wrap_Struct(klass, NULL, simplet_layer_free, filter);
+  return Data_Wrap_Struct(klass, NULL, simplet_layer_free, layer);
 }
 
 // use rb_define_alloc_func everywhere

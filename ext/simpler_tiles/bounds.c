@@ -23,13 +23,9 @@ to_wkt(VALUE self){
 
 static VALUE
 extend(VALUE self, VALUE x, VALUE y){
-  simplet_bounds_t *bounds;
-  VALUE args[2];
-
-  args[0] = x;
-  args[1] = y;
-
+  simplet_bounds_t *bounds = get_bounds(self);
   simplet_bounds_extend(bounds, NUM2DBL(x), NUM2DBL(y));
+  return self;
 }
 
 static VALUE
