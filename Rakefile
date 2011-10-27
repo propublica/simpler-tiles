@@ -9,23 +9,9 @@ rescue Bundler::BundlerError => e
   $stderr.puts "Run `bundle install` to install missing gems"
   exit e.status_code
 end
+Bundler::GemHelper.install_tasks
 require 'rake'
 
-require 'jeweler'
-require 'lib/simpler_tiles/version'
-Jeweler::Tasks.new do |gem|
-  # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
-  gem.name = "simpler-tiles"
-  gem.homepage = "http://github.com/thejefflarson/simpler-tiles"
-  gem.license = "MIT"
-  gem.summary = %Q{maps!}
-  gem.description = %Q{mappy maps!}
-  gem.email = "thejefflarson@gmail.com"
-  gem.authors = ["Jeff Larson"]
-  gem.version = SimplerTiles::VERSION
-  # dependencies defined in Gemfile
-end
-Jeweler::RubygemsDotOrgTasks.new
 
 require 'rake/testtask'
 Rake::TestTask.new(:test) do |test|
@@ -34,18 +20,10 @@ Rake::TestTask.new(:test) do |test|
   test.verbose = true
 end
 
-require 'rcov/rcovtask'
-Rcov::RcovTask.new do |test|
-  test.libs << 'test'
-  test.pattern = 'test/**/test_*.rb'
-  test.verbose = true
-  test.rcov_opts << '--exclude "gems/*"'
-end
-
 task :default => :test
 
 require 'rake/extensiontask'
-Rake::ExtensionTask.new('simpler_tiles', Rake.application.jeweler.gemspec) do |ext|
+Rake::ExtensionTask.new('simpler_tiles') do |ext|
   ext.lib_dir = File.join('lib', 'simpler_tiles')
 end
 

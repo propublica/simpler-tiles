@@ -3,12 +3,10 @@ require 'helper'
 class TestSimplerTiles < Test::Unit::TestCase
   should "produce a png image" do
     map = SimplerTiles::Map.new do |m|
-
-
       m.slippy 13, 27, 6
 
-      m.add_layer "/Users/jlarson/dev/redistricting-lobbying/db/static/shapes/10m_land.shp"
-      m.add_filter "SELECT * from '10m_land'"
+      m.add_layer "#{File.dirname(__FILE__)}/../data/tl_2010_us_state10.shp"
+      m.add_filter "SELECT * from 'tl_2010_us_state10'"
       m.styles 'fill' => "#061F3799",
           'line-join' => "round",
            'line-cap' => "square",

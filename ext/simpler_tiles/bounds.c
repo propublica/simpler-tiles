@@ -51,8 +51,13 @@ reproject(VALUE self, VALUE from, VALUE to) {
   simplet_bounds_t *bounds;
   if(!(bounds = simplet_bounds_reproject(get_bounds(self), RSTRING_PTR(from), RSTRING_PTR(to))))
     rb_raise(rb_eRuntimeError, "Error in creating bounds.");
-  return new(cSimplerTilesBounds, rb_float_new(bounds->nw.x), rb_float_new(bounds->nw.y),
-                                  rb_float_new(bounds->se.x), rb_float_new(bounds->se.y));
+  
+  VALUE args[4];
+  args[0] = rb_float_new(bounds->nw.x);
+  args[1] = rb_float_new(bounds->nw.y);
+  args[2] = rb_float_new(bounds->se.x);
+  args[3] = rb_float_new(bounds->se.y);
+  return rb_funcall2(cSimplerTilesBounds, rb_intern("new"), 4, args);
 }
 
 static VALUE
