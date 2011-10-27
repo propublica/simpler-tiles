@@ -1,6 +1,5 @@
 # -*- encoding: utf-8 -*-
-$:.push File.expand_path("../lib", __FILE__)
-require "simpler-tiles/version"
+require "#{File.expand_path(File.dirname(__FILE__))}/lib/simpler_tiles/version"
 
 Gem::Specification.new do |s|
   s.name = %q{simpler-tiles}
@@ -25,8 +24,7 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency(%q<rake-compiler>, [">= 0"])
   s.add_development_dependency(%q<bundler>, ["~> 1.0.0"])
-  s.add_development_dependency(%q<jeweler>, ["~> 1.6.0"])
-  s.add_development_dependency(%q<rake-compiler>, [">= 0"])
-  s.add_development_dependency(%q<bundler>, ["~> 1.0.0"])
+  s.add_development_dependency(%q<shoulda>, ["~> 2.11.3"])
+  s.add_development_dependency(%q<redgreen>, ["~> 1.2.2"])
 end
 

@@ -40,7 +40,7 @@ class TestMap < Test::Unit::TestCase
         m.styles 'fill' => "#061F3799",
             'line-join' => "round",
              'line-cap' => "square",
-           'seamless' => "true"
+             'seamless' => "true"
       end
       assert_raises RuntimeError do
         map.to_png
