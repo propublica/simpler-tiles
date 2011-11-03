@@ -7,8 +7,7 @@ module SimplerTiles
       yield self if block_given?
     end
 
-
-    private
+  private
 
     def inspect_attributes
       [:query]

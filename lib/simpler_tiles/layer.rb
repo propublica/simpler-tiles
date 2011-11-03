@@ -7,7 +7,12 @@ module SimplerTiles
       yield self if block_given?
     end
 
-    private
+    def filter(sql, &blk)
+      layer = SimplerTiles::Filter.new(sql, &blk)
+      add_filter filter
+    end
+
+  private
 
     def inspect_attributes
       [:source]

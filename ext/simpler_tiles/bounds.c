@@ -64,7 +64,7 @@ init_bounds(){
   VALUE rbounds = rb_define_class_under(mSimplerTiles, "Bounds", rb_cObject);
   rb_define_alloc_func(rbounds, alloc_bounds);
   rb_define_method(rbounds, "to_wkt", to_wkt, 0);
-  rb_define_method(rbounds, "grow", grow, 0);
+  rb_define_method(rbounds, "grow", grow, 2);
   rb_define_method(rbounds, "reproject", reproject, 2);
   cSimplerTilesBounds = rbounds;
 }

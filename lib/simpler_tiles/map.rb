@@ -12,7 +12,7 @@ module SimplerTiles
     end
 
 
-    def ar_layer
+    def ar_layer(&blk)
       if !defined?(ActiveRecord)
         raise "ActiveRecord not available"
       end
@@ -25,10 +25,10 @@ module SimplerTiles
         :port     => config[:port],
         :password => config[:password]
       }
-      layer "PG:#{params.map {|k,v| "#{k}='#{v}' "}}"
+      layer "PG:#{params.map {|k,v| "#{k}='#{v}' "}}", &blk
     end
 
-    private
+  private
 
     def inspect_attributes
       [:srs, :width, :height]

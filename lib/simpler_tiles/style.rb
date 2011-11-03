@@ -7,7 +7,7 @@ module SimplerTiles
       self.arg = arg
     end
 
-    private
+  private
 
     def inspect_attributes
       [:key, :arg]
