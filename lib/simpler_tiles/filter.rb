@@ -7,6 +7,12 @@ module SimplerTiles
       yield self if block_given?
     end
 
+    def styles(styles)
+      styles.each do |k,v|
+        add_style k, v
+      end
+    end
+
   private
 
     def inspect_attributes

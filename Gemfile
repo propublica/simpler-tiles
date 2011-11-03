@@ -8,8 +8,7 @@ group :development do
 end
 
 group :test do
-  gem "shoulda", ">= 0"
-  gem "shoulda-context"
+  gem "shoulda"
   gem "redgreen"
 end
 

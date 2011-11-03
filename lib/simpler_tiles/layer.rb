@@ -9,7 +9,7 @@ module SimplerTiles
 
     def filter(sql, &blk)
       layer = SimplerTiles::Filter.new(sql, &blk)
-      add_filter filter
+      add_filter layer
     end
 
   private
