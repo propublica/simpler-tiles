@@ -51,7 +51,7 @@ class TestMap < Test::Unit::TestCase
       map = SimplerTiles::Map.new do |m|
         m.slippy 0, 0, 1
       end
-      map.buffer = 64
+      map.buffer = 1000
       p map.bounds.to_wkt
       p map.buffered_bounds.to_wkt
     end

@@ -74,6 +74,8 @@ buffered_bounds(VALUE self){
   simplet_map_t *map = get_map(self);
   cairo_matrix_t mat;
   simplet_map_init_matrix(map, &mat);
+  cairo_matrix_invert(&mat);
+
   double dx, dy;
   dx = dy = simplet_map_get_buffer(map);
   cairo_matrix_transform_distance(&mat, &dx, &dy);
