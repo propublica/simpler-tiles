@@ -1,5 +1,6 @@
 #include "map.h"
 #include <simple-tiles/map.h>
+#include <simple-tiles/bounds.h>
 
 VALUE cSimplerTilesMap;
 
@@ -53,14 +54,35 @@ set_bounds(VALUE self, VALUE maxx, VALUE maxy, VALUE minx, VALUE miny){
 }
 
 static VALUE
+new_bounds(simplet_bounds_t *bounds){
+  VALUE args[4];
+  args[0] = rb_float_new(bounds->nw.x);
+  args[1] = rb_float_new(bounds->nw.y);
+  args[2] = rb_float_new(bounds->se.x);
+  args[3] = rb_float_new(bounds->se.y);
+  return rb_funcall2(cSimplerTilesBounds, rb_intern("new"), 4, args);
+}
+
+static VALUE
 bounds(VALUE self){
   simplet_map_t *map = get_map(self);
-  VALUE args[4];
-  args[0] = rb_float_new(map->bounds->nw.x);
-  args[1] = rb_float_new(map->bounds->nw.y);
-  args[2] = rb_float_new(map->bounds->se.x);
-  args[3] = rb_float_new(map->bounds->se.y);
-  return rb_funcall2(cSimplerTilesBounds, rb_intern("new"), 4, args);
+  return new_bounds(map->bounds);
+}
+
+static VALUE
+buffered_bounds(VALUE self){
+  simplet_map_t *map = get_map(self);
+  cairo_matrix_t mat;
+  simplet_map_init_matrix(map, &mat);
+  double dx, dy;
+  dx = dy = simplet_map_get_buffer(map);
+  cairo_matrix_transform_distance(&mat, &dx, &dy);
+
+  simplet_bounds_t *bbounds = simplet_bounds_buffer(map->bounds, dx);
+  if(!bbounds)
+    rb_raise(rb_eRuntimeError, "Could not allocate space for a new SimplerTiles::Bounds in memory.");
+
+  return new_bounds(bbounds);
 }
 
 static VALUE
@@ -68,6 +90,19 @@ set_size(VALUE self, VALUE width, VALUE height){
   simplet_map_t *map = get_map(self);
   simplet_map_set_size(map, NUM2INT(width), NUM2INT(height));
   return Qnil;
+}
+
+static VALUE
+set_buffer(VALUE self, VALUE buffer){
+  simplet_map_t *map = get_map(self);
+  simplet_map_set_buffer(map, NUM2DBL(buffer));
+  return rb_float_new(map->buffer);
+}
+
+static VALUE
+get_buffer(VALUE self, VALUE buffer){
+  simplet_map_t *map = get_map(self);
+  return rb_float_new(simplet_map_get_buffer(map));
 }
 
 static VALUE
@@ -198,8 +233,11 @@ init_map(){
   rb_define_method(rmap, "height", get_height, 0);
   rb_define_method(rmap, "width=", set_width, 1);
   rb_define_method(rmap, "height=", set_height, 1);
+  rb_define_method(rmap, "buffer", get_buffer, 0);
+  rb_define_method(rmap, "buffer=", set_buffer, 1);
   rb_define_method(rmap, "set_bounds", set_bounds, 4);
   rb_define_method(rmap, "bounds", bounds, 0);
+  rb_define_method(rmap, "buffered_bounds", buffered_bounds, 0);
   rb_define_method(rmap, "add_layer", add_layer, 1);
   rb_define_method(rmap, "add_filter", add_filter, 1);
   rb_define_method(rmap, "add_style", add_style, 2);
