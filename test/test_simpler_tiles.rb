@@ -3,7 +3,7 @@ require 'helper'
 class TestSimplerTiles < Test::Unit::TestCase
   should "produce a png image" do
     map = SimplerTiles::Map.new do |m|
-      m.slippy 13, 27, 6
+      m.slippy 144, 188, 9
 
       m.add_layer "#{File.dirname(__FILE__)}/../data/tl_2010_us_state10.shp"
       m.add_filter "SELECT * from 'tl_2010_us_state10'"

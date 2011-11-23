@@ -188,7 +188,6 @@ stream(void* stream, const unsigned char *data, unsigned int length){
   return CAIRO_STATUS_SUCCESS;
 }
 
-
 static VALUE
 to_png(VALUE self){
   simplet_map_t *map = get_map(self);
@@ -206,7 +205,10 @@ to_png(VALUE self){
 static VALUE
 slippy(VALUE self, VALUE x, VALUE y, VALUE z){
   simplet_map_t *map = get_map(self);
-  if(simplet_map_set_slippy(map, NUM2INT(x), NUM2INT(y), NUM2INT(z)))
+  int cx = NUM2INT(x);
+  int cy = NUM2INT(y);
+  int cz = NUM2INT(z);
+  if(simplet_map_set_slippy(map, cx, cy, cz))
     return Qtrue;
   return Qfalse;
 }
