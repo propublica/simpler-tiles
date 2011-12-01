@@ -56,10 +56,10 @@ set_bounds(VALUE self, VALUE maxx, VALUE maxy, VALUE minx, VALUE miny){
 static VALUE
 new_bounds(simplet_bounds_t *bounds){
   VALUE args[4];
-  args[0] = rb_float_new(bounds->nw->x);
-  args[1] = rb_float_new(bounds->nw->y);
-  args[2] = rb_float_new(bounds->se->x);
-  args[3] = rb_float_new(bounds->se->y);
+  args[0] = rb_float_new(bounds->nw.x);
+  args[1] = rb_float_new(bounds->nw.y);
+  args[2] = rb_float_new(bounds->se.x);
+  args[3] = rb_float_new(bounds->se.y);
   return rb_funcall2(cSimplerTilesBounds, rb_intern("new"), 4, args);
 }
 
