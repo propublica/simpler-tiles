@@ -3,7 +3,9 @@ bounds.o: bounds.c bounds.h simpler_tiles.h map.h layer.h filter.h \
 filter.o: filter.c filter.h simpler_tiles.h map.h bounds.h layer.h \
   style.h
 layer.o: layer.c layer.h simpler_tiles.h map.h bounds.h filter.h style.h
-map.o: map.c map.h simpler_tiles.h bounds.h layer.h filter.h style.h
+map.o: map.c map.h simpler_tiles.h bounds.h layer.h filter.h style.h \
+  util.h
 simpler_tiles.o: simpler_tiles.c simpler_tiles.h map.h bounds.h layer.h \
   filter.h style.h
-style.o: style.c style.h simpler_tiles.h map.h bounds.h layer.h filter.h
+style.o: style.c style.h simpler_tiles.h map.h bounds.h layer.h filter.h \
+  util.h

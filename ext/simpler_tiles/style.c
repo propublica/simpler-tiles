@@ -1,4 +1,5 @@
 #include "style.h"
+#include "util.h"
 #include <simple-tiles/style.h>
 
 VALUE cSimplerTilesStyle;
@@ -10,12 +11,21 @@ get_style(VALUE self){
   return style;
 }
 
+static void
+mark_style(void *style){
+  simplet_style_t *stl = style;
+  VALUE filter = (VALUE)simplet_style_get_user_data(stl);
+  if(filter) rb_gc_mark(filter);
+}
+
 static VALUE
 alloc_style(VALUE klass){
   simplet_style_t *style;
+
   if(!(style = simplet_style_new(NULL, NULL)))
     rb_fatal("Could not allocate space for a new SimplerTiles::Style in memory.");
-  return Data_Wrap_Struct(klass, NULL, simplet_style_free, style);
+
+  return Data_Wrap_Struct(klass, mark_style, simplet_style_free, style);
 }
 
 static VALUE

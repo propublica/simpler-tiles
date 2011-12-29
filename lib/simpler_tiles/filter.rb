@@ -9,7 +9,8 @@ module SimplerTiles
 
     def styles(styles)
       styles.each do |k,v|
-        add_style k, v
+        style = SimplerTiles::Style.new k, v
+        add_style style
       end
     end
 

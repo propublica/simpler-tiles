@@ -1,5 +1,7 @@
 #include "layer.h"
+#include "filter.h"
 #include <simple-tiles/layer.h>
+#include <simple-tiles/list.h>
 
 VALUE cSimplerTilesLayer;
 
@@ -8,6 +10,13 @@ get_layer(VALUE self){
   simplet_layer_t *layer;
   Data_Get_Struct(self, simplet_layer_t, layer);
   return layer;
+}
+
+static void
+mark_layer(void *layer){
+  simplet_layer_t *lyr = layer;
+  VALUE map = (VALUE)simplet_layer_get_user_data(lyr);
+  if(map) rb_gc_mark(map);
 }
 
 static VALUE
@@ -27,11 +36,13 @@ get_source(VALUE self) {
 }
 
 static VALUE
-add_filter(VALUE self, VALUE sql){
-  Check_Type(sql, T_STRING);
+add_filter(VALUE self, VALUE filter){
   simplet_layer_t *layer = get_layer(self);
-  simplet_layer_add_filter(layer, RSTRING_PTR(sql));
-  return Qnil;
+  simplet_filter_t *fltr;
+  Data_Get_Struct(filter, simplet_filter_t, fltr);
+  simplet_list_push(layer->filters, fltr);
+  simplet_filter_set_user_data(fltr, self);
+  return filter;
 }
 
 // rb_define_alloc_func
@@ -41,7 +52,7 @@ layer_alloc(VALUE klass){
   if(!(layer = simplet_layer_new("")))
     rb_fatal("Could not allocate space for a new SimplerTiles::Layer in memory.");
 
-  return Data_Wrap_Struct(klass, NULL, simplet_layer_free, layer);
+  return Data_Wrap_Struct(klass, mark_layer, simplet_layer_free, layer);
 }
 
 // use rb_define_alloc_func everywhere

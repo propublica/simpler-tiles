@@ -6,8 +6,8 @@ ROOT = File.expand_path(File.join(File.dirname(__FILE__), '..', '..'))
 LIBDIR = Config::CONFIG['libdir']
 INCLUDEDIR = Config::CONFIG['includedir']
 
-$CFLAGS << " #{ENV["CFLAGS"]}" << `gdal-config --cflags`.chomp
-$LIBS << " #{ENV["LIBS"]}" << `gdal-config --libs`
+$CFLAGS << " #{ENV["CFLAGS"]}" << `pkg-config --cflags simple-tiles pangocairo`.chomp << `gdal-config --cflags`.chomp
+$LIBS << " #{ENV["LIBS"]}" << `pkg-config --libs simple-tiles pangocairo`.chomp << `gdal-config --libs`
 
 HEADER_DIRS = [
  '/usr/local/include',
@@ -24,6 +24,7 @@ LIB_DIRS = [
 ]
 
 dir_config('cairo', HEADER_DIRS, LIB_DIRS)
+dir_config('pango', HEADER_DIRS, LIB_DIRS)
 dir_config('simple-tiles', HEADER_DIRS, LIB_DIRS)
 
 def missing(lib)
@@ -35,6 +36,7 @@ missing "simple-tiles" unless find_library "simple-tiles", "simplet_map_render_t
 missing "gdal"         unless find_header "ogr_api.h"
 missing "gdal"         unless find_header "ogr_srs_api.h"
 missing "cairo"        unless find_header "cairo/cairo.h"
+missing "pango"        unless find_header "pango/pangocairo.h"
 missing "simple-tiles" unless find_header "simple-tiles/simple_tiles.h"
 
 create_makefile('simpler_tiles/simpler_tiles')

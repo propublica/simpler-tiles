@@ -1,5 +1,10 @@
 #include "map.h"
+#include "util.h"
 #include <simple-tiles/map.h>
+#include <simple-tiles/layer.h>
+#include <simple-tiles/bounds.h>
+#include <simple-tiles/list.h>
+
 
 
 VALUE cSimplerTilesMap;
@@ -51,14 +56,37 @@ set_bounds(VALUE self, VALUE maxx, VALUE maxy, VALUE minx, VALUE miny){
 }
 
 static VALUE
+new_bounds(simplet_bounds_t *bounds){
+  VALUE args[4];
+  args[0] = rb_float_new(bounds->nw.x);
+  args[1] = rb_float_new(bounds->nw.y);
+  args[2] = rb_float_new(bounds->se.x);
+  args[3] = rb_float_new(bounds->se.y);
+  return rb_funcall2(cSimplerTilesBounds, rb_intern("new"), 4, args);
+}
+
+static VALUE
 bounds(VALUE self){
   simplet_map_t *map = get_map(self);
-  VALUE args[4];
-  args[0] = rb_float_new(map->bounds->nw.x);
-  args[1] = rb_float_new(map->bounds->nw.y);
-  args[2] = rb_float_new(map->bounds->se.x);
-  args[3] = rb_float_new(map->bounds->se.y);
-  return rb_funcall2(cSimplerTilesBounds, rb_intern("new"), 4, args);
+  return new_bounds(map->bounds);
+}
+
+static VALUE
+buffered_bounds(VALUE self){
+  simplet_map_t *map = get_map(self);
+  cairo_matrix_t mat;
+  simplet_map_init_matrix(map, &mat);
+  cairo_matrix_invert(&mat);
+
+  double dx, dy;
+  dx = dy = simplet_map_get_buffer(map);
+  cairo_matrix_transform_distance(&mat, &dx, &dy);
+
+  simplet_bounds_t *bbounds = simplet_bounds_buffer(map->bounds, dx);
+  if(!bbounds)
+    rb_raise(rb_eRuntimeError, "Could not allocate space for a new SimplerTiles::Bounds in memory.");
+
+  return new_bounds(bbounds);
 }
 
 static VALUE
@@ -66,6 +94,19 @@ set_size(VALUE self, VALUE width, VALUE height){
   simplet_map_t *map = get_map(self);
   simplet_map_set_size(map, NUM2INT(width), NUM2INT(height));
   return Qnil;
+}
+
+static VALUE
+set_buffer(VALUE self, VALUE buffer){
+  simplet_map_t *map = get_map(self);
+  simplet_map_set_buffer(map, NUM2DBL(buffer));
+  return rb_float_new(map->buffer);
+}
+
+static VALUE
+get_buffer(VALUE self, VALUE buffer){
+  simplet_map_t *map = get_map(self);
+  return rb_float_new(simplet_map_get_buffer(map));
 }
 
 static VALUE
@@ -96,11 +137,13 @@ get_height(VALUE self){
 
 // TODO: return newly created layer
 static VALUE
-add_layer(VALUE self, VALUE source){
-  Check_Type(source, T_STRING);
+add_layer(VALUE self, VALUE layer){
   simplet_map_t *map = get_map(self);
-  simplet_map_add_layer(map, RSTRING_PTR(source));
-  return Qnil;
+  simplet_layer_t *lyr;
+  Data_Get_Struct(layer, simplet_layer_t, lyr);
+  simplet_list_push(map->layers, lyr);
+  simplet_layer_set_user_data(lyr, (void *)self);
+  return layer;
 }
 
 static VALUE
@@ -131,7 +174,6 @@ stream(void* stream, const unsigned char *data, unsigned int length){
   rb_str_cat((VALUE)stream, (const char *)data, (long)length);
   return CAIRO_STATUS_SUCCESS;
 }
-
 
 static VALUE
 to_png(VALUE self){
@@ -178,13 +220,16 @@ init_map(){
   rb_define_method(rmap, "height", get_height, 0);
   rb_define_method(rmap, "width=", set_width, 1);
   rb_define_method(rmap, "height=", set_height, 1);
+  rb_define_method(rmap, "buffer", get_buffer, 0);
+  rb_define_method(rmap, "buffer=", set_buffer, 1);
   rb_define_method(rmap, "set_bounds", set_bounds, 4);
   rb_define_method(rmap, "bounds", bounds, 0);
+  rb_define_method(rmap, "buffered_bounds", buffered_bounds, 0);
   rb_define_method(rmap, "save", save, 1);
   rb_define_method(rmap, "slippy", slippy, 3);
   rb_define_method(rmap, "to_png", to_png, 0);
   rb_define_method(rmap, "valid?", is_valid, 0);
-  rb_define_private_method(rmap, "add_layer", add_layer, 2);
+  rb_define_private_method(rmap, "add_layer", add_layer, 1);
 
   cSimplerTilesMap = rmap;
 }
