@@ -14,8 +14,18 @@ get_filter(VALUE self){
 static void
 mark_filter(void *filter){
   simplet_filter_t *fltr = filter;
-  VALUE layer = (VALUE)simplet_filter_get_user_data(fltr);
-  if(layer) rb_gc_mark(layer);
+  VALUE ref = (VALUE)simplet_filter_get_user_data(fltr);
+  if(ref) rb_gc_mark(ref);
+}
+
+
+static void
+filter_free(void *filter){
+  simplet_filter_t *fltr = filter;
+  // test if we have been linked in ruby land
+  VALUE refs = (VALUE)simplet_filter_get_user_data(fltr);
+  // if not it is safe to free this filter.
+  if(!refs) simplet_filter_free(fltr);
 }
 
 static VALUE
@@ -34,14 +44,14 @@ get_query(VALUE self){
   return rb_str_new2(str);
 }
 
-// TODO: return newly created style
 static VALUE
 add_style(VALUE self, VALUE style){
   simplet_filter_t *filter = get_filter(self);
   simplet_style_t *style_s;
   Data_Get_Struct(style, simplet_style_t, style_s);
   simplet_filter_add_style_directly(filter, style_s);
-  simplet_style_set_user_data(style_s, (void *)self);
+  VALUE circ_ref = rb_ary_new3(2, self, style);
+  simplet_style_set_user_data(style_s, (void *)circ_ref);
   return style;
 }
 
@@ -52,7 +62,7 @@ filter_alloc(VALUE klass){
   if(!(filter = simplet_filter_new(NULL)))
     rb_fatal("Could not allocate space for a new SimplerTiles::Filter in memory.");
 
-  return Data_Wrap_Struct(klass, mark_filter, simplet_filter_free, filter);
+  return Data_Wrap_Struct(klass, mark_filter, filter_free, filter);
 };
 
 

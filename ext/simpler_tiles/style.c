@@ -14,8 +14,17 @@ get_style(VALUE self){
 static void
 mark_style(void *style){
   simplet_style_t *stl = style;
-  VALUE filter = (VALUE)simplet_style_get_user_data(stl);
-  if(filter) rb_gc_mark(filter);
+  VALUE refs = (VALUE)simplet_style_get_user_data(stl);
+  if(refs) rb_gc_mark(refs);
+}
+
+static void
+style_free(void *style){
+  simplet_style_t *stl = style;
+  // test if we have been linked in ruby land
+  VALUE refs = (VALUE)simplet_style_get_user_data(stl);
+  // if not it is safe to free this style.
+  if(!refs) simplet_style_free(stl);
 }
 
 static VALUE
@@ -25,7 +34,7 @@ alloc_style(VALUE klass){
   if(!(style = simplet_style_new(NULL, NULL)))
     rb_fatal("Could not allocate space for a new SimplerTiles::Style in memory.");
 
-  return Data_Wrap_Struct(klass, mark_style, simplet_style_free, style);
+  return Data_Wrap_Struct(klass, mark_style, style_free, style);
 }
 
 static VALUE

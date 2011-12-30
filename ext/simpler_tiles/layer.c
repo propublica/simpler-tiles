@@ -15,8 +15,17 @@ get_layer(VALUE self){
 static void
 mark_layer(void *layer){
   simplet_layer_t *lyr = layer;
-  VALUE map = (VALUE)simplet_layer_get_user_data(lyr);
-  if(map) rb_gc_mark(map);
+  VALUE ref = (VALUE)simplet_layer_get_user_data(lyr);
+  if(ref) rb_gc_mark(ref);
+}
+
+static void
+layer_free(void *layer){
+  simplet_layer_t *lyr = layer;
+  // test if we have been linked in ruby land
+  VALUE refs = (VALUE)simplet_layer_get_user_data(lyr);
+  // if not it is safe to free this layer.
+  if(!refs) simplet_layer_free(lyr);
 }
 
 static VALUE
@@ -40,8 +49,9 @@ add_filter(VALUE self, VALUE filter){
   simplet_layer_t *layer = get_layer(self);
   simplet_filter_t *fltr;
   Data_Get_Struct(filter, simplet_filter_t, fltr);
-  simplet_list_push(layer->filters, fltr);
-  simplet_filter_set_user_data(fltr, (void *)self);
+  simplet_layer_add_filter_directly(layer, fltr);
+  VALUE circ_ref = rb_ary_new3(2, self, filter);
+  simplet_filter_set_user_data(fltr, (void *)circ_ref);
   return filter;
 }
 
@@ -52,7 +62,7 @@ layer_alloc(VALUE klass){
   if(!(layer = simplet_layer_new("")))
     rb_fatal("Could not allocate space for a new SimplerTiles::Layer in memory.");
 
-  return Data_Wrap_Struct(klass, mark_layer, simplet_layer_free, layer);
+  return Data_Wrap_Struct(klass, mark_layer, layer_free, layer);
 }
 
 // use rb_define_alloc_func everywhere

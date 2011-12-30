@@ -5,8 +5,6 @@
 #include <simple-tiles/bounds.h>
 #include <simple-tiles/list.h>
 
-
-
 VALUE cSimplerTilesMap;
 
 static simplet_map_t *
@@ -141,8 +139,9 @@ add_layer(VALUE self, VALUE layer){
   simplet_map_t *map = get_map(self);
   simplet_layer_t *lyr;
   Data_Get_Struct(layer, simplet_layer_t, lyr);
-  simplet_list_push(map->layers, lyr);
-  simplet_layer_set_user_data(lyr, (void *)self);
+  simplet_map_add_layer_directly(map, lyr);
+  VALUE circ_ref = rb_ary_new3(2, self, layer);
+  simplet_layer_set_user_data(lyr, (void *)circ_ref);
   return layer;
 }
 
