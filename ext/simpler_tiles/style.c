@@ -57,7 +57,7 @@ get_key(VALUE self){
   simplet_style_t *style = get_style(self);
   char *key;
   simplet_style_get_key(style, &key);
-  return Qnil;
+  return rb_str_new2(key);
 }
 
 void

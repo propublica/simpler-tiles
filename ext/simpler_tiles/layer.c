@@ -1,6 +1,6 @@
 #include "layer.h"
-#include "filter.h"
 #include <simple-tiles/layer.h>
+#include <simple-tiles/filter.h>
 #include <simple-tiles/list.h>
 
 VALUE cSimplerTilesLayer;
@@ -41,7 +41,7 @@ add_filter(VALUE self, VALUE filter){
   simplet_filter_t *fltr;
   Data_Get_Struct(filter, simplet_filter_t, fltr);
   simplet_list_push(layer->filters, fltr);
-  simplet_filter_set_user_data(fltr, self);
+  simplet_filter_set_user_data(fltr, (void *)self);
   return filter;
 }
 

@@ -1,4 +1,4 @@
-require 'helper'
+require "#{File.join(File.dirname(__FILE__))}/helper"
 
 class TestMap < Test::Unit::TestCase
   context SimplerTiles::Map do

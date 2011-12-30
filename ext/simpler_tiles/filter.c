@@ -40,8 +40,8 @@ add_style(VALUE self, VALUE style){
   simplet_filter_t *filter = get_filter(self);
   simplet_style_t *style_s;
   Data_Get_Struct(style, simplet_style_t, style_s);
-  simplet_list_push(filter->styles, style_s);
-  simplet_style_set_user_data(style_s, self);
+  simplet_filter_add_style_directly(filter, style_s);
+  simplet_style_set_user_data(style_s, (void *)self);
   return style;
 }
 
