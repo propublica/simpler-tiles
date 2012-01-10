@@ -49,13 +49,12 @@ class TestMap < Test::Unit::TestCase
       end
     end
 
+    #TODO: transform to real test
     should "return bounds" do
       map = SimplerTiles::Map.new do |m|
         m.slippy 0, 0, 1
       end
       map.buffer = 1000
-      p map.bounds.to_wkt
-      p map.buffered_bounds.to_wkt
     end
 
     should "set and get bgcolor" do

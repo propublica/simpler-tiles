@@ -31,7 +31,6 @@ module SimplerTiles
     def to_png
       data = ""
       to_png_stream Proc.new { |chunk| data += chunk }
-      p data
       yield data
     end
 

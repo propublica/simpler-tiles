@@ -3,7 +3,7 @@ require "#{File.join(File.dirname(__FILE__))}/helper"
 class TestSimplerTiles < Test::Unit::TestCase
   should "produce a png image" do
     map = SimplerTiles::Map.new do |m|
-      m.slippy 13, 27, 6
+      m.slippy 3, 6, 4
       m.layer "#{File.dirname(__FILE__)}/../data/tl_2010_us_state10.shp" do |l|
         l.filter "SELECT * from 'tl_2010_us_state10'" do |f|
           f.styles 'fill' => "#061F3799",
