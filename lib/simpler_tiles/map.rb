@@ -28,6 +28,13 @@ module SimplerTiles
       layer "PG:#{params.map {|k,v| "#{k}='#{v}' "}}", &blk
     end
 
+    def to_png
+      data = ""
+      to_png_stream Proc.new { |chunk| data += chunk }
+      p data
+      yield data
+    end
+
   private
 
     def inspect_attributes

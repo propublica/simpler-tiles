@@ -168,24 +168,22 @@ save(VALUE self, VALUE path){
 }
 
 static cairo_status_t
-stream(void* stream, const unsigned char *data, unsigned int length){
-  Check_Type((VALUE)stream, T_STRING);
-  rb_str_cat((VALUE)stream, (const char *)data, (long)length);
+stream(void* block, const unsigned char *data, unsigned int length){
+  ID call = rb_intern("call");
+  VALUE rdata = rb_str_new((const char *)data, (long)length);
+  rb_funcall((VALUE)block, call, 1, rdata);
   return CAIRO_STATUS_SUCCESS;
 }
 
 static VALUE
-to_png(VALUE self){
+to_png_stream(VALUE self, VALUE block){
   simplet_map_t *map = get_map(self);
-  VALUE data;
-  char *cdata;
-  data = rb_str_new2(cdata);
-  simplet_map_render_to_stream(map, (void *)data, stream);
+
+  simplet_map_render_to_stream(map, (void *)block, stream);
   if(simplet_map_get_status(map) != SIMPLET_OK)
     rb_raise(rb_eRuntimeError, simplet_map_status_to_string(map));
 
-  if(rb_block_given_p()) rb_yield(data);
-  return data;
+  return Qtrue;
 }
 
 static VALUE
@@ -226,8 +224,8 @@ init_map(){
   rb_define_method(rmap, "buffered_bounds", buffered_bounds, 0);
   rb_define_method(rmap, "save", save, 1);
   rb_define_method(rmap, "slippy", slippy, 3);
-  rb_define_method(rmap, "to_png", to_png, 0);
   rb_define_method(rmap, "valid?", is_valid, 0);
+  rb_define_private_method(rmap, "to_png_stream", to_png_stream, 1);
   rb_define_private_method(rmap, "add_layer", add_layer, 1);
 
   cSimplerTilesMap = rmap;
