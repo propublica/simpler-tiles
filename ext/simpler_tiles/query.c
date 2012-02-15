@@ -60,14 +60,14 @@ query_alloc(VALUE klass){
   simplet_query_t *query;
 
   if(!(query = simplet_query_new(NULL)))
-    rb_fatal("Could not allocate space for a new SimplerTiles::Filter in memory.");
+    rb_fatal("Could not allocate space for a new SimplerTiles::Query in memory.");
 
   return Data_Wrap_Struct(klass, mark_query, query_free, query);
 };
 
 
 void init_query(){
-  VALUE rquery = rb_define_class_under(mSimplerTiles, "Filter", rb_cObject);
+  VALUE rquery = rb_define_class_under(mSimplerTiles, "Query", rb_cObject);
   rb_define_alloc_func(rquery, query_alloc);
   rb_define_method(rquery, "query=", set_sql, 1);
   rb_define_method(rquery, "query", get_sql, 0);

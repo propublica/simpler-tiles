@@ -8,7 +8,7 @@ module SimplerTiles
     end
 
     def query(sql, &blk)
-      layer = SimplerTiles::Filter.new(sql, &blk)
+      layer = SimplerTiles::Query.new(sql, &blk)
       add_query layer
     end
 
