@@ -78,5 +78,5 @@ init_style(){
   rb_define_method(rstyle, "key=", set_key, 1);
   rb_define_method(rstyle, "key", get_key, 0);
 
-  cSimplerTilesFilter = rstyle;
+  cSimplerTilesStyle = rstyle;
 }

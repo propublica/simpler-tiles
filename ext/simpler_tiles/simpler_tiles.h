@@ -7,7 +7,7 @@
 #include "map.h"
 #include "bounds.h"
 #include "layer.h"
-#include "filter.h"
+#include "query.h"
 #include "style.h"
 
 

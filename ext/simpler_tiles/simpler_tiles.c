@@ -11,6 +11,6 @@ Init_simpler_tiles(){
   init_map();
   init_bounds();
   init_layer();
-  init_filter();
+  init_query();
   init_style();
 }

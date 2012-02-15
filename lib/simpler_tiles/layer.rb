@@ -7,9 +7,9 @@ module SimplerTiles
       yield self if block_given?
     end
 
-    def filter(sql, &blk)
+    def query(sql, &blk)
       layer = SimplerTiles::Filter.new(sql, &blk)
-      add_filter layer
+      add_query layer
     end
 
   private

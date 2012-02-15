@@ -1,6 +1,6 @@
 #include "layer.h"
 #include <simple-tiles/layer.h>
-#include <simple-tiles/filter.h>
+#include <simple-tiles/query.h>
 #include <simple-tiles/list.h>
 
 VALUE cSimplerTilesLayer;
@@ -45,14 +45,14 @@ get_source(VALUE self) {
 }
 
 static VALUE
-add_filter(VALUE self, VALUE filter){
+add_query(VALUE self, VALUE query){
   simplet_layer_t *layer = get_layer(self);
-  simplet_filter_t *fltr;
-  Data_Get_Struct(filter, simplet_filter_t, fltr);
-  simplet_layer_add_filter_directly(layer, fltr);
-  VALUE circ_ref = rb_ary_new3(2, self, filter);
-  simplet_filter_set_user_data(fltr, (void *)circ_ref);
-  return filter;
+  simplet_query_t *qry;
+  Data_Get_Struct(query, simplet_query_t, qry);
+  simplet_layer_add_query_directly(layer, qry);
+  VALUE circ_ref = rb_ary_new3(2, self, query);
+  simplet_query_set_user_data(qry, (void *)circ_ref);
+  return query;
 }
 
 // rb_define_alloc_func
@@ -71,7 +71,7 @@ void init_layer(){
   rb_define_alloc_func(rlayer, layer_alloc);
   rb_define_method(rlayer, "source=", set_source, 1);
   rb_define_method(rlayer, "source", get_source, 0);
-  rb_define_private_method(rlayer, "add_filter", add_filter, 1);
+  rb_define_private_method(rlayer, "add_query", add_query, 1);
 
   cSimplerTilesLayer = rlayer;
 }

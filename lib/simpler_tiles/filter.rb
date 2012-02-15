@@ -1,5 +1,5 @@
 module SimplerTiles
-  class Filter
+  class Query
     include SimplerTiles::PP
 
     def initialize(query)

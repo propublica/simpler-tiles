@@ -36,8 +36,8 @@ class TestMap < Test::Unit::TestCase
         m.set_bounds -179.231086, 17.831509, -100.859681, 71.441059
         m.set_size 256, 256
         m.layer "#{File.dirname(__FILE__)}/../data/tl_2010_us_state10.shp" do |l|
-          l.filter "SELECT * from tl_2010_us_state10_error_error" do |f|
-            f.styles 'fill' => "#061F3799",
+          l.query "SELECT * from tl_2010_us_state10_error_error" do |q|
+            q.styles 'fill' => "#061F3799",
                 'line-join' => "round",
                  'line-cap' => "square",
                  'seamless' => "true"
