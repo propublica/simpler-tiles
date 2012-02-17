@@ -12,7 +12,7 @@ module SimplerTiles
     end
 
 
-    def ar_layer(&blk)
+    def ar_layer
       if !defined?(ActiveRecord)
         raise "ActiveRecord not available"
       end
@@ -25,7 +25,8 @@ module SimplerTiles
         :port     => config[:port],
         :password => config[:password]
       }
-      layer "PG:#{params.map {|k,v| "#{k}='#{v}' "}}", &blk
+
+      layer "PG:#{params.map {|k,v| "#{k}='#{v}' "}}"
     end
 
     def to_png
