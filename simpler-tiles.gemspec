@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
   s.test_files = `git ls-files -- {test}/*`.split("\n")
   s.homepage = %q{http://github.com/thejefflarson/simpler-tiles}
   s.licenses = ["MIT"]
-  s.require_paths = ["lib/simpler_tiles"]
+  s.require_paths = ["lib"]
   s.summary = %q{maps!}
 
   s.add_development_dependency(%q<rake-compiler>, [">= 0"])
@@ -27,4 +27,3 @@ Gem::Specification.new do |s|
   s.add_development_dependency(%q<shoulda>, ["~> 2.11.3"])
   s.add_development_dependency(%q<redgreen>, ["~> 1.2.2"])
 end
-
