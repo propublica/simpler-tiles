@@ -32,7 +32,8 @@ module SimplerTiles
     def to_png
       data = ""
       to_png_stream Proc.new { |chunk| data += chunk }
-      yield data
+      yield data if block_given?
+      data
     end
 
   private
