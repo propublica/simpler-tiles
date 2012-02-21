@@ -37,6 +37,12 @@ alloc_style(VALUE klass){
   return Data_Wrap_Struct(klass, mark_style, style_free, style);
 }
 
+/*
+Set the arg for this Style.
+
+@param (String)
+@return (String)
+*/
 static VALUE
 set_arg(VALUE self, VALUE arg){
   Check_Type(arg, T_STRING);
@@ -45,6 +51,12 @@ set_arg(VALUE self, VALUE arg){
   return arg;
 }
 
+
+/*
+Get the arg for this Style.
+
+@return (String)
+*/
 static VALUE
 get_arg(VALUE self){
   simplet_style_t *style = get_style(self);
@@ -53,6 +65,12 @@ get_arg(VALUE self){
   return rb_str_new2(arg);
 }
 
+/*
+Set the key for this Style.
+
+@param (String)
+@return (String)
+*/
 static VALUE
 set_key(VALUE self, VALUE key){
   Check_Type(key, T_STRING);
@@ -61,6 +79,12 @@ set_key(VALUE self, VALUE key){
   return key;
 }
 
+/*
+Get the key for this Style.
+
+@param (String)
+@return (String)
+*/
 static VALUE
 get_key(VALUE self){
   simplet_style_t *style = get_style(self);
