@@ -27,7 +27,8 @@ class TestMap < Test::Unit::TestCase
     end
 
     should "set slippy" do
-      assert @map.slippy 0, 0, 1
+      @map.slippy(0, 0, 1)
+      assert_equal @map.width, 256
     end
 
     should "raise error when invalid" do

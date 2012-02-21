@@ -28,6 +28,11 @@ query_free(void *query){
   if(!refs) simplet_query_free(fltr);
 }
 
+/*
+Set the OGR SQL for this Query.
+
+@returns (String)
+*/
 static VALUE
 set_sql(VALUE self, VALUE query){
   Check_Type(query, T_STRING);
@@ -36,6 +41,11 @@ set_sql(VALUE self, VALUE query){
   return query;
 }
 
+/*
+Get the OGR SQL for this Query.
+
+@returns (String)
+*/
 static VALUE
 get_sql(VALUE self){
   simplet_query_t *query = get_query(self);

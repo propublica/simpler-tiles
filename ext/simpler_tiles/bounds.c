@@ -10,6 +10,12 @@ get_bounds(VALUE self){
   return bounds;
 }
 
+
+/*
+Return a WKT representation of the bounds.
+
+@return [String]
+*/
 static VALUE
 to_wkt(VALUE self){
   simplet_bounds_t *bounds = get_bounds(self);
@@ -21,6 +27,12 @@ to_wkt(VALUE self){
   return rb_str_new2(wkt);
 }
 
+/*
+Extend the bounds to include the point defined by x, y.
+
+@param [Number, Number]
+@return [Bounds]
+*/
 static VALUE
 grow(VALUE self, VALUE x, VALUE y){
   simplet_bounds_t *bounds = get_bounds(self);
@@ -28,6 +40,13 @@ grow(VALUE self, VALUE x, VALUE y){
   return self;
 }
 
+/*
+Reproject the bounds from <tt>from_proj</tt> to new projection
+<tt>to_proj</tt>. Returns a new bounds object.
+
+@param [String, String]
+@return [Bounds]
+*/
 static VALUE
 reproject(VALUE self, VALUE from, VALUE to) {
   Check_Type(from, T_STRING);

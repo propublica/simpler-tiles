@@ -28,6 +28,13 @@ layer_free(void *layer){
   if(!refs) simplet_layer_free(lyr);
 }
 
+
+/*
+Set the source attribute for the Layer.
+
+@return (String)
+@param (String)
+*/
 static VALUE
 set_source(VALUE self, VALUE source){
   Check_Type(source, T_STRING);
@@ -36,6 +43,11 @@ set_source(VALUE self, VALUE source){
   return source;
 }
 
+/*
+Get a copy of the Layer's source.
+
+@return (String)
+*/
 static VALUE
 get_source(VALUE self) {
   simplet_layer_t *layer = get_layer(self);
@@ -44,6 +56,12 @@ get_source(VALUE self) {
   return rb_str_new2(source);
 }
 
+/*
+Add a query object to this Layer's list of queries.
+
+@param (String)
+@return (Query)
+*/
 static VALUE
 add_query(VALUE self, VALUE query){
   simplet_layer_t *layer = get_layer(self);
@@ -55,7 +73,6 @@ add_query(VALUE self, VALUE query){
   return query;
 }
 
-// rb_define_alloc_func
 VALUE
 layer_alloc(VALUE klass){
   simplet_layer_t *layer;
@@ -65,7 +82,6 @@ layer_alloc(VALUE klass){
   return Data_Wrap_Struct(klass, mark_layer, layer_free, layer);
 }
 
-// use rb_define_alloc_func everywhere
 void init_layer(){
   VALUE rlayer = rb_define_class_under(mSimplerTiles, "Layer", rb_cObject);
   rb_define_alloc_func(rlayer, layer_alloc);

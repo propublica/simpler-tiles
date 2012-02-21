@@ -14,6 +14,12 @@ get_map(VALUE self){
   return map;
 }
 
+/*
+Set the background color of the map.
+
+@param (String)
+@return (nil)
+*/
 static VALUE
 set_bgcolor(VALUE self, VALUE bgcolor){
   Check_Type(bgcolor, T_STRING);
@@ -22,6 +28,11 @@ set_bgcolor(VALUE self, VALUE bgcolor){
   return Qnil;
 }
 
+/*
+Return a copy of the background color of the map.
+
+@return (String)
+*/
 static VALUE
 get_bgcolor(VALUE self){
   simplet_map_t *map = get_map(self);
@@ -30,6 +41,12 @@ get_bgcolor(VALUE self){
   return rb_str_new2(color);
 }
 
+/*
+Set the projection from an Proj.4 readable string.
+
+@param (String)
+@return (String)
+*/
 static VALUE
 set_srs(VALUE self, VALUE srs){
   Check_Type(srs, T_STRING);
@@ -38,6 +55,11 @@ set_srs(VALUE self, VALUE srs){
   return Qnil;
 }
 
+/*
+Return the projection for the map in string representation.
+
+@return (String)
+*/
 static VALUE
 get_srs(VALUE self){
   simplet_map_t *map = get_map(self);
@@ -46,6 +68,12 @@ get_srs(VALUE self){
   return rb_str_new2(srs);
 }
 
+/*
+Set the bounds on the map.
+
+@param (Number, Number, Number, Number)
+@return (nil)
+*/
 static VALUE
 set_bounds(VALUE self, VALUE maxx, VALUE maxy, VALUE minx, VALUE miny){
   simplet_map_t *map = get_map(self);
@@ -63,12 +91,21 @@ new_bounds(simplet_bounds_t *bounds){
   return rb_funcall2(cSimplerTilesBounds, rb_intern("new"), 4, args);
 }
 
+/*
+Return the bounds of this map.
+
+@return (Bounds)
+*/
 static VALUE
 bounds(VALUE self){
   simplet_map_t *map = get_map(self);
   return new_bounds(map->bounds);
 }
+/*
+Return the bounds of this map sized according to it's buffer attribute.
 
+@return (Bounds)
+*/
 static VALUE
 buffered_bounds(VALUE self){
   simplet_map_t *map = get_map(self);
@@ -87,6 +124,12 @@ buffered_bounds(VALUE self){
   return new_bounds(bbounds);
 }
 
+/*
+Set the size in pixels of the final map.
+
+@param (Number, Number)
+@return (nil)
+*/
 static VALUE
 set_size(VALUE self, VALUE width, VALUE height){
   simplet_map_t *map = get_map(self);
@@ -94,6 +137,12 @@ set_size(VALUE self, VALUE width, VALUE height){
   return Qnil;
 }
 
+/*
+Set the buffer on the Map.
+
+@param (Number)
+@return (Number)
+*/
 static VALUE
 set_buffer(VALUE self, VALUE buffer){
   simplet_map_t *map = get_map(self);
@@ -101,39 +150,72 @@ set_buffer(VALUE self, VALUE buffer){
   return rb_float_new(map->buffer);
 }
 
+/*
+Get the Map's buffer.
+
+@return (Number)
+*/
 static VALUE
-get_buffer(VALUE self, VALUE buffer){
+get_buffer(VALUE self){
   simplet_map_t *map = get_map(self);
   return rb_float_new(simplet_map_get_buffer(map));
 }
 
-static VALUE
-set_width(VALUE self, VALUE width){
-  simplet_map_t *map = get_map(self);
-  map->width = NUM2INT(width);
-  return INT2NUM(map->width);
-}
 
-static VALUE
-set_height(VALUE self, VALUE height){
-  simplet_map_t *map = get_map(self);
-  map->height = NUM2INT(height);
-  return INT2NUM(map->height);
-}
+/*
+Get the width of the map.
 
+@return (Number)
+*/
 static VALUE
 get_width(VALUE self){
   simplet_map_t *map = get_map(self);
-  return INT2NUM(map->width);
+  return INT2NUM(simplet_map_get_width(map));
 }
 
+/*
+Get the height of the map.
+
+@return (Number)
+*/
 static VALUE
 get_height(VALUE self){
   simplet_map_t *map = get_map(self);
-  return INT2NUM(map->height);
+  return INT2NUM(simplet_map_get_height(map));
 }
 
-// TODO: return newly created layer
+/*
+Set the width of the Map.
+
+@return (Number)
+*/
+static VALUE
+set_width(VALUE self, VALUE width){
+  simplet_map_t *map = get_map(self);
+  simplet_map_set_width(map, NUM2INT(width));
+  return get_width(self);
+}
+
+/*
+Set the height of the Map.
+
+@return (Number)
+*/
+static VALUE
+set_height(VALUE self, VALUE height){
+  simplet_map_t *map = get_map(self);
+  simplet_map_set_height(map, NUM2INT(height));
+  return get_height(self);
+}
+
+
+
+/*
+Create and return a {Layer} based on the passed in string.
+
+@param (String)
+@return (Layer)
+*/
 static VALUE
 add_layer(VALUE self, VALUE layer){
   simplet_map_t *map = get_map(self);
@@ -145,6 +227,11 @@ add_layer(VALUE self, VALUE layer){
   return layer;
 }
 
+/*
+Test to see if the Map has fulfilled the requirements for rendering
+
+@return (Boolean)
+*/
 static VALUE
 is_valid(VALUE self){
   simplet_map_t *map = get_map(self);
@@ -153,6 +240,12 @@ is_valid(VALUE self){
   return Qtrue;
 }
 
+/*
+Render the Map to the filesystem.
+
+@param (String)
+@return (Boolean)
+*/
 static VALUE
 save(VALUE self, VALUE path){
   Check_Type(path, T_STRING);
@@ -167,6 +260,7 @@ save(VALUE self, VALUE path){
   }
 }
 
+
 static cairo_status_t
 stream(void* block, const unsigned char *data, unsigned int length){
   ID call = rb_intern("call");
@@ -175,6 +269,12 @@ stream(void* block, const unsigned char *data, unsigned int length){
   return CAIRO_STATUS_SUCCESS;
 }
 
+/*
+Render the map to a png stream and yield values to the passed in block.
+
+@yield [chunk] Block that takes chunks of data
+@return (nil)
+*/
 static VALUE
 to_png_stream(VALUE self, VALUE block){
   simplet_map_t *map = get_map(self);
@@ -183,15 +283,21 @@ to_png_stream(VALUE self, VALUE block){
   if(simplet_map_get_status(map) != SIMPLET_OK)
     rb_raise(rb_eRuntimeError, simplet_map_status_to_string(map));
 
-  return Qtrue;
+  return Qnil;
 }
 
+/*
+Set the map to be slippy via passed in parameters.
+
+@param (Number, Number, Number)
+@return (nil)
+*/
 static VALUE
 slippy(VALUE self, VALUE x, VALUE y, VALUE z){
   simplet_map_t *map = get_map(self);
   if(simplet_map_set_slippy(map, NUM2INT(x), NUM2INT(y), NUM2INT(z)) != SIMPLET_OK)
     rb_raise(rb_eRuntimeError, simplet_map_status_to_string(map));
-  return Qtrue;
+  return Qnil;
 }
 
 static VALUE

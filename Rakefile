@@ -2,6 +2,7 @@
 
 require 'rubygems'
 require 'bundler'
+
 begin
   Bundler.setup(:default, :development, :test)
 rescue Bundler::BundlerError => e
@@ -11,7 +12,11 @@ rescue Bundler::BundlerError => e
 end
 Bundler::GemHelper.install_tasks
 require 'rake'
+require 'yard'
 
+YARD::Rake::YardocTask.new do |t|
+
+end
 
 require 'rake/testtask'
 Rake::TestTask.new(:test) do |test|
@@ -48,3 +53,7 @@ end
 Rake::Task[:compile].prerequisites.unshift DEPEND
 Rake::Task[:test].prerequisites.unshift DATA
 Rake::Task[:test].prerequisites.unshift :compile
+
+
+
+

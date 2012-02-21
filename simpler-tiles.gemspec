@@ -26,4 +26,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency(%q<bundler>, ["~> 1.0.0"])
   s.add_development_dependency(%q<shoulda>, ["~> 2.11.3"])
   s.add_development_dependency(%q<redgreen>, ["~> 1.2.2"])
+  s.add_development_dependency(%q<yard>, ["~> 0.7.5"])
 end
