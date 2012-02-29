@@ -1,17 +1,26 @@
 module SimplerTiles
+  # The Map object is the root of the style declaration for SimplerTiles.
+  # It wraps the methods in Simple Tiles and tracks projection, width, height
+  # and contains a list of Layer objects.
   class Map
     include SimplerTiles::PP
 
+    # Initialize a map with Mercator Projection and a tile square by default
     def initialize
+      self.srs    = "epsg:3785"
+      self.width  = 256
+      self.height = 256
       yield self if block_given?
     end
 
+    # Add a layer to the c list of layers and yield the new layer.
     def layer(source, &blk)
       layer = SimplerTiles::Layer.new(source, &blk)
       add_layer layer
     end
 
-
+    # A convienence method to use Active Record configuration and add a new
+    # layer.
     def ar_layer
       if !defined?(ActiveRecord)
         raise "ActiveRecord not available"
@@ -29,6 +38,7 @@ module SimplerTiles
       layer "PG:#{params.map {|k,v| "#{k}='#{v}' "}}"
     end
 
+    # Render the data to a blob of png data.
     def to_png
       data = ""
       to_png_stream Proc.new { |chunk| data += chunk }

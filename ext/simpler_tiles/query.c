@@ -31,7 +31,7 @@ query_free(void *query){
 /*
 Set the OGR SQL for this Query.
 
-@returns (String)
+@return (String)
 */
 static VALUE
 set_sql(VALUE self, VALUE query){
@@ -44,7 +44,7 @@ set_sql(VALUE self, VALUE query){
 /*
 Get the OGR SQL for this Query.
 
-@returns (String)
+@return (String)
 */
 static VALUE
 get_sql(VALUE self){

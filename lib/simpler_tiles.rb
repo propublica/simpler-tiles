@@ -1,4 +1,6 @@
+# SimplerTiles contains all of the classes we'll want to define.
 module SimplerTiles
+  # The location of this file will define the root path for SimplerTiles
   ROOT = File.expand_path File.dirname(__FILE__)
 end
 
