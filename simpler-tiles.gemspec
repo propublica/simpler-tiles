@@ -12,8 +12,8 @@ Gem::Specification.new do |s|
   s.email = %q{thejefflarson@gmail.com}
   s.extensions = ["ext/simpler_tiles/extconf.rb"]
   s.extra_rdoc_files = [
-    "LICENSE.txt",
-    "README.rdoc"
+    "LICENSE",
+    "README"
   ]
   s.files = `git ls-files`.split("\n")
   s.test_files = `git ls-files -- {test}/*`.split("\n")
