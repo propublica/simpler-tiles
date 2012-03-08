@@ -22,6 +22,13 @@ task :doc do |t|
   File.open("index.html", 'w').write ERB.new(File.open("index.erb").read).result(binding)
 end
 
+task :publish do |t|
+  `git checkout gh-pages`
+  `git merge master`
+  `git push`
+  `git checkout master`
+end
+
 
 require 'rake/testtask'
 Rake::TestTask.new(:test) do |test|
