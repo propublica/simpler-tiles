@@ -14,9 +14,14 @@ Bundler::GemHelper.install_tasks
 require 'rake'
 require 'yard'
 
-YARD::Rake::YardocTask.new do |t|
+YARD::Rake::YardocTask.new
 
+
+require 'erb'
+task :doc do |t|
+  File.open("index.html", 'w').write ERB.new(File.open("index.erb").read).result(binding)
 end
+
 
 require 'rake/testtask'
 Rake::TestTask.new(:test) do |test|
