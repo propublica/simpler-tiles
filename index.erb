@@ -81,6 +81,7 @@
         padding-left: 10px;
         font-size: 12px;
         border-left: 5px solid #efefef;
+        line-height: 1.3;
       }
 
       hr {
@@ -266,56 +267,56 @@ CODE
     <p>
       Simpler Tiles was designed to make slippy maps so the following is a full tile
       server using sinatra, it will open display any shapefile on your hard drive
-      by visiting a url like: http://localhost:4567/path/to/shapefile.shp
+      by visiting a url like: <a href="">http://localhost:4567/path/to/shapefile.shp</a>
     </p>
 
 <%= highlight 'ruby', <<-CODE
 
-  require 'rubygems'
-  require 'sinatra'
-  require 'simpler_tiles'
+require 'rubygems'
+require 'sinatra'
+require 'simpler_tiles'
 
-  # Grab the user's home directory
-  ROOT = File.expand_path("~")
+# Grab the user's home directory
+ROOT = File.expand_path("~")
 
-  # Set up a root route that will grab the path to a shapefile and render the
-  # index template below.
-  get '/shape/*' do
-    erb :index, :locals => params
-  end
+# Set up a route that will grab the path to a shapefile and render the
+# index template below.
+get '/shape/*' do
+  erb :index, :locals => params
+end
 
-  # Set up the tile url to capture x, y, z coordinates for slippy tile generation
-  get '/tiles/*/:x/:y/:z.png' do
+# Set up the tile url to capture x, y, z coordinates for slippy tile generation
+get '/tiles/*/:x/:y/:z.png' do
 
-    # Let the browser know we are sending a png
-    content_type 'image/png'
+  # Let the browser know we are sending a png
+  content_type 'image/png'
 
-    # Create a Map object
-    map = SimplerTiles::Map.new do |m|
-      # Set the background color to black
-      m.bgcolor = "#000000"
+  # Create a Map object
+  map = SimplerTiles::Map.new do |m|
+    # Set the background color to black
+    m.bgcolor = "#000000"
 
-      # Set the slippy map parameters from the url
-      m.slippy params[:x].to_i, params[:y].to_i, params[:z].to_i
+    # Set the slippy map parameters from the url
+    m.slippy params[:x].to_i, params[:y].to_i, params[:z].to_i
 
-      # Add a layer based on the parameters in the URL
-      m.layer File.join(ROOT, params[:splat].first) do |l|
+    # Add a layer based on the parameters in the URL
+    m.layer File.join(ROOT, params[:splat].first) do |l|
 
-        # Grab all of the data from the shapefile
-        l.query "select * from '\#\{File.basename(params[:splat].first, '.shp')\}'" do |q|
+      # Grab all of the data from the shapefile
+      l.query "select * from '\#\{File.basename(params[:splat].first, '.shp')\}'" do |q|
 
-          # Add a style for stroke, fill, weight and, set the line-join to be round
-          q.styles 'stroke' => '#002240',
-                   'weight' => '1',
-                'line-join' => 'round',
-                     'fill' => '#ffffff'
-        end
+        # Add a style for stroke, fill, weight and set the line-join to be round
+        q.styles 'stroke' => '#002240',
+                 'weight' => '1',
+              'line-join' => 'round',
+                   'fill' => '#ffffff'
       end
     end
-
-    # Finally, render the map and ship it off
-    map.to_png
   end
+
+  # Finally, render the map and ship it off
+  map.to_png
+end
 
 # A simple inline template for the map
 __END__
