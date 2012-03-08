@@ -64,6 +64,10 @@
         background-color: #e6f3ff;
       }
 
+      ol {
+        padding-left: 0px;
+      }
+
       code, pre, tt { font-family: Monaco, monospace; font-size: 12px; }
       tt { border:1px solid #cdcdcd; padding: 2px;}
       dd { margin-left: 1em; }
@@ -147,13 +151,15 @@
     </style>
   </head>
   <body>
+    <img src="simpler-tiles-logo.png">
     <p>
       <a href="http://github.com/propublica/simpler-tiles">Simpler Tiles</a>
       is a library containing ruby bindings for
       <a href="http://propublica.github.com/simple-tiles/">Simple Tiles</a>, a
       GIS image generation library. It allows you to generate PNG based map
       images without having to dip into straight C and easily connects with
-      ActiveRecord.
+      ActiveRecord. It can display any vector data that
+      <a href="http://www.gdal.org/ogr/ogr_formats.html">OGR</a> can read.
     </p>
 
     <p>
@@ -165,7 +171,7 @@ $ gem install simpler-tiles
     </p>
 
     <p>
-      The api docs are <a href="docs/index.html">here</a>, and if you have
+      The api docs are <a href="doc/index.html">here</a>, and if you have
       comments or questions head on over to <tt>#newsapps</tt> or <tt>#propublica</tt>
       on Freenode, or post them in the github issue
       <a href="https://github.com/propublica/simpler-tiles/issues?sort=created&direction=desc&state=open">tracker</a>.
@@ -190,7 +196,9 @@ $ gem install simpler-tiles
         <tt><a href="doc/SimplerTiles/Map.html">SimplerTiles::Map</a></tt>: wraps
         the <tt><a href="http://propublica.github.com/simple-tiles/#maps">simplet_map_t</a></tt>
         C structure and contains projection information, <tt>SimplerTiles::Bounds</tt>
-        and a list of <tt>SimplerTiles::Layer</tt> objects.
+        and a list of <tt>SimplerTiles::Layer</tt> objects. If you are using ActiveRecord
+        you can connect to and query your database backend by calling the
+        <tt>ar_layer</tt> method.
       </li>
       <li>
         <tt><a href="doc/SimplerTiles/Bounds.html">SimplerTiles::Bounds</a></tt>: wraps
@@ -223,30 +231,30 @@ $ gem install simpler-tiles
       <a href="https://github.com/thejefflarson/simpler-tiles-contours">here</a>):
     </p>
 
-<div class="highlight"><pre>  <span class="nb">require</span> <span class="s1">&#39;rubygems&#39;</span>
-  <span class="nb">require</span> <span class="s1">&#39;simpler_tiles&#39;</span>
+<div class="highlight"><pre><span class="nb">require</span> <span class="s1">&#39;rubygems&#39;</span>
+<span class="nb">require</span> <span class="s1">&#39;simpler_tiles&#39;</span>
 
-  <span class="no">ROOT</span> <span class="o">=</span> <span class="no">File</span><span class="o">.</span><span class="n">expand_path</span><span class="p">(</span><span class="no">File</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="bp">__FILE__</span><span class="p">))</span>
+<span class="no">ROOT</span> <span class="o">=</span> <span class="no">File</span><span class="o">.</span><span class="n">expand_path</span><span class="p">(</span><span class="no">File</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="bp">__FILE__</span><span class="p">))</span>
 
-  <span class="n">map</span> <span class="o">=</span> <span class="no">SimplerTiles</span><span class="o">::</span><span class="no">Map</span><span class="o">.</span><span class="n">new</span> <span class="k">do</span> <span class="o">|</span><span class="n">m</span><span class="o">|</span>
-    <span class="n">m</span><span class="o">.</span><span class="n">srs</span>     <span class="o">=</span> <span class="s2">&quot;EPSG:3083&quot;</span>
-    <span class="n">m</span><span class="o">.</span><span class="n">bgcolor</span> <span class="o">=</span> <span class="s2">&quot;#ffffff&quot;</span>
-    <span class="n">m</span><span class="o">.</span><span class="n">width</span>   <span class="o">=</span> <span class="mi">423</span>
-    <span class="n">m</span><span class="o">.</span><span class="n">height</span>  <span class="o">=</span> <span class="mi">260</span>
-    <span class="n">m</span><span class="o">.</span><span class="n">set_bounds</span><span class="p">(</span><span class="o">-</span><span class="mi">585080</span><span class="o">.</span><span class="mi">885134</span><span class="p">,</span> <span class="mi">6849466</span><span class="o">.</span><span class="mi">721081</span><span class="p">,</span> <span class="mi">4161303</span><span class="o">.</span><span class="mi">603672</span><span class="p">,</span> <span class="mi">9587780</span><span class="o">.</span><span class="mi">816356</span><span class="p">)</span>
+<span class="n">map</span> <span class="o">=</span> <span class="no">SimplerTiles</span><span class="o">::</span><span class="no">Map</span><span class="o">.</span><span class="n">new</span> <span class="k">do</span> <span class="o">|</span><span class="n">m</span><span class="o">|</span>
+  <span class="n">m</span><span class="o">.</span><span class="n">srs</span>     <span class="o">=</span> <span class="s2">&quot;EPSG:3083&quot;</span>
+  <span class="n">m</span><span class="o">.</span><span class="n">bgcolor</span> <span class="o">=</span> <span class="s2">&quot;#ffffff&quot;</span>
+  <span class="n">m</span><span class="o">.</span><span class="n">width</span>   <span class="o">=</span> <span class="mi">423</span>
+  <span class="n">m</span><span class="o">.</span><span class="n">height</span>  <span class="o">=</span> <span class="mi">260</span>
+  <span class="n">m</span><span class="o">.</span><span class="n">set_bounds</span><span class="p">(</span><span class="o">-</span><span class="mi">585080</span><span class="o">.</span><span class="mi">885134</span><span class="p">,</span> <span class="mi">6849466</span><span class="o">.</span><span class="mi">721081</span><span class="p">,</span> <span class="mi">4161303</span><span class="o">.</span><span class="mi">603672</span><span class="p">,</span> <span class="mi">9587780</span><span class="o">.</span><span class="mi">816356</span><span class="p">)</span>
 
-    <span class="no">Dir</span><span class="o">[</span><span class="s2">&quot;</span><span class="si">#{</span><span class="no">ROOT</span><span class="si">}</span><span class="s2">/data/*.shp&quot;</span><span class="o">].</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">shp</span><span class="o">|</span>
-      <span class="n">m</span><span class="o">.</span><span class="n">layer</span> <span class="n">shp</span> <span class="k">do</span> <span class="o">|</span><span class="n">l</span><span class="o">|</span>
-        <span class="n">l</span><span class="o">.</span><span class="n">query</span> <span class="s2">&quot;select * from &#39;</span><span class="si">#{</span><span class="no">File</span><span class="o">.</span><span class="n">basename</span> <span class="n">shp</span><span class="p">,</span> <span class="s1">&#39;.shp&#39;</span><span class="si">}</span><span class="s2">&#39;&quot;</span> <span class="k">do</span> <span class="o">|</span><span class="n">q</span><span class="o">|</span>
-          <span class="n">q</span><span class="o">.</span><span class="n">styles</span> <span class="s2">&quot;stroke&quot;</span> <span class="o">=&gt;</span> <span class="s2">&quot;#111111&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;line-join&quot;</span> <span class="o">=&gt;</span> <span class="s2">&quot;round&quot;</span><span class="p">,</span>
-                   <span class="s2">&quot;weight&quot;</span> <span class="o">=&gt;</span> <span class="s2">&quot;0.1&quot;</span>
-        <span class="k">end</span>
+  <span class="no">Dir</span><span class="o">[</span><span class="s2">&quot;</span><span class="si">#{</span><span class="no">ROOT</span><span class="si">}</span><span class="s2">/data/*.shp&quot;</span><span class="o">].</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">shp</span><span class="o">|</span>
+    <span class="n">m</span><span class="o">.</span><span class="n">layer</span> <span class="n">shp</span> <span class="k">do</span> <span class="o">|</span><span class="n">l</span><span class="o">|</span>
+      <span class="n">l</span><span class="o">.</span><span class="n">query</span> <span class="s2">&quot;select * from &#39;</span><span class="si">#{</span><span class="no">File</span><span class="o">.</span><span class="n">basename</span> <span class="n">shp</span><span class="p">,</span> <span class="s1">&#39;.shp&#39;</span><span class="si">}</span><span class="s2">&#39;&quot;</span> <span class="k">do</span> <span class="o">|</span><span class="n">q</span><span class="o">|</span>
+        <span class="n">q</span><span class="o">.</span><span class="n">styles</span> <span class="s2">&quot;stroke&quot;</span> <span class="o">=&gt;</span> <span class="s2">&quot;#111111&quot;</span><span class="p">,</span>
+              <span class="s2">&quot;line-join&quot;</span> <span class="o">=&gt;</span> <span class="s2">&quot;round&quot;</span><span class="p">,</span>
+                 <span class="s2">&quot;weight&quot;</span> <span class="o">=&gt;</span> <span class="s2">&quot;0.1&quot;</span>
       <span class="k">end</span>
     <span class="k">end</span>
   <span class="k">end</span>
+<span class="k">end</span>
 
-  <span class="no">File</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">#{</span><span class="no">ROOT</span><span class="si">}</span><span class="s2">/out.png&quot;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="p">{</span><span class="o">|</span><span class="n">f</span><span class="o">|</span> <span class="n">f</span><span class="o">.</span><span class="n">write</span> <span class="n">map</span><span class="o">.</span><span class="n">to_png</span> <span class="p">}</span>
+<span class="no">File</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">#{</span><span class="no">ROOT</span><span class="si">}</span><span class="s2">/out.png&quot;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="p">{</span><span class="o">|</span><span class="n">f</span><span class="o">|</span> <span class="n">f</span><span class="o">.</span><span class="n">write</span> <span class="n">map</span><span class="o">.</span><span class="n">to_png</span> <span class="p">}</span>
 </pre></div>
 
 
@@ -254,8 +262,8 @@ $ gem install simpler-tiles
     <h2>A Simple Tile Server</h2>
 
     <p>
-      Simpler Tiles was designed to make slippy maps so the following is a full tile
-      server using sinatra, it will open display any shapefile on your hard drive
+      Simpler Tiles was designed to make slippy maps, and the following is a full tile
+      server using sinatra. It will open display any shapefile on your hard drive
       by visiting a url like: <a href="">http://localhost:4567/shape/path/to/shapefile.shp</a>
     </p>
 
@@ -347,7 +355,59 @@ $ gem install simpler-tiles
 
     <h2>Tips and Tricks</h2>
 
+    <p>
+      Deploying dynamically generated maps is difficult because of the data sizes and
+      processing required to render them. At ProPublica we have been following
+      these best practices:
+    </p>
 
+    <ol>
+      <li>
+        If you are using a PostGIS backend make sure to limit your queries to
+        the bounds of the image. You will want to add a where clause to each
+        trip to the database like so:
+<div class="highlight"><pre><span class="n">layer</span><span class="o">.</span><span class="n">query</span> <span class="no">Shape</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="s2">&quot;the_geom &amp;&amp; SRID=4326;</span><span class="si">#{</span><span class="n">map</span><span class="o">.</span><span class="n">buffered_bounds</span><span class="o">.</span><span class="n">reproject</span><span class="p">(</span><span class="n">map</span><span class="o">.</span><span class="n">srs</span><span class="p">,</span> <span class="s1">&#39;epsg:4326&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">to_wkt</span><span class="si">}</span><span class="s2">&#39;}&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">to_sql</span> <span class="k">do</span> <span class="o">|</span><span class="n">query</span><span class="o">|</span>
+  <span class="c1"># ...</span>
+<span class="k">end</span>
+</pre></div>
+
+        This will protect against doing a full table scan in your database.
+      </li>
+      <li>
+        <p>
+          If you are serving images as part of a tiled map, you'll also want to
+          put a proxy in front of your server with far future expiration date. At
+          propublica we're using cloudfront to serve this tile:
+        </p>
+        <img src="http://tiles-a.propublica.org/redistricting-maps/tiles/CA/12/330/789/11.png">
+        <p>
+          It will also speed up browser-side rendering if you have 4 domains
+          that proxy the tiles (eg. tiles-a.propublica.org, tiles-b.propublica.org, etc)
+        </p>
+      </li>
+      <li>
+        Because of the extra time spent in collision detection for labels, you'll
+        probably want to limit the amount of labels you are displaying on a particular
+        tile.
+      </li>
+      <li>
+        If you are displaying labels (cf.
+        <a href="http://propublica.github.com/simple-tiles/#styles">text-field and font styles</a>)
+        you'll want to use a buffer -- usually  a quarter to a half of a tile
+        (i.e. for a 256 tile set the buffer to be 64 to 128 pixels) -- so that
+        the layout isn't clipped at tile boundaries. You can assign a buffer on
+        <tt>SimplerTiles::Map</tt> objects like so:
+
+<div class="highlight"><pre>  <span class="n">map</span><span class="o">.</span><span class="n">buffer</span> <span class="mi">128</span>
+</pre></div>
+
+      </li>
+      <li>
+        Finally, for truly speedy maps, storing your spatial data in the Web Mercator
+        projection -- <tt>epsg:3785</tt> -- will cut down on response time
+        because each geometry object won't need to be pre-processed.
+      </li>
+    </ol>
 
     <h2>License</h2>
 
@@ -373,6 +433,6 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 IN THE SOFTWARE.
 </pre>
 
-    <p><em>Simple Tiles is a project of ProPublica.</em></p>
+    <p><em>Simpler Tiles is a project of ProPublica.</em></p>
   </body>
 </html>

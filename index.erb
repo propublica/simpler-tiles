@@ -72,6 +72,10 @@
         background-color: #e6f3ff;
       }
 
+      ol {
+        padding-left: 0px;
+      }
+
       code, pre, tt { font-family: Monaco, monospace; font-size: 12px; }
       tt { border:1px solid #cdcdcd; padding: 2px;}
       dd { margin-left: 1em; }
@@ -155,13 +159,15 @@
     </style>
   </head>
   <body>
+    <img src="simpler-tiles-logo.png">
     <p>
       <a href="http://github.com/propublica/simpler-tiles">Simpler Tiles</a>
       is a library containing ruby bindings for
       <a href="http://propublica.github.com/simple-tiles/">Simple Tiles</a>, a
       GIS image generation library. It allows you to generate PNG based map
       images without having to dip into straight C and easily connects with
-      ActiveRecord.
+      ActiveRecord. It can display any vector data that
+      <a href="http://www.gdal.org/ogr/ogr_formats.html">OGR</a> can read.
     </p>
 
     <p>
@@ -173,7 +179,7 @@ $ gem install simpler-tiles
     </p>
 
     <p>
-      The api docs are <a href="docs/index.html">here</a>, and if you have
+      The api docs are <a href="doc/index.html">here</a>, and if you have
       comments or questions head on over to <tt>#newsapps</tt> or <tt>#propublica</tt>
       on Freenode, or post them in the github issue
       <a href="https://github.com/propublica/simpler-tiles/issues?sort=created&direction=desc&state=open">tracker</a>.
@@ -198,7 +204,9 @@ $ gem install simpler-tiles
         <tt><a href="doc/SimplerTiles/Map.html">SimplerTiles::Map</a></tt>: wraps
         the <tt><a href="http://propublica.github.com/simple-tiles/#maps">simplet_map_t</a></tt>
         C structure and contains projection information, <tt>SimplerTiles::Bounds</tt>
-        and a list of <tt>SimplerTiles::Layer</tt> objects.
+        and a list of <tt>SimplerTiles::Layer</tt> objects. If you are using ActiveRecord
+        you can connect to and query your database backend by calling the
+        <tt>ar_layer</tt> method.
       </li>
       <li>
         <tt><a href="doc/SimplerTiles/Bounds.html">SimplerTiles::Bounds</a></tt>: wraps
@@ -265,8 +273,8 @@ CODE
     <h2>A Simple Tile Server</h2>
 
     <p>
-      Simpler Tiles was designed to make slippy maps so the following is a full tile
-      server using sinatra, it will open display any shapefile on your hard drive
+      Simpler Tiles was designed to make slippy maps, and the following is a full tile
+      server using sinatra. It will open display any shapefile on your hard drive
       by visiting a url like: <a href="">http://localhost:4567/shape/path/to/shapefile.shp</a>
     </p>
 
@@ -361,7 +369,65 @@ CODE
 
     <h2>Tips and Tricks</h2>
 
+    <p>
+      Deploying dynamically generated maps is difficult because of the data sizes and
+      processing required to render them. At ProPublica we have been following
+      these best practices:
+    </p>
 
+    <ol>
+      <li>
+        If you are using a PostGIS backend make sure to limit your queries to
+        the bounds of the image. You will want to add a where clause to each
+        trip to the database like so:
+<%= highlight 'ruby', <<-CODE
+
+layer.query Shape.where("the_geom && SRID=4326;\#\{map.buffered_bounds.reproject(map.srs, 'epsg:4326').to_wkt}'\}").to_sql do |query|
+  # ...
+end
+
+CODE
+%>
+        This will protect against doing a full table scan in your database.
+      </li>
+      <li>
+        <p>
+          If you are serving images as part of a tiled map, you'll also want to
+          put a proxy in front of your server with far future expiration date. At
+          propublica we're using cloudfront to serve this tile:
+        </p>
+        <img src="http://tiles-a.propublica.org/redistricting-maps/tiles/CA/12/330/789/11.png">
+        <p>
+          It will also speed up browser-side rendering if you have 4 domains
+          that proxy the tiles (eg. tiles-a.propublica.org, tiles-b.propublica.org, etc)
+        </p>
+      </li>
+      <li>
+        Because of the extra time spent in collision detection for labels, you'll
+        probably want to limit the amount of labels you are displaying on a particular
+        tile.
+      </li>
+      <li>
+        If you are displaying labels (cf.
+        <a href="http://propublica.github.com/simple-tiles/#styles">text-field and font styles</a>)
+        you'll want to use a buffer -- usually  a quarter to a half of a tile
+        (i.e. for a 256 tile set the buffer to be 64 to 128 pixels) -- so that
+        the layout isn't clipped at tile boundaries. You can assign a buffer on
+        <tt>SimplerTiles::Map</tt> objects like so:
+
+<%= highlight 'ruby', <<-CODE
+
+  map.buffer 128
+
+CODE
+%>
+      </li>
+      <li>
+        Finally, for truly speedy maps, storing your spatial data in the Web Mercator
+        projection -- <tt>epsg:3785</tt> -- will cut down on response time
+        because each geometry object won't need to be pre-processed.
+      </li>
+    </ol>
 
     <h2>License</h2>
 
@@ -387,6 +453,6 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 IN THE SOFTWARE.
 </pre>
 
-    <p><em>Simple Tiles is a project of ProPublica.</em></p>
+    <p><em>Simpler Tiles is a project of ProPublica.</em></p>
   </body>
 </html>

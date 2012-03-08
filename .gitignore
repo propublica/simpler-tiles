@@ -12,6 +12,6 @@ Gemfile
 .document
 Gemfile.lock
 *.orig
-*.png
+test/*.png
 mkmf.log
 ext/simpler_tiles/Makefile
