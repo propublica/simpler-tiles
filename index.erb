@@ -90,7 +90,7 @@
         height: 1px;
       }
 
-      /*  docco styles */
+      /* styles stolen from docco */
       body .hll { background-color: #ffffcc }
       body .c { color: #408080; font-style: italic }  /* Comment */
       body .err { border: 1px solid #FF0000 }         /* Error */
@@ -267,7 +267,7 @@ CODE
     <p>
       Simpler Tiles was designed to make slippy maps so the following is a full tile
       server using sinatra, it will open display any shapefile on your hard drive
-      by visiting a url like: <a href="">http://localhost:4567/path/to/shapefile.shp</a>
+      by visiting a url like: <a href="">http://localhost:4567/shape/path/to/shapefile.shp</a>
     </p>
 
 <%= highlight 'ruby', <<-CODE
@@ -282,7 +282,7 @@ ROOT = File.expand_path("~")
 # Set up a route that will grab the path to a shapefile and render the
 # index template below.
 get '/shape/*' do
-  erb :index, :locals => params
+  erb :index
 end
 
 # Set up the tile url to capture x, y, z coordinates for slippy tile generation
