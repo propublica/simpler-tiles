@@ -162,7 +162,7 @@
     <img src="simpler-tiles-logo.png">
     <p>
       <a href="http://github.com/propublica/simpler-tiles">Simpler Tiles</a>
-      is a library containing ruby bindings for
+      is a library of ruby bindings for
       <a href="http://propublica.github.com/simple-tiles/">Simple Tiles</a>, a
       GIS image generation library. It allows you to generate PNG based map
       images without having to dip into straight C and easily connects with
@@ -171,8 +171,8 @@
     </p>
 
     <p>
-      The source is at <a href="http://github.com/propublica/simpler-tiles">Github</a>
-      and you can install the gem with:
+      The source is at <a href="http://github.com/propublica/simpler-tiles">Github</a>.
+      You can install the gem with:
 <pre>
 $ gem install simpler-tiles
 </pre>
@@ -188,10 +188,10 @@ $ gem install simpler-tiles
     <h2>Dependencies</h2>
 
     <p>
-      Simpler Tiles depends on Simple Tiles, OGR, Cairo and Pango, you can find
+      Simpler Tiles depends on <a href="http://propublica.github.com/simple-tiles/">Simple Tiles</a>, <a href="http://www.gdal.org/ogr/">OGR</a>, <a href="http://cairographics.org/">Cairo</a> and <a href="http://www.pango.org/">Pango</a>. You can find
       installation instructions for these libraries in the
-      <a href="http://propublica.github.com/simple-tiles/#dependencies">Simple Tiles</a>
-      documentation.
+      <a href="http://propublica.github.com/simple-tiles/#dependencies">Simple Tiles
+      documentation</a>.
     </p>
 
     <h2>Overview</h2>
@@ -222,7 +222,7 @@ $ gem install simpler-tiles
       <li>
         <tt><a href="doc/SimplerTiles/Query.html">SimplerTiles::Query</a></tt>: wraps
         the <tt><a href="http://propublica.github.com/simple-tiles/#queries">simplet_query_t</a></tt>
-        C structure and contains an OGR SQL string to filter it's parent layer's
+        C structure and contains an OGR SQL string to filter its parent layer's
         data source.
       </li>
       <li>
@@ -270,11 +270,11 @@ CODE
 %>
 
 
-    <h2>A Simple Tile Server</h2>
+    <h2>A Basic Tile Server</h2>
 
     <p>
-      Simpler Tiles was designed to make slippy maps, and the following is a full tile
-      server using sinatra. It will open display any shapefile on your hard drive
+      Simpler Tiles was designed to make <a href="http://wiki.openstreetmap.org/wiki/Slippy_Map">slippy maps</a>. The following is a basic tile
+      server using <a href="http://sinatrarb.com">Sinatra</a>. It will open display any shapefile on your hard drive
       by visiting a url like: <a href="">http://localhost:4567/shape/path/to/shapefile.shp</a>
     </p>
 
@@ -363,8 +363,8 @@ CODE
 %>
 
     <p>
-      That's in no way a safe or secure thing to put on the internet, but it will
-      do as a replacement for QGIS!
+      <strong>That's in no way a safe or secure thing to put on the internet</strong>, but it will
+      do as a simple replacement for QGIS!
     </p>
 
     <h2>Tips and Tricks</h2>
@@ -378,7 +378,7 @@ CODE
     <ol>
       <li>
         If you are using a PostGIS backend make sure to limit your queries to
-        the bounds of the image. You will want to add a where clause to each
+        the bounds of the image. You will want to add a <tt>where</tt> clause to each
         trip to the database like so:
 <%= highlight 'ruby', <<-CODE
 
@@ -391,16 +391,10 @@ CODE
         This will protect against doing a full table scan in your database.
       </li>
       <li>
-        <p>
           If you are serving images as part of a tiled map, you'll also want to
-          put a proxy in front of your server with far future expiration date. At
-          propublica we're using cloudfront to serve this tile:
-        </p>
-        <img src="http://tiles-a.propublica.org/redistricting-maps/tiles/CA/12/330/789/11.png">
-        <p>
-          It will also speed up browser-side rendering if you have 4 domains
-          that proxy the tiles (eg. tiles-a.propublica.org, tiles-b.propublica.org, etc)
-        </p>
+          put a proxy in front of your server with far future expiration date.
+          It will also speed up browser-side rendering if you have multiple domains
+          that proxy the tiles (eg. tiles1.example.com, tiles2.example.com, etc.)
       </li>
       <li>
         Because of the extra time spent in collision detection for labels, you'll
