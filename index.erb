@@ -391,10 +391,17 @@ CODE
         This will protect against doing a full table scan in your database.
       </li>
       <li>
+        <p>
           If you are serving images as part of a tiled map, you'll also want to
-          put a proxy in front of your server with far future expiration date.
+          put a proxy in front of your server with far future expiration date. At
+          ProPublica we're using cloudfront to serve this tile:
+        </p>
+
+        <img src="http://tiles-a.propublica.org/redistricting-maps/tiles/CA/12/330/789/11.png">
+        <p>
           It will also speed up browser-side rendering if you have multiple domains
-          that proxy the tiles (eg. tiles1.example.com, tiles2.example.com, etc.)
+          that proxy the tiles (eg. tiles-a.propublica.org, tiles-b.propublica.org, etc.)
+        </p>
       </li>
       <li>
         Because of the extra time spent in collision detection for labels, you'll
@@ -419,7 +426,7 @@ CODE
       <li>
         Finally, for truly speedy maps, storing your spatial data in the Web Mercator
         projection -- <tt>epsg:3785</tt> -- will cut down on response time
-        because each geometry object won't need to be pre-processed.
+        because each geometry object won't need to be reprojected.
       </li>
     </ol>
 
