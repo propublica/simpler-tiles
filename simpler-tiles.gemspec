@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Jeff Larson"]
   s.date = %q{2011-06-23}
-  s.description = %q{mappy maps!}
+  s.description = %q{Ruby bindings for Simple Tiles}
   s.email = %q{thejefflarson@gmail.com}
   s.extensions = ["ext/simpler_tiles/extconf.rb"]
   s.extra_rdoc_files = [
@@ -20,7 +20,7 @@ Gem::Specification.new do |s|
   s.homepage = %q{http://github.com/thejefflarson/simpler-tiles}
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
-  s.summary = %q{maps!}
+  s.summary = %q{A set of ruby bindings for the Simple Tiles mapping library.}
 
   s.add_development_dependency(%q<rake-compiler>, [">= 0"])
   s.add_development_dependency(%q<bundler>, ["~> 1.1.0"])
