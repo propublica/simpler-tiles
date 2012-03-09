@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
   ]
   s.files = `git ls-files`.split("\n")
   s.test_files = `git ls-files -- {test}/*`.split("\n")
-  s.homepage = %q{http://github.com/thejefflarson/simpler-tiles}
+  s.homepage = %q{http://github.com/propublica/simpler-tiles}
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
   s.summary = %q{A set of ruby bindings for the Simple Tiles mapping library.}
