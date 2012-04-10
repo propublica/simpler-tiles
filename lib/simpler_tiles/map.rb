@@ -5,7 +5,6 @@ module SimplerTiles
   class Map
     include SimplerTiles::PP
 
-    # Initialize a map with Mercator Projection and a tile square by default
     def initialize
       yield self if block_given?
     end
