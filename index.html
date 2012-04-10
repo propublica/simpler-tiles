@@ -70,7 +70,9 @@
 
       code, pre, tt { font-family: Monaco, monospace; font-size: 12px; }
       tt { border:1px solid #efefef; padding: 2px;}
-      dd { margin-left: 1em; }
+      dd { margin-left: 0; }
+      dt { margin-left: 1em; }
+
       a { color: black; }
       a:hover { text-decoration: none; }
       pre {
@@ -406,9 +408,18 @@ $ gem install simpler-tiles
       <li>
         Finally, for truly speedy maps, storing your spatial data in the Web Mercator
         projection -- <tt>epsg:3785</tt> -- will cut down on response time
-        because each geometry object won't need to be pre-processed.
+        because each geometry object won't need to be reprojected.
       </li>
     </ol>
+
+    <h2>Change Log</h2>
+
+    <dl>
+      <dd><b>0.0.2</b> &mdash; April 10, 2012</dd>
+      <dt>Removed initialization defaults from <tt>SimplerTiles::Map</tt></dt>
+      <dd><b>0.0.1</b></dd>
+      <dt>Initial release.</dt>
+    </dl>
 
     <h2>License</h2>
 

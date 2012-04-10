@@ -7,9 +7,6 @@ module SimplerTiles
 
     # Initialize a map with Mercator Projection and a tile square by default
     def initialize
-      self.srs    = "epsg:3785"
-      self.width  = 256
-      self.height = 256
       yield self if block_given?
     end
 
