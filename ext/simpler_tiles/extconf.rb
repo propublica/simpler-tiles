@@ -35,7 +35,7 @@ missing "cairo"        unless find_library "cairo",        "cairo_surface_write_
 missing "simple-tiles" unless find_library "simple-tiles", "simplet_map_render_to_stream"
 missing "gdal"         unless find_header "ogr_api.h"
 missing "gdal"         unless find_header "ogr_srs_api.h"
-missing "cairo"        unless find_header "cairo/cairo.h"
+missing "cairo"        unless find_header "cairo.h"
 missing "pango"        unless find_header "pango/pangocairo.h"
 missing "simple-tiles" unless find_header "simple-tiles/simple_tiles.h"
 
