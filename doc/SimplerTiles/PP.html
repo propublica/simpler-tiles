@@ -83,9 +83,8 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>
-PP contains a pretty print routine for SimplerTiles objects.
-</p>
+    
+<p>PP contains a pretty print routine for SimplerTiles objects.</p>
 
 
   </div>
@@ -124,9 +123,8 @@ PP contains a pretty print routine for SimplerTiles objects.
   
 
   
-    <span class="summary_desc"><div class='inline'><p>
-A simple Nokogiri inspired inspection routine.
-</p>
+    <span class="summary_desc"><div class='inline'>
+<p>A simple Nokogiri inspired inspection routine.</p>
 </div></span>
   
 </li>
@@ -150,9 +148,8 @@ A simple Nokogiri inspired inspection routine.
   
 </p><div class="docstring">
   <div class="discussion">
-    <p>
-A simple Nokogiri inspired inspection routine.
-</p>
+    
+<p>A simple Nokogiri inspired inspection routine.</p>
 
 
   </div>
@@ -177,14 +174,13 @@ A simple Nokogiri inspired inspection routine.
     <td>
       <pre class="code"><span class="info file"># File 'lib/simpler_tiles/mixins/pp.rb', line 5</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_inspect identifier id'>inspect</span>
-  <span class='rubyid_attributes identifier id'>attributes</span> <span class='assign token'>=</span> <span class='rubyid_inspect_attributes identifier id'>inspect_attributes</span><span class='dot token'>.</span><span class='rubyid_map identifier id'>map</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_attribute identifier id'>attribute</span><span class='bitor op'>|</span>
-    <span class='dstring node'>&quot;#{attribute.to_s}=#{send(attribute).inspect}&quot;</span>
-  <span class='rubyid_end end kw'>end</span><span class='dot token'>.</span><span class='rubyid_join identifier id'>join</span> <span class='string val'>' '</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_inspect'>inspect</span>
+  <span class='id identifier rubyid_attributes'>attributes</span> <span class='op'>=</span> <span class='id identifier rubyid_inspect_attributes'>inspect_attributes</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_attribute'>attribute</span><span class='op'>|</span>
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_attribute'>attribute</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rbrace'>}</span><span class='tstring_content'>=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='id identifier rubyid_attribute'>attribute</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>end</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'> </span><span class='tstring_end'>'</span></span>
 
-  <span class='dstring node'>&quot;#&lt;#{self.class.name}:#{sprintf(&quot;0x%x&quot;, object_id)} #{attributes}&gt;&quot;</span>
-<span class='rubyid_end end kw'>end</span>
-</pre>
+  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>#&lt;</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='rbrace'>}</span><span class='tstring_content'>:</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_sprintf'>sprintf</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>0x%x</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_object_id'>object_id</span><span class='rparen'>)</span><span class='rbrace'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_attributes'>attributes</span><span class='rbrace'>}</span><span class='tstring_content'>&gt;</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -195,9 +191,9 @@ A simple Nokogiri inspired inspection routine.
 </div>
     
     <div id="footer">
-  Generated on Tue Apr 10 17:04:09 2012 by 
+  Generated on Sat Dec  8 18:04:34 2012 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.5 (ruby-1.8.7).
+  0.7.5 (ruby-1.9.3).
 </div>
 
   </body>

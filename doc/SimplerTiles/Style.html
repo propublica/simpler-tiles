@@ -100,10 +100,9 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>
-Each style defines a particular directive for styling the map. For a list
-of keys and arguments refer to the simple-tiles documentation.
-</p>
+    
+<p>Each style defines a particular directive for styling the map. For a list
+of keys and arguments refer to the simple-tiles documentation.</p>
 
 
   </div>
@@ -142,9 +141,8 @@ of keys and arguments refer to the simple-tiles documentation.
   
 
   
-    <span class="summary_desc"><div class='inline'><p>
-Get the arg for this Style.
-</p>
+    <span class="summary_desc"><div class='inline'>
+<p>Get the arg for this Style.</p>
 </div></span>
   
 </li>
@@ -166,9 +164,8 @@ Get the arg for this Style.
   
 
   
-    <span class="summary_desc"><div class='inline'><p>
-Set the arg for this Style.
-</p>
+    <span class="summary_desc"><div class='inline'>
+<p>Set the arg for this Style.</p>
 </div></span>
   
 </li>
@@ -192,9 +189,8 @@ Set the arg for this Style.
   
 
   
-    <span class="summary_desc"><div class='inline'><p>
-Construct a new style.
-</p>
+    <span class="summary_desc"><div class='inline'>
+<p>Construct a new style.</p>
 </div></span>
   
 </li>
@@ -216,9 +212,8 @@ Construct a new style.
   
 
   
-    <span class="summary_desc"><div class='inline'><p>
-Get the key for this Style.
-</p>
+    <span class="summary_desc"><div class='inline'>
+<p>Get the key for this Style.</p>
 </div></span>
   
 </li>
@@ -240,9 +235,8 @@ Get the key for this Style.
   
 
   
-    <span class="summary_desc"><div class='inline'><p>
-Set the key for this Style.
-</p>
+    <span class="summary_desc"><div class='inline'>
+<p>Set the key for this Style.</p>
 </div></span>
   
 </li>
@@ -273,9 +267,8 @@ Set the key for this Style.
   
 </p><div class="docstring">
   <div class="discussion">
-    <p>
-Construct a new style
-</p>
+    
+<p>Construct a new style</p>
 
 
   </div>
@@ -297,11 +290,10 @@ Construct a new style
     <td>
       <pre class="code"><span class="info file"># File 'lib/simpler_tiles/style.rb', line 8</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='rubyid_key identifier id'>key</span><span class='comma token'>,</span> <span class='rubyid_arg identifier id'>arg</span><span class='rparen token'>)</span>
-  <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_key identifier id'>key</span> <span class='assign token'>=</span> <span class='rubyid_key identifier id'>key</span>
-  <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_arg identifier id'>arg</span> <span class='assign token'>=</span> <span class='rubyid_arg identifier id'>arg</span>
-<span class='rubyid_end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='id identifier rubyid_arg'>arg</span><span class='rparen'>)</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_key'>key</span> <span class='op'>=</span> <span class='id identifier rubyid_key'>key</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_arg'>arg</span> <span class='op'>=</span> <span class='id identifier rubyid_arg'>arg</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -323,9 +315,8 @@ Construct a new style
   
 </p><div class="docstring">
   <div class="discussion">
-    <p>
-Get the arg for this Style.
-</p>
+    
+<p>Get the arg for this Style.</p>
 
 
   </div>
@@ -357,9 +348,8 @@ Get the arg for this Style.
     <td>
       <pre class="code"><span class="info file"># File 'ext/simpler_tiles/style.c'</span>
 
-<span class='rubyid_static identifier id'>static</span> <span class='rubyid_VALUE constant id'>VALUE</span>
-<span class='rubyid_get_arg identifier id'>get_arg</span><span class='lparen token'>(</span><span class='rubyid_VALUE constant id'>VALUE</span> <span class='rubyid_self self kw'>self</span><span class='rparen token'>)</span><span class='lbrace token'>{</span>
-</pre>
+static VALUE
+get_arg(VALUE self){</pre>
     </td>
   </tr>
 </table>
@@ -374,9 +364,8 @@ Get the arg for this Style.
   
 </p><div class="docstring">
   <div class="discussion">
-    <p>
-Set the arg for this Style.
-</p>
+    
+<p>Set the arg for this Style.</p>
 
 
   </div>
@@ -423,9 +412,8 @@ Set the arg for this Style.
     <td>
       <pre class="code"><span class="info file"># File 'ext/simpler_tiles/style.c'</span>
 
-<span class='rubyid_static identifier id'>static</span> <span class='rubyid_VALUE constant id'>VALUE</span>
-<span class='rubyid_set_arg identifier id'>set_arg</span><span class='lparen token'>(</span><span class='rubyid_VALUE constant id'>VALUE</span> <span class='rubyid_self self kw'>self</span><span class='comma token'>,</span> <span class='rubyid_VALUE constant id'>VALUE</span> <span class='rubyid_arg identifier id'>arg</span><span class='rparen token'>)</span><span class='lbrace token'>{</span>
-</pre>
+static VALUE
+set_arg(VALUE self, VALUE arg){</pre>
     </td>
   </tr>
 </table>
@@ -440,9 +428,8 @@ Set the arg for this Style.
   
 </p><div class="docstring">
   <div class="discussion">
-    <p>
-Get the key for this Style.
-</p>
+    
+<p>Get the key for this Style.</p>
 
 
   </div>
@@ -489,9 +476,8 @@ Get the key for this Style.
     <td>
       <pre class="code"><span class="info file"># File 'ext/simpler_tiles/style.c'</span>
 
-<span class='rubyid_static identifier id'>static</span> <span class='rubyid_VALUE constant id'>VALUE</span>
-<span class='rubyid_get_key identifier id'>get_key</span><span class='lparen token'>(</span><span class='rubyid_VALUE constant id'>VALUE</span> <span class='rubyid_self self kw'>self</span><span class='rparen token'>)</span><span class='lbrace token'>{</span>
-</pre>
+static VALUE
+get_key(VALUE self){</pre>
     </td>
   </tr>
 </table>
@@ -506,9 +492,8 @@ Get the key for this Style.
   
 </p><div class="docstring">
   <div class="discussion">
-    <p>
-Set the key for this Style.
-</p>
+    
+<p>Set the key for this Style.</p>
 
 
   </div>
@@ -555,9 +540,8 @@ Set the key for this Style.
     <td>
       <pre class="code"><span class="info file"># File 'ext/simpler_tiles/style.c'</span>
 
-<span class='rubyid_static identifier id'>static</span> <span class='rubyid_VALUE constant id'>VALUE</span>
-<span class='rubyid_set_key identifier id'>set_key</span><span class='lparen token'>(</span><span class='rubyid_VALUE constant id'>VALUE</span> <span class='rubyid_self self kw'>self</span><span class='comma token'>,</span> <span class='rubyid_VALUE constant id'>VALUE</span> <span class='rubyid_key identifier id'>key</span><span class='rparen token'>)</span><span class='lbrace token'>{</span>
-</pre>
+static VALUE
+set_key(VALUE self, VALUE key){</pre>
     </td>
   </tr>
 </table>
@@ -568,9 +552,9 @@ Set the key for this Style.
 </div>
     
     <div id="footer">
-  Generated on Tue Apr 10 17:04:09 2012 by 
+  Generated on Sat Dec  8 18:04:34 2012 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.5 (ruby-1.8.7).
+  0.7.5 (ruby-1.9.3).
 </div>
 
   </body>

@@ -100,10 +100,9 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>
-Each Bounds represents a rectangular box, for <span class='object_link'><a href="Map.html" title="SimplerTiles::Map (class)">Map</a></span> objects they define the
-boundary of the data to return from each <span class='object_link'><a href="Layer.html" title="SimplerTiles::Layer (class)">Layer</a></span>.
-</p>
+    
+<p>Each Bounds represents a rectangular box, for <span class='object_link'><a href="Map.html" title="SimplerTiles::Map (class)">Map</a></span> objects they define the
+boundary of the data to return from each <span class='object_link'><a href="Layer.html" title="SimplerTiles::Layer (class)">Layer</a></span>.</p>
 
 
   </div>
@@ -142,9 +141,8 @@ boundary of the data to return from each <span class='object_link'><a href="Laye
   
 
   
-    <span class="summary_desc"><div class='inline'><p>
-Extend the bounds to include the point defined by x, y.
-</p>
+    <span class="summary_desc"><div class='inline'>
+<p>Extend the bounds to include the point defined by x, y.</p>
 </div></span>
   
 </li>
@@ -168,9 +166,8 @@ Extend the bounds to include the point defined by x, y.
   
 
   
-    <span class="summary_desc"><div class='inline'><p>
-Initialize a bounds from max and min coordinates.
-</p>
+    <span class="summary_desc"><div class='inline'>
+<p>Initialize a bounds from max and min coordinates.</p>
 </div></span>
   
 </li>
@@ -192,10 +189,9 @@ Initialize a bounds from max and min coordinates.
   
 
   
-    <span class="summary_desc"><div class='inline'><p>
-Reproject the bounds from <tt>from_proj</tt> to new projection
-<tt>to_proj</tt>.
-</p>
+    <span class="summary_desc"><div class='inline'>
+<p>Reproject the bounds from <tt>from_proj</tt> to new projection
+<tt>to_proj</tt>.</p>
 </div></span>
   
 </li>
@@ -217,9 +213,8 @@ Reproject the bounds from <tt>from_proj</tt> to new projection
   
 
   
-    <span class="summary_desc"><div class='inline'><p>
-Return a WKT representation of the bounds.
-</p>
+    <span class="summary_desc"><div class='inline'>
+<p>Return a WKT representation of the bounds.</p>
 </div></span>
   
 </li>
@@ -250,9 +245,8 @@ Return a WKT representation of the bounds.
   
 </p><div class="docstring">
   <div class="discussion">
-    <p>
-Initialize a bounds from max and min coordinates
-</p>
+    
+<p>Initialize a bounds from max and min coordinates</p>
 
 
   </div>
@@ -274,11 +268,10 @@ Initialize a bounds from max and min coordinates
     <td>
       <pre class="code"><span class="info file"># File 'lib/simpler_tiles/bounds.rb', line 8</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='rubyid_maxx identifier id'>maxx</span><span class='comma token'>,</span> <span class='rubyid_maxy identifier id'>maxy</span><span class='comma token'>,</span> <span class='rubyid_minx identifier id'>minx</span><span class='comma token'>,</span> <span class='rubyid_miny identifier id'>miny</span><span class='rparen token'>)</span>
-  <span class='rubyid_grow identifier id'>grow</span> <span class='rubyid_maxx identifier id'>maxx</span><span class='comma token'>,</span> <span class='rubyid_maxy identifier id'>maxy</span>
-  <span class='rubyid_grow identifier id'>grow</span> <span class='rubyid_minx identifier id'>minx</span><span class='comma token'>,</span> <span class='rubyid_miny identifier id'>miny</span>
-<span class='rubyid_end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_maxx'>maxx</span><span class='comma'>,</span> <span class='id identifier rubyid_maxy'>maxy</span><span class='comma'>,</span> <span class='id identifier rubyid_minx'>minx</span><span class='comma'>,</span> <span class='id identifier rubyid_miny'>miny</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_grow'>grow</span> <span class='id identifier rubyid_maxx'>maxx</span><span class='comma'>,</span> <span class='id identifier rubyid_maxy'>maxy</span>
+  <span class='id identifier rubyid_grow'>grow</span> <span class='id identifier rubyid_minx'>minx</span><span class='comma'>,</span> <span class='id identifier rubyid_miny'>miny</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -300,9 +293,8 @@ Initialize a bounds from max and min coordinates
   
 </p><div class="docstring">
   <div class="discussion">
-    <p>
-Extend the bounds to include the point defined by x, y.
-</p>
+    
+<p>Extend the bounds to include the point defined by x, y.</p>
 
 
   </div>
@@ -349,9 +341,8 @@ Extend the bounds to include the point defined by x, y.
     <td>
       <pre class="code"><span class="info file"># File 'ext/simpler_tiles/bounds.c'</span>
 
-<span class='rubyid_static identifier id'>static</span> <span class='rubyid_VALUE constant id'>VALUE</span>
-<span class='rubyid_grow identifier id'>grow</span><span class='lparen token'>(</span><span class='rubyid_VALUE constant id'>VALUE</span> <span class='rubyid_self self kw'>self</span><span class='comma token'>,</span> <span class='rubyid_VALUE constant id'>VALUE</span> <span class='rubyid_x identifier id'>x</span><span class='comma token'>,</span> <span class='rubyid_VALUE constant id'>VALUE</span> <span class='rubyid_y identifier id'>y</span><span class='rparen token'>)</span><span class='lbrace token'>{</span>
-</pre>
+static VALUE
+grow(VALUE self, VALUE x, VALUE y){</pre>
     </td>
   </tr>
 </table>
@@ -366,10 +357,9 @@ Extend the bounds to include the point defined by x, y.
   
 </p><div class="docstring">
   <div class="discussion">
-    <p>
-Reproject the bounds from <tt>from_proj</tt> to new projection
-<tt>to_proj</tt>. Returns a new bounds object.
-</p>
+    
+<p>Reproject the bounds from <tt>from_proj</tt> to new projection
+<tt>to_proj</tt>. Returns a new bounds object.</p>
 
 
   </div>
@@ -416,26 +406,25 @@ Reproject the bounds from <tt>from_proj</tt> to new projection
     <td>
       <pre class="code"><span class="info file"># File 'ext/simpler_tiles/bounds.c'</span>
 
-<span class='rubyid_static identifier id'>static</span> <span class='rubyid_VALUE constant id'>VALUE</span>
-<span class='rubyid_reproject identifier id'>reproject</span><span class='lparen token'>(</span><span class='rubyid_VALUE constant id'>VALUE</span> <span class='rubyid_self self kw'>self</span><span class='comma token'>,</span> <span class='rubyid_VALUE constant id'>VALUE</span> <span class='rubyid_from identifier id'>from</span><span class='comma token'>,</span> <span class='rubyid_VALUE constant id'>VALUE</span> <span class='rubyid_to identifier id'>to</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span>
-  <span class='rubyid_Check_Type constant id'>Check_Type</span><span class='lparen token'>(</span><span class='rubyid_from identifier id'>from</span><span class='comma token'>,</span> <span class='rubyid_T_STRING constant id'>T_STRING</span><span class='rparen token'>)</span><span class='semicolon token'>;</span>
-  <span class='rubyid_Check_Type constant id'>Check_Type</span><span class='lparen token'>(</span><span class='rubyid_to identifier id'>to</span><span class='comma token'>,</span> <span class='rubyid_T_STRING constant id'>T_STRING</span><span class='rparen token'>)</span><span class='semicolon token'>;</span>
-  <span class='rubyid_simplet_bounds_t identifier id'>simplet_bounds_t</span> <span class='mult op'>*</span><span class='rubyid_bounds identifier id'>bounds</span><span class='semicolon token'>;</span>
-  <span class='rubyid_if if kw'>if</span><span class='lparen token'>(</span><span class='notop op'>!</span><span class='lparen token'>(</span><span class='rubyid_bounds identifier id'>bounds</span> <span class='assign token'>=</span> <span class='rubyid_simplet_bounds_reproject identifier id'>simplet_bounds_reproject</span><span class='lparen token'>(</span><span class='rubyid_get_bounds identifier id'>get_bounds</span><span class='lparen token'>(</span><span class='rubyid_self self kw'>self</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='rubyid_RSTRING_PTR constant id'>RSTRING_PTR</span><span class='lparen token'>(</span><span class='rubyid_from identifier id'>from</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='rubyid_RSTRING_PTR constant id'>RSTRING_PTR</span><span class='lparen token'>(</span><span class='rubyid_to identifier id'>to</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
-    <span class='rubyid_rb_raise identifier id'>rb_raise</span><span class='lparen token'>(</span><span class='rubyid_rb_eRuntimeError identifier id'>rb_eRuntimeError</span><span class='comma token'>,</span> <span class='string val'>&quot;Error in creating bounds.&quot;</span><span class='rparen token'>)</span><span class='semicolon token'>;</span>
+static VALUE
+reproject(VALUE self, VALUE from, VALUE to) {
+  Check_Type(from, T_STRING);
+  Check_Type(to, T_STRING);
+  simplet_bounds_t *bounds;
+  if(!(bounds = simplet_bounds_reproject(get_bounds(self), RSTRING_PTR(from), RSTRING_PTR(to))))
+    rb_raise(rb_eRuntimeError, &quot;Error in creating bounds.&quot;);
 
-  <span class='rubyid_VALUE constant id'>VALUE</span> <span class='rubyid_id identifier id'>id</span> <span class='assign token'>=</span> <span class='rubyid_rb_intern identifier id'>rb_intern</span><span class='lparen token'>(</span><span class='string val'>&quot;new&quot;</span><span class='rparen token'>)</span><span class='semicolon token'>;</span>
+  VALUE id = rb_intern(&quot;new&quot;);
 
-  <span class='rubyid_VALUE constant id'>VALUE</span> <span class='rubyid_rbounds identifier id'>rbounds</span> <span class='assign token'>=</span> <span class='rubyid_rb_funcall identifier id'>rb_funcall</span><span class='lparen token'>(</span><span class='rubyid_cSimplerTilesBounds identifier id'>cSimplerTilesBounds</span><span class='comma token'>,</span> <span class='rubyid_id identifier id'>id</span><span class='comma token'>,</span> <span class='integer val'>4</span><span class='comma token'>,</span>
-                              <span class='rubyid_rb_float_new identifier id'>rb_float_new</span><span class='lparen token'>(</span><span class='rubyid_bounds identifier id'>bounds</span><span class='minus op'>-</span><span class='gt op'>&gt;</span><span class='rubyid_nw identifier id'>nw</span><span class='dot token'>.</span><span class='rubyid_x identifier id'>x</span><span class='rparen token'>)</span><span class='comma token'>,</span>
-                              <span class='rubyid_rb_float_new identifier id'>rb_float_new</span><span class='lparen token'>(</span><span class='rubyid_bounds identifier id'>bounds</span><span class='minus op'>-</span><span class='gt op'>&gt;</span><span class='rubyid_nw identifier id'>nw</span><span class='dot token'>.</span><span class='rubyid_y identifier id'>y</span><span class='rparen token'>)</span><span class='comma token'>,</span>
-                              <span class='rubyid_rb_float_new identifier id'>rb_float_new</span><span class='lparen token'>(</span><span class='rubyid_bounds identifier id'>bounds</span><span class='minus op'>-</span><span class='gt op'>&gt;</span><span class='rubyid_se identifier id'>se</span><span class='dot token'>.</span><span class='rubyid_x identifier id'>x</span><span class='rparen token'>)</span><span class='comma token'>,</span>
-                              <span class='rubyid_rb_float_new identifier id'>rb_float_new</span><span class='lparen token'>(</span><span class='rubyid_bounds identifier id'>bounds</span><span class='minus op'>-</span><span class='gt op'>&gt;</span><span class='rubyid_se identifier id'>se</span><span class='dot token'>.</span><span class='rubyid_y identifier id'>y</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='semicolon token'>;</span>
+  VALUE rbounds = rb_funcall(cSimplerTilesBounds, id, 4,
+                              rb_float_new(bounds-&gt;nw.x),
+                              rb_float_new(bounds-&gt;nw.y),
+                              rb_float_new(bounds-&gt;se.x),
+                              rb_float_new(bounds-&gt;se.y));
 
-  <span class='rubyid_simplet_bounds_free identifier id'>simplet_bounds_free</span><span class='lparen token'>(</span><span class='rubyid_bounds identifier id'>bounds</span><span class='rparen token'>)</span><span class='semicolon token'>;</span>
-  <span class='rubyid_return return kw'>return</span> <span class='rubyid_rbounds identifier id'>rbounds</span><span class='semicolon token'>;</span>
-<span class='rbrace token'>}</span>
-</pre>
+  simplet_bounds_free(bounds);
+  return rbounds;
+}</pre>
     </td>
   </tr>
 </table>
@@ -450,9 +439,8 @@ Reproject the bounds from <tt>from_proj</tt> to new projection
   
 </p><div class="docstring">
   <div class="discussion">
-    <p>
-Return a WKT representation of the bounds.
-</p>
+    
+<p>Return a WKT representation of the bounds.</p>
 
 
   </div>
@@ -484,9 +472,8 @@ Return a WKT representation of the bounds.
     <td>
       <pre class="code"><span class="info file"># File 'ext/simpler_tiles/bounds.c'</span>
 
-<span class='rubyid_static identifier id'>static</span> <span class='rubyid_VALUE constant id'>VALUE</span>
-<span class='rubyid_to_wkt identifier id'>to_wkt</span><span class='lparen token'>(</span><span class='rubyid_VALUE constant id'>VALUE</span> <span class='rubyid_self self kw'>self</span><span class='rparen token'>)</span><span class='lbrace token'>{</span>
-</pre>
+static VALUE
+to_wkt(VALUE self){</pre>
     </td>
   </tr>
 </table>
@@ -497,9 +484,9 @@ Return a WKT representation of the bounds.
 </div>
     
     <div id="footer">
-  Generated on Tue Apr 10 17:04:10 2012 by 
+  Generated on Sat Dec  8 18:04:34 2012 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.5 (ruby-1.8.7).
+  0.7.5 (ruby-1.9.3).
 </div>
 
   </body>

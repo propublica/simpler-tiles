@@ -100,11 +100,9 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>
-A Query represents an OGR SQL query against a layer&#8217;s datasource.
-Queries contain styles that are applied to each returned object from the
-datastore.
-</p>
+    
+<p>A Query represents an OGR SQL query against a layer's datasource. Queries
+contain styles that are applied to each returned object from the datastore.</p>
 
 
   </div>
@@ -166,9 +164,8 @@ datastore.
   
 
   
-    <span class="summary_desc"><div class='inline'><p>
-Initialize a query with a string containing OGR SQL.
-</p>
+    <span class="summary_desc"><div class='inline'>
+<p>Initialize a query with a string containing OGR SQL.</p>
 </div></span>
   
 </li>
@@ -190,9 +187,8 @@ Initialize a query with a string containing OGR SQL.
   
 
   
-    <span class="summary_desc"><div class='inline'><p>
-Get the OGR SQL for this Query.
-</p>
+    <span class="summary_desc"><div class='inline'>
+<p>Get the OGR SQL for this Query.</p>
 </div></span>
   
 </li>
@@ -214,9 +210,8 @@ Get the OGR SQL for this Query.
   
 
   
-    <span class="summary_desc"><div class='inline'><p>
-Set the OGR SQL for this Query.
-</p>
+    <span class="summary_desc"><div class='inline'>
+<p>Set the OGR SQL for this Query.</p>
 </div></span>
   
 </li>
@@ -238,10 +233,9 @@ Set the OGR SQL for this Query.
   
 
   
-    <span class="summary_desc"><div class='inline'><p>
-Styles will take a hash of style declarations and adds them to the internal
-c list.
-</p>
+    <span class="summary_desc"><div class='inline'>
+<p>Styles will take a hash of style declarations and adds them to the internal
+c list.</p>
 </div></span>
   
 </li>
@@ -272,9 +266,8 @@ c list.
   
 </p><div class="docstring">
   <div class="discussion">
-    <p>
-Initialize a query with a string containing OGR SQL.
-</p>
+    
+<p>Initialize a query with a string containing OGR SQL.</p>
 
 
   </div>
@@ -307,9 +300,8 @@ Initialize a query with a string containing OGR SQL.
       
       
         &mdash;
-        <div class='inline'><p>
-the object that the method was called on
-</p>
+        <div class='inline'>
+<p>the object that the method was called on</p>
 </div>
       
     </li>
@@ -330,11 +322,10 @@ the object that the method was called on
     <td>
       <pre class="code"><span class="info file"># File 'lib/simpler_tiles/query.rb', line 8</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='rubyid_query identifier id'>query</span><span class='rparen token'>)</span>
-  <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_query identifier id'>query</span> <span class='assign token'>=</span> <span class='rubyid_query identifier id'>query</span>
-  <span class='rubyid_yield yield kw'>yield</span> <span class='rubyid_self self kw'>self</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_block_given? fid id'>block_given?</span>
-<span class='rubyid_end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_query'>query</span><span class='rparen'>)</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='id identifier rubyid_query'>query</span>
+  <span class='kw'>yield</span> <span class='kw'>self</span> <span class='kw'>if</span> <span class='id identifier rubyid_block_given?'>block_given?</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -366,9 +357,8 @@ the object that the method was called on
   
 </p><div class="docstring">
   <div class="discussion">
-    <p>
-Get the OGR SQL for this Query.
-</p>
+    
+<p>Get the OGR SQL for this Query.</p>
 
 
   </div>
@@ -400,9 +390,8 @@ Get the OGR SQL for this Query.
     <td>
       <pre class="code"><span class="info file"># File 'ext/simpler_tiles/query.c'</span>
 
-<span class='rubyid_static identifier id'>static</span> <span class='rubyid_VALUE constant id'>VALUE</span>
-<span class='rubyid_get_sql identifier id'>get_sql</span><span class='lparen token'>(</span><span class='rubyid_VALUE constant id'>VALUE</span> <span class='rubyid_self self kw'>self</span><span class='rparen token'>)</span><span class='lbrace token'>{</span>
-</pre>
+static VALUE
+get_sql(VALUE self){</pre>
     </td>
   </tr>
 </table>
@@ -417,9 +406,8 @@ Get the OGR SQL for this Query.
   
 </p><div class="docstring">
   <div class="discussion">
-    <p>
-Set the OGR SQL for this Query.
-</p>
+    
+<p>Set the OGR SQL for this Query.</p>
 
 
   </div>
@@ -451,9 +439,8 @@ Set the OGR SQL for this Query.
     <td>
       <pre class="code"><span class="info file"># File 'ext/simpler_tiles/query.c'</span>
 
-<span class='rubyid_static identifier id'>static</span> <span class='rubyid_VALUE constant id'>VALUE</span>
-<span class='rubyid_set_sql identifier id'>set_sql</span><span class='lparen token'>(</span><span class='rubyid_VALUE constant id'>VALUE</span> <span class='rubyid_self self kw'>self</span><span class='comma token'>,</span> <span class='rubyid_VALUE constant id'>VALUE</span> <span class='rubyid_query identifier id'>query</span><span class='rparen token'>)</span><span class='lbrace token'>{</span>
-</pre>
+static VALUE
+set_sql(VALUE self, VALUE query){</pre>
     </td>
   </tr>
 </table>
@@ -468,10 +455,9 @@ Set the OGR SQL for this Query.
   
 </p><div class="docstring">
   <div class="discussion">
-    <p>
-Styles will take a hash of style declarations and adds them to the internal
-c list.
-</p>
+    
+<p>Styles will take a hash of style declarations and adds them to the internal
+c list.</p>
 
 
   </div>
@@ -495,13 +481,12 @@ c list.
     <td>
       <pre class="code"><span class="info file"># File 'lib/simpler_tiles/query.rb', line 15</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_styles identifier id'>styles</span><span class='lparen token'>(</span><span class='rubyid_styles identifier id'>styles</span><span class='rparen token'>)</span>
-  <span class='rubyid_styles identifier id'>styles</span><span class='dot token'>.</span><span class='rubyid_each identifier id'>each</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_k identifier id'>k</span><span class='comma token'>,</span><span class='rubyid_v identifier id'>v</span><span class='bitor op'>|</span>
-    <span class='rubyid_style identifier id'>style</span> <span class='assign token'>=</span> <span class='rubyid_SimplerTiles constant id'>SimplerTiles</span><span class='colon2 op'>::</span><span class='rubyid_Style constant id'>Style</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span> <span class='rubyid_k identifier id'>k</span><span class='comma token'>,</span> <span class='rubyid_v identifier id'>v</span>
-    <span class='rubyid_add_style identifier id'>add_style</span> <span class='rubyid_style identifier id'>style</span>
-  <span class='rubyid_end end kw'>end</span>
-<span class='rubyid_end end kw'>end</span>
-</pre>
+<span class='kw'>def</span> <span class='id identifier rubyid_styles'>styles</span><span class='lparen'>(</span><span class='id identifier rubyid_styles'>styles</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_styles'>styles</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_k'>k</span><span class='comma'>,</span><span class='id identifier rubyid_v'>v</span><span class='op'>|</span>
+    <span class='id identifier rubyid_style'>style</span> <span class='op'>=</span> <span class='const'>SimplerTiles</span><span class='op'>::</span><span class='const'>Style</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='id identifier rubyid_k'>k</span><span class='comma'>,</span> <span class='id identifier rubyid_v'>v</span>
+    <span class='id identifier rubyid_add_style'>add_style</span> <span class='id identifier rubyid_style'>style</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -512,9 +497,9 @@ c list.
 </div>
     
     <div id="footer">
-  Generated on Tue Apr 10 17:04:09 2012 by 
+  Generated on Sat Dec  8 18:04:33 2012 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.7.5 (ruby-1.8.7).
+  0.7.5 (ruby-1.9.3).
 </div>
 
   </body>
