@@ -17,7 +17,7 @@ module SimplerTiles
 
     # A convienence method to use Active Record configuration and add a new
     # layer.
-    def ar_layer
+    def ar_layer(&blk)
       if !defined?(ActiveRecord)
         raise "ActiveRecord not available"
       end
@@ -31,7 +31,9 @@ module SimplerTiles
         :password => config[:password]
       }
 
-      layer "PG:" + params.reject {|k,v| v.nil? }.map {|k,v| "#{k}='#{v}'"}.join(' ')
+      conn = "PG:" + params.reject {|k,v| v.nil? }.map {|k,v| "#{k}=#{v}"}.join(' ')
+
+      layer(conn) {|l| blk.call(l) }
     end
 
     # Render the data to a blob of png data.
