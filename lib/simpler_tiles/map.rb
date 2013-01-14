@@ -31,7 +31,7 @@ module SimplerTiles
         :password => config[:password]
       }
 
-      layer "PG:" + params.map {|k,v| "#{k}='#{v}'"}.join(' ')
+      layer "PG:" + params.reject {|k,v| v.nil? }.map {|k,v| "#{k}='#{v}'"}.join(' ')
     end
 
     # Render the data to a blob of png data.
