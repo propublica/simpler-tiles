@@ -1,4 +1,4 @@
 module SimplerTiles
   # The version of the library
-  VERSION = "0.0.4"
+  VERSION = "0.0.5"
 end
