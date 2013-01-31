@@ -33,7 +33,7 @@ module SimplerTiles
 
       conn = "PG:" + params.reject {|k,v| v.nil? }.map {|k,v| "#{k}=#{v}"}.join(' ')
 
-      layer(conn) {|l| blk.call(l) }
+      layer conn, &blk
     end
 
     # Render the data to a blob of png data.
