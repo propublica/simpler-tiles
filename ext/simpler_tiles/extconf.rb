@@ -3,8 +3,8 @@ require 'mkmf'
 RbConfig::MAKEFILE_CONFIG['CC'] = ENV['CC'] if ENV['CC']
 
 ROOT = File.expand_path(File.join(File.dirname(__FILE__), '..', '..'))
-LIBDIR = Config::CONFIG['libdir']
-INCLUDEDIR = Config::CONFIG['includedir']
+LIBDIR = RbConfig::CONFIG['libdir']
+INCLUDEDIR = RbConfig::CONFIG['includedir']
 
 $CFLAGS << " #{ENV["CFLAGS"]}" << `pkg-config --cflags simple-tiles pangocairo`.chomp << `gdal-config --cflags`.chomp
 $LIBS << " #{ENV["LIBS"]}" << `pkg-config --libs simple-tiles pangocairo`.chomp << `gdal-config --libs`
