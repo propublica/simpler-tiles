@@ -23,7 +23,7 @@ Gem::Specification.new do |s|
   s.summary = %q{A set of ruby bindings for the Simple Tiles mapping library.}
 
   s.add_development_dependency(%q<rake-compiler>, [">= 0"])
-  s.add_development_dependency(%q<bundler>, ["~> 1.2.0"])
+  s.add_development_dependency(%q<bundler>, ["~> 1.3.0"])
   s.add_development_dependency(%q<shoulda>, ["~> 2.11.3"])
   s.add_development_dependency(%q<yard>, ["~> 0.7.5"])
 end
