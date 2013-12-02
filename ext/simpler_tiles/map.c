@@ -255,7 +255,7 @@ save(VALUE self, VALUE path){
   if(simplet_map_get_status(map) == SIMPLET_OK) {
     return Qtrue;
   } else {
-    rb_raise(rb_eRuntimeError, simplet_map_status_to_string(map));
+    rb_raise(rb_eRuntimeError, "%s", simplet_map_status_to_string(map));
     return Qfalse;
   }
 }
@@ -281,7 +281,7 @@ to_png_stream(VALUE self, VALUE block){
 
   simplet_map_render_to_stream(map, (void *)block, stream);
   if(simplet_map_get_status(map) != SIMPLET_OK)
-    rb_raise(rb_eRuntimeError, simplet_map_status_to_string(map));
+    rb_raise(rb_eRuntimeError, "%s", simplet_map_status_to_string(map));
 
   return Qnil;
 }
@@ -296,7 +296,7 @@ static VALUE
 slippy(VALUE self, VALUE x, VALUE y, VALUE z){
   simplet_map_t *map = get_map(self);
   if(simplet_map_set_slippy(map, NUM2INT(x), NUM2INT(y), NUM2INT(z)) != SIMPLET_OK)
-    rb_raise(rb_eRuntimeError, simplet_map_status_to_string(map));
+    rb_raise(rb_eRuntimeError, "%s", simplet_map_status_to_string(map));
   return Qnil;
 }
 

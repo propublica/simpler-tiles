@@ -1,7 +1,0 @@
-bounds.o: bounds.c bounds.h simpler_tiles.h map.h layer.h query.h style.h
-layer.o: layer.c layer.h simpler_tiles.h map.h bounds.h query.h style.h
-map.o: map.c map.h simpler_tiles.h bounds.h layer.h query.h style.h
-query.o: query.c query.h simpler_tiles.h map.h bounds.h layer.h style.h
-simpler_tiles.o: simpler_tiles.c simpler_tiles.h map.h bounds.h layer.h \
-  query.h style.h
-style.o: style.c style.h simpler_tiles.h map.h bounds.h layer.h query.h

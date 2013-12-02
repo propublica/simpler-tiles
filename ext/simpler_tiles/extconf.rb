@@ -12,6 +12,7 @@ $LIBS << " #{ENV["LIBS"]}" << `pkg-config --libs simple-tiles pangocairo`.chomp 
 HEADER_DIRS = [
  '/usr/local/include',
  '/usr/X11/include',
+ '/usr/local/opt/gettext/include',
  INCLUDEDIR,
  '/usr/include'
 ]
@@ -19,6 +20,7 @@ HEADER_DIRS = [
 LIB_DIRS = [
  '/usr/local/lib',
  '/usr/X11/lib',
+ '/usr/local/opt/gettext/lib',
  LIBDIR,
  '/usr/lib',
 ]
