@@ -24,6 +24,6 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency(%q<rake-compiler>, [">= 0"])
   s.add_development_dependency(%q<bundler>, ["~> 1.5.0"])
-  s.add_development_dependency(%q<shoulda>, ["~> 2.11.3"])
-  s.add_development_dependency(%q<yard>, ["~> 0.7.5"])
+  s.add_development_dependency(%q<shoulda>, ["~> 3.5.0"])
+  s.add_development_dependency(%q<yard>, ["~> 0.8.0"])
 end
