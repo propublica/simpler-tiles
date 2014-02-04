@@ -34,7 +34,7 @@ def missing(lib)
 end
 
 missing "cairo"        unless find_library "cairo",        "cairo_surface_write_to_png_stream"
-missing "simple-tiles" unless find_library "simple_tiles", "simplet_map_render_to_stream"
+missing "simple-tiles" unless find_library "simple-tiles", "simplet_map_render_to_stream"
 missing "gdal"         unless find_header "ogr_api.h"
 missing "gdal"         unless find_header "ogr_srs_api.h"
 missing "cairo"        unless find_header "cairo.h"
