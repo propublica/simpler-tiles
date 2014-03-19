@@ -21,10 +21,7 @@ mark_style(void *style){
 static void
 style_free(void *style){
   simplet_style_t *stl = style;
-  // test if we have been linked in ruby land
-  VALUE refs = (VALUE)simplet_style_get_user_data(stl);
-  // if not it is safe to free this style.
-  if(!refs) simplet_style_free(stl);
+  simplet_style_free(stl);
 }
 
 static VALUE

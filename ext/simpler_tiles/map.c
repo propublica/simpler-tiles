@@ -222,8 +222,9 @@ add_layer(VALUE self, VALUE layer){
   simplet_layer_t *lyr;
   Data_Get_Struct(layer, simplet_layer_t, lyr);
   simplet_map_add_layer_directly(map, lyr);
-  VALUE circ_ref = rb_ary_new3(2, self, layer);
+  VALUE circ_ref = self;
   simplet_layer_set_user_data(lyr, (void *)circ_ref);
+  simplet_retain((simplet_retainable_t*) lyr);
   return layer;
 }
 

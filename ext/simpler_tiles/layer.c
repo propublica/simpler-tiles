@@ -22,10 +22,7 @@ mark_layer(void *layer){
 static void
 layer_free(void *layer){
   simplet_layer_t *lyr = layer;
-  // test if we have been linked in ruby land
-  VALUE refs = (VALUE)simplet_layer_get_user_data(lyr);
-  // if not it is safe to free this layer.
-  if(!refs) simplet_layer_free(lyr);
+  simplet_layer_free(lyr);
 }
 
 
@@ -68,8 +65,9 @@ add_query(VALUE self, VALUE query){
   simplet_query_t *qry;
   Data_Get_Struct(query, simplet_query_t, qry);
   simplet_layer_add_query_directly(layer, qry);
-  VALUE circ_ref = rb_ary_new3(2, self, query);
+  VALUE circ_ref = self;
   simplet_query_set_user_data(qry, (void *)circ_ref);
+  simplet_retain((simplet_retainable_t*) qry);
   return query;
 }
 

@@ -60,8 +60,9 @@ add_style(VALUE self, VALUE style){
   simplet_style_t *style_s;
   Data_Get_Struct(style, simplet_style_t, style_s);
   simplet_query_add_style_directly(query, style_s);
-  VALUE circ_ref = rb_ary_new3(2, self, style);
+  VALUE circ_ref = self;
   simplet_style_set_user_data(style_s, (void *)circ_ref);
+  simplet_retain((simplet_retainable_t*) style_s);
   return style;
 }
 
