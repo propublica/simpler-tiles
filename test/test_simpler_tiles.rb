@@ -3,7 +3,9 @@ require "#{File.join(File.dirname(__FILE__))}/helper"
 class TestSimplerTiles < Test::Unit::TestCase
   should "produce a png image" do
     map = SimplerTiles::Map.new do |m|
-      m.slippy 3, 6, 4
+      m.slippy 55, 105, 8
+
+
       m.layer "#{File.dirname(__FILE__)}/../data/tl_2010_us_state10.shp" do |l|
         l.query "SELECT * from 'tl_2010_us_state10'" do |q|
           q.styles 'fill' => "#061F3799",
@@ -12,6 +14,7 @@ class TestSimplerTiles < Test::Unit::TestCase
                'seamless' => "true"
         end
       end
+      m.raster_layer "#{File.dirname(__FILE__)}/../data/someplaceintexas.jpg"
     end
 
     assert map.valid?
@@ -27,7 +30,7 @@ class TestSimplerTiles < Test::Unit::TestCase
 
   should "not crash with memory errors" do
     GC.disable
-    t = 100.times.map do
+    t = 10.times.map do
       Thread.new do
         map = SimplerTiles::Map.new do |m|
           m.slippy 3, 6, 4
@@ -39,6 +42,7 @@ class TestSimplerTiles < Test::Unit::TestCase
                    'seamless' => "true"
             end
           end
+          m.raster_layer "#{File.dirname(__FILE__)}/../data/someplaceintexas.jpg"
         end
 
         assert map.valid?

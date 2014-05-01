@@ -1,5 +1,6 @@
 #include "raster_layer.h"
 #include "layer.h"
+#include <simple-tiles/layer.h>
 #include <simple-tiles/raster_layer.h>
 #include <simple-tiles/list.h>
 

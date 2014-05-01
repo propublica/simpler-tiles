@@ -1,5 +1,6 @@
 #include "vector_layer.h"
 #include "layer.h"
+#include <simple-tiles/layer.h>
 #include <simple-tiles/vector_layer.h>
 #include <simple-tiles/query.h>
 #include <simple-tiles/list.h>
