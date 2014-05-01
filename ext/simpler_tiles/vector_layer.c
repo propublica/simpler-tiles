@@ -1,4 +1,5 @@
 #include "vector_layer.h"
+#include <simple-tiles/layer.h>
 #include <simple-tiles/vector_layer.h>
 #include <simple-tiles/query.h>
 #include <simple-tiles/list.h>
@@ -36,7 +37,7 @@ static VALUE
 set_source(VALUE self, VALUE source){
   Check_Type(source, T_STRING);
   simplet_vector_layer_t *layer = get_layer(self);
-  simplet_vector_layer_set_source(layer, RSTRING_PTR(source));
+  simplet_layer_set_source((simplet_layer_t *) layer, RSTRING_PTR(source));
   return source;
 }
 
@@ -49,7 +50,7 @@ static VALUE
 get_source(VALUE self) {
   simplet_vector_layer_t *layer = get_layer(self);
   char *source;
-  simplet_vector_layer_get_source(layer, &source);
+  simplet_layer_get_source((simplet_layer_t *) layer, &source);
   return rb_str_new2(source);
 }
 

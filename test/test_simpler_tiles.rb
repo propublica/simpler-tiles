@@ -12,6 +12,7 @@ class TestSimplerTiles < Test::Unit::TestCase
                'seamless' => "true"
         end
       end
+      m.raster_layer "#{File.dirname(__FILE__)}/../data/LC80290392014052LGN00/LC80290392014052LGN00.jpg"
     end
 
     assert map.valid?
@@ -39,6 +40,7 @@ class TestSimplerTiles < Test::Unit::TestCase
                    'seamless' => "true"
             end
           end
+          m.raster_layer "#{File.dirname(__FILE__)}/../data/LC80290392014052LGN00/LC80290392014052LGN00.jpg"
         end
 
         assert map.valid?
