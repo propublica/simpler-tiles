@@ -1,7 +1,9 @@
 #include "vector_layer.h"
+#include "layer.h"
 #include <simple-tiles/vector_layer.h>
 #include <simple-tiles/query.h>
 #include <simple-tiles/list.h>
+#include <simple-tiles/memory.h>
 
 VALUE cSimplerTilesVectorLayer;
 
@@ -25,33 +27,6 @@ layer_free(void *layer){
   simplet_vector_layer_free(lyr);
 }
 
-
-/*
-Set the source attribute for the Layer.
-
-@return (String)
-@param (String)
-*/
-static VALUE
-set_source(VALUE self, VALUE source){
-  Check_Type(source, T_STRING);
-  simplet_vector_layer_t *layer = get_layer(self);
-  simplet_vector_layer_set_source(layer, RSTRING_PTR(source));
-  return source;
-}
-
-/*
-Get a copy of the Layer's source.
-
-@return (String)
-*/
-static VALUE
-get_source(VALUE self) {
-  simplet_vector_layer_t *layer = get_layer(self);
-  char *source;
-  simplet_vector_layer_get_source(layer, &source);
-  return rb_str_new2(source);
-}
 
 /*
 Add a query object to this Layer's list of queries.
@@ -81,8 +56,7 @@ vector_layer_alloc(VALUE klass){
 }
 
 void init_vector_layer(){
-  VALUE rLayer = rb_define_class_under(mSimplerTiles, "Layer", rb_cObject);
-  VALUE rVectorLayer = rb_define_class_under(mSimplerTiles, "VectorLayer", rLayer);
+  VALUE rVectorLayer = rb_define_class_under(mSimplerTiles, "VectorLayer", rb_cObject);
   rb_define_alloc_func(rVectorLayer, vector_layer_alloc);
   rb_define_method(rVectorLayer, "source=", set_source, 1);
   rb_define_method(rVectorLayer, "source", get_source, 0);

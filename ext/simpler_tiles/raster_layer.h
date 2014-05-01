@@ -9,6 +9,7 @@ extern "C" {
 
 void init_raster_layer();
 extern VALUE cSimplerTilesRasterLayer;
+
 #ifdef __cplusplus
 }
 #endif

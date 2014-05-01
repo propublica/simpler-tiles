@@ -9,6 +9,7 @@ extern "C" {
 
 void init_vector_layer();
 extern VALUE cSimplerTilesVectorLayer;
+
 #ifdef __cplusplus
 }
 #endif
