@@ -7,7 +7,8 @@ Init_simpler_tiles(){
   mSimplerTiles = rb_define_module("SimplerTiles");
   init_map();
   init_bounds();
-  init_layer();
+  init_vector_layer();
+  init_raster_layer();
   init_query();
   init_style();
 }

@@ -38,9 +38,12 @@ Rake::TestTask.new(:test) do |test|
 end
 
 task :default => :test
-
+# e.g. DEV_CONFIG='--with-simple-tiles-include=/tmp/simple-tiles/usr/local/include/ --with-simple-tiles-lib=/tmp/simple-tiles/usr/local/lib/' bundle exec rake test
 require 'rake/extensiontask'
 Rake::ExtensionTask.new('simpler_tiles') do |ext|
+  if ENV['DEV_CONFIG']
+    ext.config_options << ENV['DEV_CONFIG']
+  end
   ext.lib_dir = File.join('lib', 'simpler_tiles')
 end
 
@@ -65,7 +68,3 @@ end
 Rake::Task[:compile].prerequisites.unshift DEPEND
 Rake::Task[:test].prerequisites.unshift DATA
 Rake::Task[:test].prerequisites.unshift :compile
-
-
-
-

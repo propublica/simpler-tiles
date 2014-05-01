@@ -6,7 +6,8 @@
 
 #include "map.h"
 #include "bounds.h"
-#include "layer.h"
+#include "vector_layer.h"
+#include "raster_layer.h"
 #include "query.h"
 #include "style.h"
 
