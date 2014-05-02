@@ -47,11 +47,6 @@ Rake::ExtensionTask.new('simpler_tiles') do |ext|
   ext.lib_dir = File.join('lib', 'simpler_tiles')
 end
 
-DEPEND = "ext/simpler_tiles/depend"
-file DEPEND => FileList["ext/simpler_tiles/*.c"] do |t|
-  `cd ext/simpler_tiles/; gcc -MM *.c > depend`
-end
-
 DATA = "data/tl_2010_us_state10.shp"
 file DATA do |t|
   if !File.exists? t.name
@@ -65,6 +60,5 @@ file DATA do |t|
   end
 end
 
-Rake::Task[:compile].prerequisites.unshift DEPEND
 Rake::Task[:test].prerequisites.unshift DATA
 Rake::Task[:test].prerequisites.unshift :compile
