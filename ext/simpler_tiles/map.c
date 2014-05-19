@@ -1,6 +1,7 @@
 #include "map.h"
-#include "util.h"
+#include <simple-tiles/util.h>
 #include <simple-tiles/map.h>
+#include <simple-tiles/memory.h>
 #include <simple-tiles/vector_layer.h>
 #include <simple-tiles/raster_layer.h>
 #include <simple-tiles/bounds.h>
@@ -222,9 +223,9 @@ add_vector_layer(VALUE self, VALUE layer){
   simplet_map_t *map = get_map(self);
   simplet_vector_layer_t *lyr;
   Data_Get_Struct(layer, simplet_vector_layer_t, lyr);
-  simplet_map_add_layer_directly(map, lyr);
+  simplet_map_add_layer_directly(map, (simplet_layer_t *) lyr);
   VALUE circ_ref = self;
-  simplet_layer_set_user_data(lyr, (void *)circ_ref);
+  simplet_vector_layer_set_user_data(lyr, (void *)circ_ref);
   simplet_retain((simplet_retainable_t*) lyr);
   return layer;
 }
@@ -240,9 +241,9 @@ add_raster_layer(VALUE self, VALUE layer){
   simplet_map_t *map = get_map(self);
   simplet_raster_layer_t *lyr;
   Data_Get_Struct(layer, simplet_raster_layer_t, lyr);
-  simplet_map_add_layer_directly(map, lyr);
+  simplet_map_add_layer_directly(map, (simplet_layer_t *) lyr);
   VALUE circ_ref = self;
-  simplet_layer_set_user_data(lyr, (void *)circ_ref);
+  simplet_raster_layer_set_user_data(lyr, (void *)circ_ref);
   simplet_retain((simplet_retainable_t*) lyr);
   return layer;
 }

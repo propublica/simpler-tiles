@@ -29,7 +29,6 @@ task :publish do |t|
   `git checkout master`
 end
 
-
 require 'rake/testtask'
 Rake::TestTask.new(:test) do |test|
   test.libs << 'lib' << 'test'

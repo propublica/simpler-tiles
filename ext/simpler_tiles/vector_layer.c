@@ -15,6 +15,7 @@ get_layer(VALUE self){
   return layer;
 }
 
+
 static void
 mark_layer(void *layer){
   simplet_vector_layer_t *lyr = layer;
@@ -27,7 +28,6 @@ layer_free(void *layer){
   simplet_vector_layer_t *lyr = layer;
   simplet_vector_layer_free(lyr);
 }
-
 
 /*
 Add a query object to this Layer's list of queries.

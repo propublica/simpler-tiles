@@ -6,13 +6,6 @@
 
 VALUE cSimplerTilesRasterLayer;
 
-static simplet_raster_layer_t *
-get_layer(VALUE self){
-  simplet_raster_layer_t *layer;
-  Data_Get_Struct(self, simplet_raster_layer_t, layer);
-  return layer;
-}
-
 static void
 mark_layer(void *layer){
   simplet_raster_layer_t *lyr = layer;
