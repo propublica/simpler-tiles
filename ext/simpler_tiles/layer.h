@@ -7,8 +7,12 @@
 extern "C" {
 #endif
 
-void init_layer();
-extern VALUE cSimplerTilesLayer;
+VALUE
+set_source(VALUE self, VALUE source);
+
+VALUE
+get_source(VALUE self);
+
 #ifdef __cplusplus
 }
 #endif

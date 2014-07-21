@@ -29,7 +29,6 @@ task :publish do |t|
   `git checkout master`
 end
 
-
 require 'rake/testtask'
 Rake::TestTask.new(:test) do |test|
   test.libs << 'lib' << 'test'
@@ -38,15 +37,13 @@ Rake::TestTask.new(:test) do |test|
 end
 
 task :default => :test
-
+# e.g. DEV_CONFIG='--with-simple-tiles-include=/tmp/simple-tiles/usr/local/include/ --with-simple-tiles-lib=/tmp/simple-tiles/usr/local/lib/' bundle exec rake test
 require 'rake/extensiontask'
 Rake::ExtensionTask.new('simpler_tiles') do |ext|
+  if ENV['DEV_CONFIG']
+    ext.config_options << ENV['DEV_CONFIG']
+  end
   ext.lib_dir = File.join('lib', 'simpler_tiles')
-end
-
-DEPEND = "ext/simpler_tiles/depend"
-file DEPEND => FileList["ext/simpler_tiles/*.c"] do |t|
-  `cd ext/simpler_tiles/; gcc -MM *.c > depend`
 end
 
 DATA = "data/tl_2010_us_state10.shp"
@@ -62,10 +59,5 @@ file DATA do |t|
   end
 end
 
-Rake::Task[:compile].prerequisites.unshift DEPEND
 Rake::Task[:test].prerequisites.unshift DATA
 Rake::Task[:test].prerequisites.unshift :compile
-
-
-
-

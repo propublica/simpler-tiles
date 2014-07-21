@@ -169,7 +169,8 @@
       GIS image generation library. It allows you to generate PNG based map
       images without having to dip into straight C and easily connects with
       ActiveRecord. It can display any vector data that
-      <a href="http://www.gdal.org/ogr/ogr_formats.html">OGR</a> can read.
+      <a href="http://www.gdal.org/ogr/ogr_formats.html">OGR</a> can read and any
+      raster data that <a href="http://www.gdal.org/formats_list.html">GDAL</a> can read..
     </p>
 
     <p>
@@ -216,10 +217,16 @@ $ gem install simpler-tiles
         C structure and specifies the limit of the map in spatial coordinates.
       </li>
       <li>
-        <tt><a href="doc/SimplerTiles/Map.html">SimplerTiles::Layer</a></tt>: wraps
-        the <tt><a href="http://propublica.github.com/simple-tiles/#layers">simplet_layer_t</a></tt>
+        <tt><a href="doc/SimplerTiles/Map.html">SimplerTiles::VectorLayer</a></tt>: wraps
+        the <tt><a href="http://propublica.github.com/simple-tiles/#vector_layers">simplet_vector_layer_t</a></tt>
         C structure and contains an OGR connection string for a particular data source,
-        and contains a list of <tt>SimplerTiles::Query</tt> objects.
+        and contains a list of <tt>SimplerTiles::Query</tt> objects. <strong>Note:</strong> The <tt>SimplerTiles::Layer</tt>
+        class now proxies to <tt>VectorLayer</tt>.
+      </li>
+      <li>
+        <tt><a href="doc/SimplerTiles/Map.html">SimplerTiles::RasterLayer</a></tt>: wraps
+        the <tt><a href="http://propublica.github.com/simple-tiles/#raster_layers">simplet_raster_layer_t</a></tt>
+        C structure and contains an GDAL connection string for a particular data source.
       </li>
       <li>
         <tt><a href="doc/SimplerTiles/Query.html">SimplerTiles::Query</a></tt>: wraps
@@ -256,7 +263,7 @@ map = SimplerTiles::Map.new do |m|
   m.set_bounds(-585080.885134, 6849466.721081, 4161303.603672, 9587780.816356)
 
   Dir["\#\{ROOT\}/data/*.shp"].each do |shp|
-    m.layer shp do |l|
+    m.vector_layer shp do |l|
       l.query "select * from '\#\{File.basename shp, '.shp'\}'" do |q|
         q.styles "stroke" => "#111111",
               "line-join" => "round",
@@ -310,7 +317,7 @@ get '/tiles/*/:x/:y/:z.png' do
     m.slippy params[:x].to_i, params[:y].to_i, params[:z].to_i
 
     # Add a layer based on the parameters in the URL
-    m.layer File.join(ROOT, params[:splat].first) do |l|
+    m.vector_layer File.join(ROOT, params[:splat].first) do |l|
 
       # Grab all of the data from the shapefile
       l.query "select * from '\#\{File.basename(params[:splat].first, '.shp')\}'" do |q|
