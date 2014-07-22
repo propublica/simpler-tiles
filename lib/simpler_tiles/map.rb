@@ -11,8 +11,14 @@ module SimplerTiles
 
     # Add a layer to the c list of layers and yield the new layer.
     def layer(source, &blk)
-      layer = SimplerTiles::Layer.new(source, &blk)
-      add_layer layer
+      layer = SimplerTiles::VectorLayer.new(source, &blk)
+      add_vector_layer layer
+    end
+
+    # Add a raster layer
+    def raster_layer(source)
+      layer = SimplerTiles::RasterLayer.new(source)
+      add_raster_layer layer
     end
 
     # A convienence method to use Active Record configuration and add a new

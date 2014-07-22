@@ -1,5 +1,5 @@
 #include "style.h"
-#include "util.h"
+#include <simple-tiles/util.h>
 #include <simple-tiles/style.h>
 
 VALUE cSimplerTilesStyle;

@@ -1,7 +1,9 @@
 #include "map.h"
-#include "util.h"
+#include <simple-tiles/util.h>
 #include <simple-tiles/map.h>
-#include <simple-tiles/layer.h>
+#include <simple-tiles/memory.h>
+#include <simple-tiles/vector_layer.h>
+#include <simple-tiles/raster_layer.h>
 #include <simple-tiles/bounds.h>
 #include <simple-tiles/list.h>
 
@@ -211,22 +213,41 @@ set_height(VALUE self, VALUE height){
 
 
 /*
-Create and return a {Layer} based on the passed in string.
+Create and return a {VectorLayer} based on the passed in string.
 
 @param (String)
 @return (Layer)
 */
 static VALUE
-add_layer(VALUE self, VALUE layer){
+add_vector_layer(VALUE self, VALUE layer){
   simplet_map_t *map = get_map(self);
-  simplet_layer_t *lyr;
-  Data_Get_Struct(layer, simplet_layer_t, lyr);
-  simplet_map_add_layer_directly(map, lyr);
+  simplet_vector_layer_t *lyr;
+  Data_Get_Struct(layer, simplet_vector_layer_t, lyr);
+  simplet_map_add_layer_directly(map, (simplet_layer_t *) lyr);
   VALUE circ_ref = self;
-  simplet_layer_set_user_data(lyr, (void *)circ_ref);
+  simplet_vector_layer_set_user_data(lyr, (void *)circ_ref);
   simplet_retain((simplet_retainable_t*) lyr);
   return layer;
 }
+
+/*
+Create and return a {RasterLayer} based on the passed in string.
+
+@param (String)
+@return (Layer)
+*/
+static VALUE
+add_raster_layer(VALUE self, VALUE layer){
+  simplet_map_t *map = get_map(self);
+  simplet_raster_layer_t *lyr;
+  Data_Get_Struct(layer, simplet_raster_layer_t, lyr);
+  simplet_map_add_layer_directly(map, (simplet_layer_t *) lyr);
+  VALUE circ_ref = self;
+  simplet_raster_layer_set_user_data(lyr, (void *)circ_ref);
+  simplet_retain((simplet_retainable_t*) lyr);
+  return layer;
+}
+
 
 /*
 Test to see if the Map has fulfilled the requirements for rendering
@@ -333,7 +354,8 @@ init_map(){
   rb_define_method(rmap, "slippy", slippy, 3);
   rb_define_method(rmap, "valid?", is_valid, 0);
   rb_define_private_method(rmap, "to_png_stream", to_png_stream, 1);
-  rb_define_private_method(rmap, "add_layer", add_layer, 1);
+  rb_define_private_method(rmap, "add_vector_layer", add_vector_layer, 1);
+  rb_define_private_method(rmap, "add_raster_layer", add_raster_layer, 1);
 
   cSimplerTilesMap = rmap;
 }

@@ -70,7 +70,6 @@ reproject(VALUE self, VALUE from, VALUE to) {
 static VALUE
 alloc_bounds(VALUE self){
   simplet_bounds_t *bounds;
-  VALUE args[4];
   if(!(bounds = simplet_bounds_new()))
     rb_raise(rb_eRuntimeError, "Error in creating bounds.");
 

@@ -1,6 +1,7 @@
 #include "query.h"
 #include <simple-tiles/query.h>
 #include <simple-tiles/style.h>
+#include <simple-tiles/memory.h>
 
 VALUE cSimplerTilesQuery;
 
