@@ -371,9 +371,15 @@ __END__
 CODE
 %>
 
-<h2>Raster Demo</h2>
-<p>SimplerTiles can also turn raster images, like NASA's Landsat scenes, into map tiles. Here's a
-variant of the previous code for a raster tile server</p>
+    <p>
+      <strong>That's in no way a safe or secure thing to put on the internet</strong>, but it will
+      do as a simple replacement for QGIS!
+    </p>
+
+
+    <h2>Raster Demo</h2>
+    <p>SimplerTiles can also turn raster images, like NASA's <a href="http://landsat.usgs.gov/">Landsat</a> scenes, into map tiles. Here's a
+    variant of the previous code for a raster tile server that serves a Landsat 8 true color image of New York City.</p>
 
 <%= highlight 'ruby', <<-CODE
 
@@ -385,7 +391,6 @@ get '/tiles/:x/:y/:z.png' do
 
   # Create a Map object
   map = SimplerTiles::Map.new do |m|
-    m.buffer = 64
     m.slippy params[:x].to_i, params[:y].to_i, params[:z].to_i
     m.raster_layer "path/to/raster.tif"
   end
@@ -395,17 +400,12 @@ end
 CODE
 %>
 
-<p>Here's the result map:</p>
-
-<p>
-  <iframe src="http://projects.propublica.org/nyc-raster-demo/" width="600" height="600" scrolling="no" border="0"></iframe>
-</p>
-
+    <p>Here's the result map:</p>
 
     <p>
-      <strong>That's in no way a safe or secure thing to put on the internet</strong>, but it will
-      do as a simple replacement for QGIS!
+      <iframe src="http://projects.propublica.org/nyc-raster-demo/" width="600" height="600" scrolling="no" border="0" frameborder="0"></iframe>
     </p>
+
 
     <h2>Tips and Tricks</h2>
 
@@ -416,20 +416,6 @@ CODE
     </p>
 
     <ol>
-      <li>
-        If you are using a PostGIS backend make sure to limit your queries to
-        the bounds of the image. You will want to add a <tt>where</tt> clause to each
-        trip to the database like so:
-<%= highlight 'ruby', <<-CODE
-
-layer.query Shape.where("the_geom && SRID=4326;\#\{map.buffered_bounds.reproject(map.srs, 'epsg:4326').to_wkt}'\}").to_sql do |query|
-  # ...
-end
-
-CODE
-%>
-        This will protect against doing a full table scan in your database.
-      </li>
       <li>
         <p>
           If you are serving images as part of a tiled map, you'll also want to
