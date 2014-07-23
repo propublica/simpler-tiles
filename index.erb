@@ -371,6 +371,37 @@ __END__
 CODE
 %>
 
+<h2>Raster Demo</h2>
+<p>SimplerTiles can also turn raster images, like NASA's Landsat scenes, into map tiles. Here's a
+variant of the previous code for a raster tile server</p>
+
+<%= highlight 'ruby', <<-CODE
+
+# Set up the tile url to capture x, y, z coordinates for slippy tile generation
+get '/tiles/:x/:y/:z.png' do
+
+  # Let the browser know we are sending a png
+  content_type 'image/png'
+
+  # Create a Map object
+  map = SimplerTiles::Map.new do |m|
+    m.buffer = 64
+    m.slippy params[:x].to_i, params[:y].to_i, params[:z].to_i
+    m.raster_layer "path/to/raster.tif"
+  end
+  map.to_png
+end
+
+CODE
+%>
+
+<p>Here's the result map:</p>
+
+<p>
+  <iframe src="http://projects.propublica.org/nyc-raster-demo/" width="600" height="600" scrolling="no" border="0"></iframe>
+</p>
+
+
     <p>
       <strong>That's in no way a safe or secure thing to put on the internet</strong>, but it will
       do as a simple replacement for QGIS!
