@@ -359,7 +359,7 @@ $ gem install simpler-tiles
 <span class="cp">  &lt;div id=&quot;map&quot;&gt;&lt;/div&gt;</span>
 <span class="cp">  &lt;script&gt;</span>
 <span class="cp">    var map = new L.Map(&#39;map&#39;);</span>
-<span class="cp">    var layer = new L.TileLayer(&#39;/tiles/&lt;%= params[:splat] %&gt;/{x}/{y}/{z}.png&#39;)</span>
+<span class="cp">    var layer = new L.TileLayer(&#39;/tiles/&lt;%= params[:splat].first %&gt;/{x}/{y}/{z}.png&#39;)</span>
 <span class="cp">    map.addLayer(layer).setView(new L.LatLng(38, -95), 1);</span>
 <span class="cp">  &lt;/script&gt;</span>
 <span class="cp">&lt;/body&gt;</span>
