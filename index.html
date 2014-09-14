@@ -255,7 +255,7 @@ $ gem install simpler-tiles
 
 <span class="no">ROOT</span> <span class="o">=</span> <span class="no">File</span><span class="o">.</span><span class="n">expand_path</span><span class="p">(</span><span class="no">File</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="bp">__FILE__</span><span class="p">))</span>
 
-<span class="n">map</span> <span class="o">=</span> <span class="ss">SimplerTiles</span><span class="p">:</span><span class="ss">:Map</span><span class="o">.</span><span class="n">new</span> <span class="k">do</span> <span class="o">|</span><span class="n">m</span><span class="o">|</span>
+<span class="n">map</span> <span class="o">=</span> <span class="no">SimplerTiles</span><span class="o">::</span><span class="no">Map</span><span class="o">.</span><span class="n">new</span> <span class="k">do</span> <span class="o">|</span><span class="n">m</span><span class="o">|</span>
   <span class="n">m</span><span class="o">.</span><span class="n">srs</span>     <span class="o">=</span> <span class="s2">&quot;EPSG:3083&quot;</span>
   <span class="n">m</span><span class="o">.</span><span class="n">bgcolor</span> <span class="o">=</span> <span class="s2">&quot;#ffffff&quot;</span>
   <span class="n">m</span><span class="o">.</span><span class="n">width</span>   <span class="o">=</span> <span class="mi">423</span>
@@ -306,7 +306,7 @@ $ gem install simpler-tiles
   <span class="n">content_type</span> <span class="s1">&#39;image/png&#39;</span>
 
   <span class="c1"># Create a Map object</span>
-  <span class="n">map</span> <span class="o">=</span> <span class="ss">SimplerTiles</span><span class="p">:</span><span class="ss">:Map</span><span class="o">.</span><span class="n">new</span> <span class="k">do</span> <span class="o">|</span><span class="n">m</span><span class="o">|</span>
+  <span class="n">map</span> <span class="o">=</span> <span class="no">SimplerTiles</span><span class="o">::</span><span class="no">Map</span><span class="o">.</span><span class="n">new</span> <span class="k">do</span> <span class="o">|</span><span class="n">m</span><span class="o">|</span>
     <span class="c1"># Set the background color to black</span>
     <span class="n">m</span><span class="o">.</span><span class="n">bgcolor</span> <span class="o">=</span> <span class="s2">&quot;#000000&quot;</span>
 
@@ -384,7 +384,7 @@ $ gem install simpler-tiles
   <span class="n">content_type</span> <span class="s1">&#39;image/png&#39;</span>
 
   <span class="c1"># Create a Map object</span>
-  <span class="n">map</span> <span class="o">=</span> <span class="ss">SimplerTiles</span><span class="p">:</span><span class="ss">:Map</span><span class="o">.</span><span class="n">new</span> <span class="k">do</span> <span class="o">|</span><span class="n">m</span><span class="o">|</span>
+  <span class="n">map</span> <span class="o">=</span> <span class="no">SimplerTiles</span><span class="o">::</span><span class="no">Map</span><span class="o">.</span><span class="n">new</span> <span class="k">do</span> <span class="o">|</span><span class="n">m</span><span class="o">|</span>
     <span class="n">m</span><span class="o">.</span><span class="n">slippy</span> <span class="n">params</span><span class="o">[</span><span class="ss">:x</span><span class="o">].</span><span class="n">to_i</span><span class="p">,</span> <span class="n">params</span><span class="o">[</span><span class="ss">:y</span><span class="o">].</span><span class="n">to_i</span><span class="p">,</span> <span class="n">params</span><span class="o">[</span><span class="ss">:z</span><span class="o">].</span><span class="n">to_i</span>
     <span class="n">m</span><span class="o">.</span><span class="n">raster_layer</span> <span class="s2">&quot;path/to/raster.tif&quot;</span>
   <span class="k">end</span>
