@@ -273,7 +273,7 @@ map = SimplerTiles::Map.new do |m|
   m.set_bounds(-585080.885134, 6849466.721081, 4161303.603672, 9587780.816356)
 
   Dir["\#\{ROOT\}/data/*.shp"].each do |shp|
-    m.vector_layer shp do |l|
+    m.layer shp do |l|
       l.query "select * from '\#\{File.basename shp, '.shp'\}'" do |q|
         q.styles "stroke" => "#111111",
               "line-join" => "round",
@@ -293,7 +293,7 @@ CODE
 
     <p>
       Simpler Tiles was designed to make <a href="http://wiki.openstreetmap.org/wiki/Slippy_Map">slippy maps</a>. The following is a basic tile
-      server using <a href="http://sinatrarb.com">Sinatra</a>. It will open display any shapefile on your hard drive
+      server using <a href="http://sinatrarb.com">Sinatra</a>. It will open display any shapefile in your home directory
       by visiting a url like: <a href="">http://localhost:4567/shape/path/to/shapefile.shp</a>
     </p>
 
@@ -327,7 +327,7 @@ get '/tiles/*/:x/:y/:z.png' do
     m.slippy params[:x].to_i, params[:y].to_i, params[:z].to_i
 
     # Add a layer based on the parameters in the URL
-    m.vector_layer File.join(ROOT, params[:splat].first) do |l|
+    m.layer File.join(ROOT, params[:splat].first) do |l|
 
       # Grab all of the data from the shapefile
       l.query "select * from '\#\{File.basename(params[:splat].first, '.shp')\}'" do |q|
@@ -372,7 +372,7 @@ __END__
   <div id="map"></div>
   <script>
     var map = new L.Map('map');
-    var layer = new L.TileLayer('/tiles/\<\%\= params[:splat] \%\>/{x}/{y}/{z}.png')
+    var layer = new L.TileLayer('/tiles/\<\%\= params[:splat].first \%\>/{x}/{y}/{z}.png')
     map.addLayer(layer).setView(new L.LatLng(38, -95), 1);
   </script>
 </body>
