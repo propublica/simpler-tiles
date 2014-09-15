@@ -27,4 +27,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency(%q<minitest>, ["~> 4.0.0"])
   s.add_development_dependency(%q<shoulda>, ["~> 3.5.0"])
   s.add_development_dependency(%q<yard>, ["~> 0.8.0"])
+  s.add_development_dependency(%q<pygmentize>, ["~> 0.0.3"])
 end
