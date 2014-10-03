@@ -6,6 +6,13 @@
 
 VALUE cSimplerTilesRasterLayer;
 
+static simplet_raster_layer_t *
+get_layer(VALUE self){
+  simplet_raster_layer_t *layer;
+  Data_Get_Struct(self, simplet_raster_layer_t, layer);
+  return layer;
+}
+
 static void
 mark_layer(void *layer){
   simplet_raster_layer_t *lyr = layer;
@@ -17,6 +24,20 @@ static void
 layer_free(void *layer){
   simplet_raster_layer_t *lyr = layer;
   simplet_raster_layer_free(lyr);
+}
+
+static VALUE
+set_resample(VALUE self, VALUE boolean){
+  simplet_raster_layer_t *layer = get_layer(self);
+  simplet_raster_layer_set_resample(layer, boolean == Qtrue);
+  return boolean;
+}
+
+static VALUE
+get_resample(VALUE self){
+  simplet_raster_layer_t *layer = get_layer(self);
+  if(simplet_raster_layer_get_resample(layer)) return Qtrue;
+  return Qfalse;
 }
 
 VALUE
@@ -34,6 +55,8 @@ void init_raster_layer(){
 
   rb_define_method(rRasterLayer, "source=", set_source, 1);
   rb_define_method(rRasterLayer, "source", get_source, 0);
+  rb_define_method(rRasterLayer, "resample=", set_resample, 1);
+  rb_define_method(rRasterLayer, "resample", get_resample, 0);
 
   cSimplerTilesRasterLayer = rRasterLayer;
 }
