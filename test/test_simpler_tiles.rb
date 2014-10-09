@@ -64,6 +64,3 @@ class TestSimplerTiles < Test::Unit::TestCase
     GC.start
   end
 end
-
-  end
-end
