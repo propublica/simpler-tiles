@@ -16,7 +16,7 @@ module SimplerTiles
     end
 
     # Add a raster layer
-    def raster_layer(source)
+    def raster_layer(source, &blk)
       layer = SimplerTiles::RasterLayer.new(source, &blk)
       add_raster_layer layer
     end
