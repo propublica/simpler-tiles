@@ -19,6 +19,19 @@ layer_free(void *layer){
   simplet_raster_layer_free(lyr);
 }
 
+static void
+set_resample(VALUE self, VALUE boolean){
+  simple_raster_layer_t *layer = get_layer(self);
+  simplet_layer_set_resample(layer, boolean == Qtrue);
+}
+
+static VALUE
+get_resample(VALUE self){
+  simple_raster_layer_t *layer = get_layer(self);
+  if(simplet_layer_get_resample(layer)) return Qtrue;
+  return Qfalse;
+}
+
 VALUE
 raster_layer_alloc(VALUE klass){
   simplet_raster_layer_t *layer;
@@ -34,6 +47,8 @@ void init_raster_layer(){
 
   rb_define_method(rRasterLayer, "source=", set_source, 1);
   rb_define_method(rRasterLayer, "source", get_source, 0);
+  rb_define_method(rRasterLayer, "resample=", set_resample, 1);
+  rb_define_method(rRasterLayer, "resample", get_resample, 0);
 
   cSimplerTilesRasterLayer = rRasterLayer;
 }
