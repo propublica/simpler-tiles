@@ -175,11 +175,9 @@ $ gem install simpler-tiles
 
     <p>
       <em>Note for Mac OS X users:</em> You might get an error warning about
-      <tt>xcb-shm</tt> if so, you'll need to install
-      <a href="http://xquartz.macosforge.org/landing/">XQuartz</a>, and add a
-      search directory to your path with:
+      <tt>xcb-shm</tt> if so, you'll need to reinstall cairo with:
       <blockquote>
-        <tt>export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/opt/X11/lib/pkgconfig</tt>
+        <tt>brew reinstall cairo --without-x11</tt>
       </blockquote>
     </p>
 
