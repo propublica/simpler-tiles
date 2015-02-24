@@ -29,7 +29,7 @@ layer_free(void *layer){
 static VALUE
 set_resample(VALUE self, VALUE boolean){
   simplet_raster_layer_t *layer = get_layer(self);
-  simplet_raster_layer_set_resample(layer, boolean == Qtrue);
+  simplet_raster_layer_set_resample(layer, boolean == Qtrue ? SIMPLET_LANCZOS : SIMPLET_NEAREST);
   return boolean;
 }
 
