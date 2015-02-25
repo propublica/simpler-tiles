@@ -27,10 +27,24 @@ layer_free(void *layer){
 }
 
 static VALUE
-set_resample(VALUE self, VALUE boolean){
+lanczos(VALUE self, VALUE boolean){
   simplet_raster_layer_t *layer = get_layer(self);
-  simplet_raster_layer_set_resample(layer, boolean == Qtrue ? SIMPLET_LANCZOS : SIMPLET_NEAREST);
-  return boolean;
+  simplet_raster_layer_set_resample(layer, SIMPLET_LANCZOS);
+  return Qnil;
+}
+
+static VALUE
+bilinear(VALUE self, VALUE boolean){
+  simplet_raster_layer_t *layer = get_layer(self);
+  simplet_raster_layer_set_resample(layer, SIMPLET_BILINEAR);
+  return Qnil;
+}
+
+static VALUE
+nearest(VALUE self, VALUE boolean){
+  simplet_raster_layer_t *layer = get_layer(self);
+  simplet_raster_layer_set_resample(layer, SIMPLET_NEAREST);
+  return Qnil;
 }
 
 static VALUE
@@ -55,8 +69,10 @@ void init_raster_layer(){
 
   rb_define_method(rRasterLayer, "source=", set_source, 1);
   rb_define_method(rRasterLayer, "source", get_source, 0);
-  rb_define_method(rRasterLayer, "resample=", set_resample, 1);
-  rb_define_method(rRasterLayer, "resample", get_resample, 0);
+
+  rb_define_method(rRasterLayer, "bilinear!", bilinear, 0);
+  rb_define_method(rRasterLayer, "lanczos!", lanczos, 0);
+  rb_define_method(rRasterLayer, "nearest!", nearest, 0);
 
   cSimplerTilesRasterLayer = rRasterLayer;
 }
