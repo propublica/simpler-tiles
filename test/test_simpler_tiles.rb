@@ -18,7 +18,7 @@ class TestSimplerTiles < Test::Unit::TestCase
       # to set a nodata flag on a landsat look img
       # gdal_translate -a_nodata 0 someplaceintexas.jpg someplaceintexas_nodata.jpg
       raster = m.raster_layer "#{File.dirname(__FILE__)}/../data/someplaceintexas-nodata.jpg"
-      raster.resample = true
+      # raster.lanczos!
     end
 
     assert map.valid?

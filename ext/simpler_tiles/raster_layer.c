@@ -47,13 +47,6 @@ nearest(VALUE self, VALUE boolean){
   return Qnil;
 }
 
-static VALUE
-get_resample(VALUE self){
-  simplet_raster_layer_t *layer = get_layer(self);
-  if(simplet_raster_layer_get_resample(layer)) return Qtrue;
-  return Qfalse;
-}
-
 VALUE
 raster_layer_alloc(VALUE klass){
   simplet_raster_layer_t *layer;
