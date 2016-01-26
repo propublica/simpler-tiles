@@ -175,9 +175,11 @@ $ gem install simpler-tiles
 
     <p>
       <em>Note for Mac OS X users:</em> You might get an error warning about
-      <tt>xcb-shm</tt> if so, you'll need to reinstall cairo with:
+      <tt>xcb-shm</tt> if so, you'll need to install
+      <a href="http://xquartz.macosforge.org/landing/">XQuartz</a>, and add a
+      search directory to your path with:
       <blockquote>
-        <tt>brew reinstall cairo --without-x11</tt>
+        <tt>export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/opt/X11/lib/pkgconfig</tt>
       </blockquote>
     </p>
 
@@ -447,6 +449,10 @@ $ gem install simpler-tiles
     <h2>Change Log</h2>
 
     <dl>
+      <dd><b>0.3.1</b> &mdash; Februrary 15th, 2015</dd>
+      <dt>Fix build bugs.</dt>
+      <dd><b>0.3.0</b> &mdash; Februrary 15th, 2015</dd>
+      <dt>Added lanczos resampling.</dt>
       <dd><b>0.2.1</b> &mdash; June 21st, 2014</dd>
       <dt>Added raster support. (thanks <a href="http://github.com/ashaw">Al Shaw</a>)</dt>
       <dd><b>0.1.1</b> &mdash; February, 10th 2014</dd>
@@ -478,7 +484,7 @@ $ gem install simpler-tiles
     <h2>License</h2>
 
 <pre>
-Copyright (c) 2012, ProPublica
+Copyright (c) 2015, ProPublica
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
