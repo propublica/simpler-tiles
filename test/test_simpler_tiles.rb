@@ -1,7 +1,7 @@
 require "#{File.join(File.dirname(__FILE__))}/helper"
 
-class TestSimplerTiles < Test::Unit::TestCase
-  should "produce a png image" do
+describe SimplerTiles do
+  it "should produce a png image" do
     map = SimplerTiles::Map.new do |m|
       # m.bgcolor = "#000000"
       m.srs = "EPSG:32614"
@@ -32,7 +32,7 @@ class TestSimplerTiles < Test::Unit::TestCase
   end
 
 
-  should "not crash with memory errors" do
+  it "should not crash with memory errors" do
     GC.disable
     t = 10.times.map do
       Thread.new do
