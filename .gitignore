@@ -5,8 +5,6 @@ rdoc
 pkg
 tmp
 *.bundle
-data
-*.shp
 .DS_Store
 Gemfile
 .document
