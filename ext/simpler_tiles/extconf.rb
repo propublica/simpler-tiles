@@ -6,8 +6,8 @@ ROOT = File.expand_path(File.join(File.dirname(__FILE__), '..', '..'))
 LIBDIR = RbConfig::CONFIG['libdir']
 INCLUDEDIR = RbConfig::CONFIG['includedir']
 
-$CFLAGS << " #{ENV["CFLAGS"]}" << `pkg-config --cflags simple-tiles` << `gdal-config --cflags`
-$LIBS << " #{ENV["LIBS"]}" << `pkg-config --libs simple-tiles` << `gdal-config --libs`
+$CFLAGS << " #{ENV["CFLAGS"]}" << `pkg-config --cflags simple-tiles`.chomp << " " << `gdal-config --cflags`.chomp
+$LIBS << " #{ENV["LIBS"]}" << `pkg-config --libs simple-tiles`.chomp << " " << `gdal-config --libs`
 
 HEADER_DIRS = [
  '/usr/local/include',
