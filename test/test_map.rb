@@ -35,8 +35,8 @@ describe SimplerTiles::Map do
       m.srs = "+proj=longlat +ellps=GRS80 +datum=NAD83 +no_defs"
       m.set_bounds -179.231086, 17.831509, -100.859681, 71.441059
       m.set_size 256, 256
-      m.layer "#{File.dirname(__FILE__)}/../data/tl_2010_us_state10.shp" do |l|
-        l.query "SELECT * from tl_2010_us_state10_error_error" do |q|
+      m.layer "#{File.dirname(__FILE__)}/../data/tl_2010_01_state10.shp" do |l|
+        l.query "SELECT * from tl_2010_01_state10_error_error" do |q|
           q.styles 'fill' => "#061F3799",
               'line-join' => "round",
                'line-cap' => "square",
@@ -63,4 +63,3 @@ describe SimplerTiles::Map do
     assert_equal @map.bgcolor, color
   end
 end
-
